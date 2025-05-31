@@ -1,0 +1,420 @@
+﻿Project,Year,Date,Species,Colony_code,AD/chick,Sample ID,Unique_ID,Substrate,Substrate_group,Island,Area,Breeding period (Incubation/ Chick-rearing/ Mixed),Band or Band prefix,Band suffix,PFR ID,Nest/Burrow_ID,Chick age,Notes,DNA Plate,Re-extraction plate,Collaborator name
+Project Poop,2024,45485,BLSK,CRAB,CH,1934,BLSK-CRAB-CH-2024-1934,Pants,Clothing,Crab Bank,West,MIX,1234,05153,00A,,14,,,,Janet Thibault
+Project Poop,2024,45485,BLSK,CRAB,CH,1935,BLSK-CRAB-CH-2024-1935,Parchment Paper,Paper,Crab Bank,West,MIX,1234,05154,00C,,14,,,,Janet Thibault
+Project Poop,2024,45485,BLANK,CRAB,CH,1936,BLANK-CRAB-CH-2024-1936,Pants,Clothing,Crab Bank,West,MIX,NA,NA,NA,,,,,,Janet Thibault
+Project Poop,2024,45490,BLSK,CRAB,CH,1937,BLSK-CRAB-CH-2024-1937,BAG,Paper,Crab Bank,West,CHR,1234,05161,00M,,21,,,,Janet Thibault
+Project Poop,2024,45490,BLSK,CRAB,CH,1938,BLSK-CRAB-CH-2024-1938,BAG,Paper,Crab Bank,West,CHR,1234,05162,00N,,21,,,,Janet Thibault
+Project Poop,2024,45490,BLSK,CRAB,CH,1939,BLSK-CRAB-CH-2024-1939,BAG,Paper,Crab Bank,West,CHR,1234,05160,00L,,21,,,,Janet Thibault
+Project Poop,2024,45490,BLSK,CRAB,CH,1940,BLSK-CRAB-CH-2024-1940,BAG,Paper,Crab Bank,West,CHR,1234,05163,00P,,21,,,,Janet Thibault
+Project Poop,2024,45490,BLSK,CRAB,CH,1941,BLSK-CRAB-CH-2024-1941,BAG,Paper,Crab Bank,West,CHR,1234,05159,00K,,21,,,,Janet Thibault
+Project Poop,2024,45490,BLSK,CRAB,CH,1942,BLSK-CRAB-CH-2024-1942,BAG,Paper,Crab Bank,West,CHR,1234,05165,00T,,21,,,,Janet Thibault
+Project Poop,2024,45490,BLSK,CRAB,CH,1943,BLSK-CRAB-CH-2024-1943,BAG,Paper,Crab Bank,West,CHR,1234,05164,00R,,21,,,,Janet Thibault
+Project Poop,2024,45490,BLSK,CRAB,CH,1944,BLSK-CRAB-CH-2024-1944,BAG,Paper,Crab Bank,West,CHR,1234,05166,00U,,21,,,,Janet Thibault
+Project Poop,2024,45490,BLSK,CRAB,CH,1945,BLSK-CRAB-CH-2024-1945,BAG,Paper,Crab Bank,West,CHR,1234,05168,00W,,21,,,,Janet Thibault
+Project Poop,2024,45490,BLSK,CRAB,CH,1946,BLSK-CRAB-CH-2024-1946,BAG,Paper,Crab Bank,West,CHR,1234,05169,00X,,21,,,,Janet Thibault
+Project Poop,2024,45490,BLSK,CRAB,CH,1947,BLSK-CRAB-CH-2024-1947,BAG,Paper,Crab Bank,West,CHR,1234,05170,00Y,,21,,,,Janet Thibault
+Project Poop,2024,45490,BLSK,CRAB,CH,1948,BLSK-CRAB-CH-2024-1948,BAG,Paper,Crab Bank,West,CHR,1234,05173,01E,,21,,,,Janet Thibault
+Project Poop,2024,45490,BLSK,CRAB,CH,1949,BLSK-CRAB-CH-2024-1949,BAG,Paper,Crab Bank,West,CHR,1234,05171,01A,,21,,,,Janet Thibault
+Project Poop,2024,45490,BLSK,CRAB,CH,1950,BLSK-CRAB-CH-2024-1950,BAG,Paper,Crab Bank,West,CHR,1234,05172,01C,,21,,,,Janet Thibault
+Project Poop,2024,45490,BLSK,CRAB,CH,1951,BLSK-CRAB-CH-2024-1951,BAG,Paper,Crab Bank,West,CHR,1234,05174,01F,,21,,,,Janet Thibault
+Project Poop,2024,45490,BLSK,CRAB,CH,1952,BLSK-CRAB-CH-2024-1952,BAG,Paper,Crab Bank,West,CHR,1234,05175,01H,,21,,,,Janet Thibault
+Project Poop,2024,45490,BLSK,CRAB,CH,1953,BLSK-CRAB-CH-2024-1953,BAG,Paper,Crab Bank,West,CHR,1234,05176,01J,,21,,,,Janet Thibault
+Project Poop,2024,45490,BLSK,CRAB,CH,1954,BLSK-CRAB-CH-2024-1954,BAG,Paper,Crab Bank,West,CHR,1234,05177,01K,,21,,,,Janet Thibault
+Project Poop,2024,45490,BLSK,CRAB,CH,1955,BLSK-CRAB-CH-2024-1955,BAG,Paper,Crab Bank,West,CHR,1234,05178,01L,,21,,,,Janet Thibault
+Project Poop,2024,45490,BLSK,CRAB,CH,1956,BLSK-CRAB-CH-2024-1956,BAG,Paper,Crab Bank,West,CHR,1234,05179,01M,,21,,,,Janet Thibault
+Project Poop,2024,45490,BLSK,CRAB,CH,1957,BLSK-CRAB-CH-2024-1957,BAG,Paper,Crab Bank,West,CHR,1234,05180,01N,,21,,,,Janet Thibault
+Project Poop,2024,45490,BLSK,CRAB,CH,1958,BLSK-CRAB-CH-2024-1958,BAG,Paper,Crab Bank,West,CHR,1234,05181,01P,,21,,,,Janet Thibault
+Project Poop,2024,45490,BLSK,CRAB,CH,1959,BLSK-CRAB-CH-2024-1959,BAG,Paper,Crab Bank,West,CHR,1234,05182,01R,,21,,,,Janet Thibault
+Project Poop,2024,45490,BLANK,CRAB,,1960,BLANK-CRAB--2024-1960,BAG,Paper,Crab Bank,West,CHR,NA,NA,NA,,,,,,Janet Thibault
+Project Poop,2024,45496,BLSK,CRAB,CH,1961,BLSK-CRAB-CH-2024-1961,BAG,Paper,Crab Bank,,CHR,1234,05185,01V,,26,,,,Janet Thibault
+Project Poop,2024,45496,BLSK,CRAB,CH,1962,BLSK-CRAB-CH-2024-1962,BAG,Paper,Crab Bank,,CHR,1234,05186,01Y,,26,,,,Janet Thibault
+Project Poop,2024,45496,BLSK,CRAB,CH,1963,BLSK-CRAB-CH-2024-1963,BAG,Paper,Crab Bank,,CHR,1234,05187,01W,,30,,,,Janet Thibault
+Project Poop,2024,45496,BLSK,CRAB,CH,1964,BLSK-CRAB-CH-2024-1964,BAG,Paper,Crab Bank,,CHR,1234,05184,01U,,26,,,,Janet Thibault
+Project Poop,2024,45496,BLSK,CRAB,CH,1965,BLSK-CRAB-CH-2024-1965,BAG,Paper,Crab Bank,,CHR,1234,05188,01X,,30,,,,Janet Thibault
+Project Poop,2024,45496,BLSK,CRAB,CH,1966,BLSK-CRAB-CH-2024-1966,BAG,Paper,Crab Bank,,CHR,1234,05189,02A,,30,,,,Janet Thibault
+Project Poop,2024,45496,BLSK,CRAB,CH,1967,BLSK-CRAB-CH-2024-1967,BAG,Paper,Crab Bank,,CHR,1234,05190,02C,,26,,,,Janet Thibault
+Project Poop,2024,45496,BLSK,CRAB,CH,1968,BLSK-CRAB-CH-2024-1968,BAG,Paper,Crab Bank,,CHR,1234,05191,02E,,26,,,,Janet Thibault
+Project Poop,2024,45496,BLSK,CRAB,CH,1969,BLSK-CRAB-CH-2024-1969,BAG,Paper,Crab Bank,,CHR,1234,05194,02J,,26,,,,Janet Thibault
+Project Poop,2024,45496,BLSK,CRAB,CH,1970,BLSK-CRAB-CH-2024-1970,BAG,Paper,Crab Bank,,CHR,1234,05195,02K,,26,,,,Janet Thibault
+Project Poop,2024,45496,BLSK,CRAB,CH,1971,BLSK-CRAB-CH-2024-1971,BAG,Paper,Crab Bank,,CHR,1234,05197,02M,,21,,,,Janet Thibault
+Project Poop,2024,45496,BLSK,CRAB,CH,1972,BLSK-CRAB-CH-2024-1972,BAG,Paper,Crab Bank,,CHR,1234,05198,02N,,26,,,,Janet Thibault
+Project Poop,2024,45496,BLSK,CRAB,CH,1973,BLSK-CRAB-CH-2024-1973,BAG,Paper,Crab Bank,,CHR,1234,05199,02P,,26,,,,Janet Thibault
+Project Poop,2024,45496,BLSK,CRAB,CH,1974,BLSK-CRAB-CH-2024-1974,BAG,Paper,Crab Bank,,CHR,1234,05196,02L,,30,,,,Janet Thibault
+Project Poop,2024,45496,BLSK,CRAB,CH,1975,BLSK-CRAB-CH-2024-1975,BAG,Paper,Crab Bank,,CHR,1234,05205,02X,,26,,,,Janet Thibault
+Project Poop,2024,45496,BLANK,CRAB,,1976,BLANK-CRAB--2024-1976,BAG,Paper,Crab Bank,,CHR,NA,NA,NA,,,,,,Janet Thibault
+Project Poop,2024,45519,BLANK,RNDI,NA,1889,BLANK-RNDI-2024-1889,Paper Bag,Paper,Round Island,,CHR,,,,,NA,Control West,,,Collin Stampien
+Project Poop,2024,45519,BLANK,RNDI,NA,1890,BLANK-RNDI-2024-1890,Paper Bag,Paper,Round Island,,CHR,,,,,NA,Control West,,,Collin Stampien
+Project Poop,2024,45519,BLANK,RNDI,NA,1891,BLANK-RNDI-2024-1891,Paper Bag,Paper,Round Island,,CHR,,,,,NA,Control East,,,Collin Stampien
+Project Poop,2024,45519,BLANK,RNDI,NA,1892,BLANK-RNDI-2024-1892,Paper Bag,Paper,Round Island,,CHR,,,,,NA,Control East,,,Collin Stampien
+Project Poop,2024,45519,BLANK,RNDI,NA,1893,BLANK-RNDI-2024-1893,Paper Bag,Paper,Round Island,,CHR,,,,,NA,Control East,,,Collin Stampien
+Project Poop,2024,45506,BLSK,RNDI,CH,1894,BLSK-RNDI-CH-2024-1894,Paper Bag,Paper,Round Island,,CHR,,,,,12,,,,Collin Stampien
+Project Poop,2024,45506,BLSK,RNDI,CH,1895,BLSK-RNDI-CH-2024-1895,Paper Bag,Paper,Round Island,,CHR,,,,,12,,,,Collin Stampien
+Project Poop,2024,45506,BLSK,RNDI,CH,1896,BLSK-RNDI-CH-2024-1896,Paper Bag,Paper,Round Island,,CHR,,,,,12,,,,Collin Stampien
+Project Poop,2024,45506,BLSK,RNDI,CH,1897,BLSK-RNDI-CH-2024-1897,Paper Bag,Paper,Round Island,,CHR,,,,,12,,,,Collin Stampien
+Project Poop,2024,45506,BLSK,RNDI,CH,1898,BLSK-RNDI-CH-2024-1898,Paper Bag,Paper,Round Island,,CHR,,,,,12,,,,Collin Stampien
+Project Poop,2024,45506,BLSK,RNDI,CH,1899,BLSK-RNDI-CH-2024-1899,Paper Bag,Paper,Round Island,,CHR,,,,,12,,,,Collin Stampien
+Project Poop,2024,45506,BLSK,RNDI,CH,1900,BLSK-RNDI-CH-2024-1900,Paper Bag,Paper,Round Island,,CHR,,,,,12,,,,Collin Stampien
+Project Poop,2024,45506,BLSK,RNDI,CH,1901,BLSK-RNDI-CH-2024-1901,Paper Bag,Paper,Round Island,,CHR,,,,,12,,,,Collin Stampien
+Project Poop,2024,45506,BLSK,RNDI,CH,1902,BLSK-RNDI-CH-2024-1902,Paper Bag,Paper,Round Island,,CHR,,,,,12,,,,Collin Stampien
+Project Poop,2024,45506,BLSK,RNDI,CH,1903,BLSK-RNDI-CH-2024-1903,Paper Bag,Paper,Round Island,,CHR,,,,,12,,,,Collin Stampien
+Project Poop,2024,45506,BLSK,RNDI,CH,1904,BLSK-RNDI-CH-2024-1904,Paper Bag,Paper,Round Island,,CHR,,,,,12,,,,Collin Stampien
+Project Poop,2024,45506,BLSK,RNDI,CH,1905,BLSK-RNDI-CH-2024-1905,Paper Bag,Paper,Round Island,,CHR,,,,,12,,,,Collin Stampien
+Project Poop,2024,45506,BLSK,RNDI,CH,1906,BLSK-RNDI-CH-2024-1906,Paper Bag,Paper,Round Island,,CHR,,,,,12,,,,Collin Stampien
+Project Poop,2024,45506,BLSK,RNDI,CH,1907,BLSK-RNDI-CH-2024-1907,Paper Bag,Paper,Round Island,,CHR,,,,,12,,,,Collin Stampien
+Project Poop,2024,45506,BLSK,RNDI,CH,1908,BLSK-RNDI-CH-2024-1908,Paper Bag,Paper,Round Island,,CHR,,,,,12,,,,Collin Stampien
+Project Poop,2024,45506,BLSK,RNDI,CH,1909,BLSK-RNDI-CH-2024-1909,Paper Bag,Paper,Round Island,,CHR,,,,,12,,,,Collin Stampien
+Project Poop,2024,45506,BLSK,RNDI,CH,1910,BLSK-RNDI-CH-2024-1910,Paper Bag,Paper,Round Island,,CHR,,,,,12,,,,Collin Stampien
+Project Poop,2024,45506,BLSK,RNDI,CH,1911,BLSK-RNDI-CH-2024-1911,Paper Bag,Paper,Round Island,,CHR,,,,,12,,,,Collin Stampien
+Project Poop,2024,45506,BLSK,RNDI,CH,1912,BLSK-RNDI-CH-2024-1912,Paper Bag,Paper,Round Island,,CHR,,,,,12,,,,Collin Stampien
+Project Poop,2024,45506,BLSK,RNDI,CH,1913,BLSK-RNDI-CH-2024-1913,Paper Bag,Paper,Round Island,,CHR,,,,,12,,,,Collin Stampien
+Project Poop,2024,45499,BLSK,RNDI,CH,1914,BLSK-RNDI-CH-2024-1914,Paper Bag,Paper,Round Island,,MIX,,,,,10,,,,Collin Stampien
+Project Poop,2024,45499,BLSK,RNDI,CH,1915,BLSK-RNDI-CH-2024-1915,Paper Bag,Paper,Round Island,,MIX,,,,,10,,,,Collin Stampien
+Project Poop,2024,45499,BLSK,RNDI,CH,1916,BLSK-RNDI-CH-2024-1916,Paper Bag,Paper,Round Island,,MIX,,,,,10,,,,Collin Stampien
+Project Poop,2024,45485,BLSK,RNDI,CH,1917,BLSK-RNDI-CH-2024-1917,Paper Bag,Paper,Round Island,,MIX,,,,,14,,,,Collin Stampien
+Project Poop,2024,45485,BLSK,RNDI,CH,1918,BLSK-RNDI-CH-2024-1918,Paper Bag,Paper,Round Island,,MIX,,,,,10,,,,Collin Stampien
+Project Poop,2024,45476,BLSK,RNDI,CH,1919,BLSK-RNDI-CH-2024-1919,Paper Bag,Paper,Round Island,,MIX,,,,,10,,,,Collin Stampien
+Project Poop,2024,45476,BLSK,RNDI,CH,1920,BLSK-RNDI-CH-2024-1920,Paper Bag,Paper,Round Island,,MIX,,,,,10,,,,Collin Stampien
+Project Poop,2024,45476,BLSK,RNDI,CH,1921,BLSK-RNDI-CH-2024-1921,Paper Bag,Paper,Round Island,,MIX,,,,,5,,,,Collin Stampien
+Project Poop,2024,45476,BLSK,RNDI,CH,1922,BLSK-RNDI-CH-2024-1922,Paper Bag,Paper,Round Island,,MIX,,,,,14,,,,Collin Stampien
+Project Poop,2024,45476,BLSK,RNDI,CH,1923,BLSK-RNDI-CH-2024-1923,Paper Bag,Paper,Round Island,,MIX,,,,,8,,,,Collin Stampien
+Project Poop,2024,45485,BLSK,RNDI,CH,1924,BLSK-RNDI-CH-2024-1924,Paper Bag,Paper,Round Island,,MIX,,,,,10,,,,Collin Stampien
+Project Poop,2024,45485,BLSK,RNDI,CH,1925,BLSK-RNDI-CH-2024-1925,Paper Bag,Paper,Round Island,,MIX,,,,,12,,,,Collin Stampien
+Project Poop,2024,45485,BLSK,RNDI,CH,1925,BLSK-RNDI-CH-2024-1925,Paper Bag,Paper,Round Island,,MIX,,,,,10,,,,Collin Stampien
+Project Poop,2024,45485,BLSK,RNDI,CH,1927,BLSK-RNDI-CH-2024-1927,Paper Bag,Paper,Round Island,,MIX,,,,,10,,,,Collin Stampien
+Project Poop,2024,45485,BLSK,RNDI,CH,1928,BLSK-RNDI-CH-2024-1928,Paper Bag,Paper,Round Island,,MIX,,,,,14,,,,Collin Stampien
+Project Poop,2024,45476,BLSK,RNDI,CH,1929,BLSK-RNDI-CH-2024-1929,Paper Bag,Paper,Round Island,,MIX,,,,,14,,,,Collin Stampien
+Project Poop,2024,45476,BLSK,RNDI,CH,1930,BLSK-RNDI-CH-2024-1930,Paper Bag,Paper,Round Island,,MIX,,,,,10,,,,Collin Stampien
+Project Poop,2024,45476,BLSK,RNDI,CH,1931,BLSK-RNDI-CH-2024-1931,Paper Bag,Paper,Round Island,,MIX,,,,,16,,,,Collin Stampien
+Project Poop,2024,45476,BLSK,RNDI,CH,1932,BLSK-RNDI-CH-2024-1932,Paper Bag,Paper,Round Island,,MIX,,,,,14,,,,Collin Stampien
+Project Poop,2024,45476,BLSK,RNDI,CH,1933,BLSK-RNDI-CH-2024-1933,Paper Bag,Paper,Round Island,,MIX,,,,,10,,,,Collin Stampien
+Project Poop,2024,45489,BLSK,NCB,CH,F77,BLSK-NCB-CH-2024-F77,parchment paper,Paper,North Core Banks,,,1254,4502,F77,,18.262,,,,Lindsay Addison
+Project Poop,2024,45489,BLSK,NCB,CH,F78,BLSK-NCB-CH-2024-F78,parchment paper,Paper,North Core Banks,,,1254,4503,F78,,26.328,,,,Lindsay Addison
+Project Poop,2024,45489,BLSK,NCB,CH,F79,BLSK-NCB-CH-2024-F79,parchment paper,Paper,North Core Banks,,,1254,4504,F79,,23.276,,,,Lindsay Addison
+Project Poop,2024,45489,BLSK,NCB,CH,F80,BLSK-NCB-CH-2024-F80,parchment paper,Paper,North Core Banks,,,1254,4505,F80,,23.93,,,,Lindsay Addison
+Project Poop,2024,45489,BLSK,NCB,CH,F86,BLSK-NCB-CH-2024-F86,parchment paper,Paper,North Core Banks,,,1254,4511,F86,,23.93,Fainy whispy poop in vial,,,Lindsay Addison
+Project Poop,2024,45489,BLSK,NCB,CH,F88,BLSK-NCB-CH-2024-F88,parchment paper or sand,Sand,North Core Banks,,,1254,4513,F88,,27.2,,,,Lindsay Addison
+Project Poop,2024,45489,BLSK,NCB,CH,F91,BLSK-NCB-CH-2024-F91,parchment paper or sand,Sand,North Core Banks,,,1254,4516,F91,,24.475,,,,Lindsay Addison
+Project Poop,2024,45489,BLSK,NCB,CH,F98,BLSK-NCB-CH-2024-F98,parchment paper or sand,Sand,North Core Banks,,,1254,4523,F98,,19.679,,,,Lindsay Addison
+Project Poop,2024,45489,BLSK,NCB,CH,H08,BLSK-NCB-CH-2024-H08,chick's own down,Bird,North Core Banks,,,1254,4533,H08,,25.347,Poop was dried near cloaca (we thought we'd take a chance),,,Lindsay Addison
+Project Poop,2024,45489,BLSK,NCB,CH,H09,BLSK-NCB-CH-2024-H09,sand,Sand,North Core Banks,,,1254,4534,H09,,24.911,Poop collected from sand floor in playpen,,,Lindsay Addison
+Project Poop,2024,45489,BLSK,NCB,CH,H10,BLSK-NCB-CH-2024-H10,human skin,Skin,North Core Banks,,,1254,4535,H10,,22.404,Poop collected off LA's leg (no sunscreen),,,Lindsay Addison
+Project Poop,2024,45489,BLSK,NCB,CH,U1,BLSK-NCB-CH-2024-U1,sand,Sand,North Core Banks,,,unknown,unknown,unknown,,,Poop found on sand in playpen when only un-pooped chicks were in it,,,Lindsay Addison
+Project Poop,2024,45494,BLSK,SCB,CH,U2,BLSK-SCB-CH-2024-U2,sand,Sand,South Core Banks,,,unknown,unknown,unknown,,,,,,Lindsay Addison
+Project Poop,2024,45494,BLSK,SCB,CH,H11,BLSK-SCB-CH-2024-H11,sand,Sand,South Core Banks,,,1254,4536,H11,,30.361,,,,Lindsay Addison
+Project Poop,2024,45494,BLSK,SCB,CH,H13,BLSK-SCB-CH-2024-H13,parchment paper,Paper,South Core Banks,,,1254,4538,H13,,24.148,,,,Lindsay Addison
+Project Poop,2024,45494,BLSK,SCB,CH,H14,BLSK-SCB-CH-2024-H14,sand,Sand,South Core Banks,,,1254,4539,H14,,23.276,,,,Lindsay Addison
+Project Poop,2024,45494,BLSK,SCB,CH,H15,BLSK-SCB-CH-2024-H15,sand,Sand,South Core Banks,,,1254,4540,H15,,20.006,,,,Lindsay Addison
+Project Poop,2024,45494,BLSK,SCB,CH,H16,BLSK-SCB-CH-2024-H16,parchment paper,Sand,South Core Banks,,,1254,4541,H16,,27.091,,,,Lindsay Addison
+Project Poop,2024,45494,BLSK,SCB,CH,H17,BLSK-SCB-CH-2024-H17,paper bag,Paper,South Core Banks,,,1254,4542,H17,,24.911,,,,Lindsay Addison
+Project Poop,2024,45494,BLSK,SCB,CH,H18,BLSK-SCB-CH-2024-H18,parchment paper,Paper,South Core Banks,,,1254,4543,H18,,27.963,,,,Lindsay Addison
+Project Poop,2024,45494,BLSK,SCB,CH,H19,BLSK-SCB-CH-2024-H19,sand,Sand,South Core Banks,,,1254,4544,H19,,28.617,,,,Lindsay Addison
+Project Poop,2024,45494,BLSK,SCB,CH,H20,BLSK-SCB-CH-2024-H20,sand,Sand,South Core Banks,,,1254,4545,H20,,24.366,,,,Lindsay Addison
+Project Poop,2024,45494,BLSK,SCB,CH,H21,BLSK-SCB-CH-2024-H21,sand,Sand,South Core Banks,,,1254,4546,H21,,28.944,,,,Lindsay Addison
+Project Poop,2024,45494,BLSK,SCB,CH,H22,BLSK-SCB-CH-2024-H22,sand,Sand,South Core Banks,,,1254,4547,H22,,21.968,,,,Lindsay Addison
+Project Poop,2024,45494,BLSK,SCB,CH,H23,BLSK-SCB-CH-2024-H23,sand,Sand,South Core Banks,,,1254,4548,H23,,26.11,,,,Lindsay Addison
+Project Poop,2024,45494,BLSK,SCB,CH,H24,BLSK-SCB-CH-2024-H24,sand,Sand,South Core Banks,,,1254,4549,H24,,20.987,,,,Lindsay Addison
+Project Poop,2024,45494,BLSK,SCB,CH,H25,BLSK-SCB-CH-2024-H25,sand,Sand,South Core Banks,,,1254,4550,H25,,29.271,,,,Lindsay Addison
+Project Poop,2024,45494,BLSK,SCB,CH,H26,BLSK-SCB-CH-2024-H26,paper bag,Paper,South Core Banks,,,1254,4551,H26,,22.513,,,,Lindsay Addison
+Project Poop,2024,45494,BLSK,SCB,CH,H27,BLSK-SCB-CH-2024-H27,parchment paper,Paper,South Core Banks,,,1254,4552,H27,,30.906,,,,Lindsay Addison
+Project Poop,2024,45494,BLSK,SCB,CH,H28,BLSK-SCB-CH-2024-H28,paper bag,Paper,South Core Banks,,,1254,4553,H28,,25.347,,,,Lindsay Addison
+Project Poop,2024,45494,BLSK,SCB,CH,H29,BLSK-SCB-CH-2024-H29,paper bag,Paper,South Core Banks,,,1254,4554,H29,,25.565,,,,Lindsay Addison
+Project Poop,2024,45494,BLSK,SCB,CH,H30,BLSK-SCB-CH-2024-H30,paper bag,Paper,South Core Banks,,,1254,4555,H30,,22.949,,,,Lindsay Addison
+Project Poop,2024,45494,BLSK,SCB,CH,H31,BLSK-SCB-CH-2024-H31,paper bag,Paper,South Core Banks,,,1254,4556,H31,,28.835,,,,Lindsay Addison
+Project Poop,2024,45494,BLSK,SCB,CH,H32,BLSK-SCB-CH-2024-H32,paper bag,Paper,South Core Banks,,,1254,4557,H32,,27.309,,,,Lindsay Addison
+Project Poop,2024,45494,BLSK,SCB,CH,H33,BLSK-SCB-CH-2024-H33,paper bag,Paper,South Core Banks,,,1254,4558,H33,,25.674,,,,Lindsay Addison
+Project Poop,2024,45494,BLSK,SCB,CH,H34,BLSK-SCB-CH-2024-H34,parchment paper,Paper,South Core Banks,,,1254,4559,H34,,28.072,,,,Lindsay Addison
+Project Poop,2024,45494,BLSK,SCB,CH,H35,BLSK-SCB-CH-2024-H35,paper bag,Paper,South Core Banks,,,1254,4560,H35,,28.617,,,,Lindsay Addison
+Project Poop,2024,45494,BLSK,SCB,CH,H36,BLSK-SCB-CH-2024-H36,paper bag,Paper,South Core Banks,,,1254,4561,H36,,26.655,,,,Lindsay Addison
+Project Poop,2024,45494,BLSK,SCB,CH,H37,BLSK-SCB-CH-2024-H37,paper bag,Paper,South Core Banks,,,1254,4562,H37,,28.29,,,,Lindsay Addison
+Project Poop,2024,45494,BLSK,SCB,CH,H38,BLSK-SCB-CH-2024-H38,paper bag,Paper,South Core Banks,,,1254,4563,H38,,27.963,,,,Lindsay Addison
+Project Poop,2024,45494,BLSK,SCB,CH,H39,BLSK-SCB-CH-2024-H39,paper bag,Paper,South Core Banks,,,1254,4564,H39,,25.565,Fainy whispy poop in vial,,,Lindsay Addison
+Project Poop,2024,45494,BLSK,SCB,CH,H40,BLSK-SCB-CH-2024-H40,paper bag,Paper,South Core Banks,,,1254,4565,H40,,27.2,,,,Lindsay Addison
+Project Poop,2024,45494,BLSK,SCB,CH,H41,BLSK-SCB-CH-2024-H41,paper bag,Paper,South Core Banks,,,1254,4566,H41,,25.565,,,,Lindsay Addison
+Project Poop,2024,45500,BLSK,SCB,CH,H26B,BLSK-SCB-CH-2024-H26B,paper bag,Paper,South Core Banks,,,1254,4551,H26,,29,A recapture that also pooped for us on initial capture,,,Lindsay Addison
+Project Poop,2024,45500,BLSK,SCB,CH,H48,BLSK-SCB-CH-2024-H48,paper bag,Paper,South Core Banks,,,1254,4573,H48,,20.442,,,,Lindsay Addison
+Project Poop,2024,45500,BLSK,SCB,CH,H49,BLSK-SCB-CH-2024-H49,paper bag,Paper,South Core Banks,,,1254,4574,H49,,18.589,,,,Lindsay Addison
+Project Poop,2024,45500,BLSK,SCB,CH,H50,BLSK-SCB-CH-2024-H50,paper bag,Paper,South Core Banks,,,1254,4575,H50,,33.958,,,,Lindsay Addison
+Project Poop,2024,45500,BLSK,SCB,CH,H51,BLSK-SCB-CH-2024-H51,paper bag,Paper,South Core Banks,,,1254,4576,H51,,24.584,,,,Lindsay Addison
+Project Poop,2024,45500,BLSK,SCB,CH,H52,BLSK-SCB-CH-2024-H52,paper bag,Paper,South Core Banks,,,1254,4577,H52,,29.925,Fainy whispy poop in vial,,,Lindsay Addison
+Project Poop,2024,45500,BLSK,SCB,CH,H53,BLSK-SCB-CH-2024-H53,paper bag,Paper,South Core Banks,,,1254,4578,H53,,26.437,Fainy whispy poop in vial,,,Lindsay Addison
+Project Poop,2024,45500,BLSK,SCB,CH,H54,BLSK-SCB-CH-2024-H54,paper bag,Paper,South Core Banks,,,1254,4579,H54,,21.314,,,,Lindsay Addison
+Project Poop,2024,45500,BLSK,SCB,CH,H55,BLSK-SCB-CH-2024-H55,paper bag,Paper,South Core Banks,,,1254,4580,H55,,24.911,,,,Lindsay Addison
+Project Poop,2024,45500,BLSK,SCB,CH,H56,BLSK-SCB-CH-2024-H56,paper bag,Paper,South Core Banks,,,1254,4581,H56,,28.29,,,,Lindsay Addison
+Project Poop,2024,45500,BLSK,SCB,CH,H57,BLSK-SCB-CH-2024-H57,paper bag,Paper,South Core Banks,,,1254,4582,H57,,22.622,,,,Lindsay Addison
+Project Poop,2024,45500,BLSK,SCB,CH,H58,BLSK-SCB-CH-2024-H58,paper bag,Paper,South Core Banks,,,1254,4583,H58,,28.181,Fainy whispy poop in vial,,,Lindsay Addison
+Project Poop,2024,45500,BLSK,SCB,CH,H59,BLSK-SCB-CH-2024-H59,paper bag,Paper,South Core Banks,,,1254,4584,H59,,25.565,Fainy whispy poop in vial,,,Lindsay Addison
+Project Poop,2024,45500,BLSK,SCB,CH,H60,BLSK-SCB-CH-2024-H60,paper bag,Paper,South Core Banks,,,1254,4585,H60,,23.276,,,,Lindsay Addison
+Project Poop,2024,45500,BLSK,SCB,CH,H61,BLSK-SCB-CH-2024-H61,paper bag,Paper,South Core Banks,,,1254,4586,H61,,25.892,,,,Lindsay Addison
+Project Poop,2024,45500,BLSK,SCB,CH,H62,BLSK-SCB-CH-2024-H62,paper bag,Paper,South Core Banks,,,1254,4587,H62,,26.11,Fainy whispy poop in vial,,,Lindsay Addison
+Project Poop,2024,45500,BLSK,SCB,CH,H63,BLSK-SCB-CH-2024-H63,paper bag,Paper,South Core Banks,,,1254,4588,H63,,22.404,,,,Lindsay Addison
+Project Poop,2024,45500,BLSK,SCB,CH,H64,BLSK-SCB-CH-2024-H64,paper bag,Paper,South Core Banks,,,1254,4589,H64,,26.328,,,,Lindsay Addison
+Project Poop,2024,45500,BLSK,SCB,CH,H65,BLSK-SCB-CH-2024-H65,paper bag,Paper,South Core Banks,,,1254,4590,H65,,27.091,,,,Lindsay Addison
+Project Poop,2024,45500,BLSK,SCB,CH,H66,BLSK-SCB-CH-2024-H66,paper bag,Paper,South Core Banks,,,1254,4591,H66,,21.532,,,,Lindsay Addison
+Project Poop,2024,45502,BLSK,CORA,CH,H74,BLSK-CORA-CH-2024-H74,paper,Paper,Cora June Island,,,1254,4599,H74,,21.314,All poops on paper from this date were on 60lb craft paper (brown) with a lot of dry sand kicked up onto the paper,,,Lindsay Addison
+Project Poop,2024,45502,BLSK,CORA,CH,H75,BLSK-CORA-CH-2024-H75,dry sand,Sand,Cora June Island,,,1254,4600,H75,,22.731,,,,Lindsay Addison
+Project Poop,2024,45502,BLSK,CORA,CH,H76,BLSK-CORA-CH-2024-H76,paper,Paper,Cora June Island,,,1254,4601,H76,,29.489,,,,Lindsay Addison
+Project Poop,2024,45502,BLSK,CORA,CH,H77,BLSK-CORA-CH-2024-H77,paper,Paper,Cora June Island,,,1254,4602,H77,,25.02,,,,Lindsay Addison
+Project Poop,2024,45502,BLSK,CORA,CH,H78,BLSK-CORA-CH-2024-H78,paper,Paper,Cora June Island,,,1254,4603,H78,,28.399,,,,Lindsay Addison
+Project Poop,2024,45502,BLSK,CORA,CH,H79,BLSK-CORA-CH-2024-H79,paper,Paper,Cora June Island,,,1254,4604,H79,,30.034,,,,Lindsay Addison
+Project Poop,2024,45502,BLSK,CORA,CH,H80,BLSK-CORA-CH-2024-H80,paper,Paper,Cora June Island,,,1254,4605,H80,,29.053,,,,Lindsay Addison
+Project Poop,2024,45502,BLSK,CORA,CH,H81,BLSK-CORA-CH-2024-H81,paper,Paper,Cora June Island,,,1254,4606,H81,,23.494,,,,Lindsay Addison
+Project Poop,2024,45502,BLSK,CORA,CH,H82,BLSK-CORA-CH-2024-H82,paper,Paper,Cora June Island,,,1254,4607,H82,,25.347,,,,Lindsay Addison
+Project Poop,2024,45502,BLSK,CORA,CH,H83,BLSK-CORA-CH-2024-H83,paper,Paper,Cora June Island,,,1254,4608,H83,,26.764,,,,Lindsay Addison
+Project Poop,2024,45502,BLSK,CORA,CH,H84,BLSK-CORA-CH-2024-H84,paper,Paper,Cora June Island,,,1254,4609,H84,,30.47,,,,Lindsay Addison
+Project Poop,2024,45502,BLSK,CORA,CH,H85,BLSK-CORA-CH-2024-H85,paper,Paper,Cora June Island,,,1254,4610,H85,,25.456,,,,Lindsay Addison
+Project Poop,2024,45502,BLSK,CORA,CH,H86,BLSK-CORA-CH-2024-H86,paper,Paper,Cora June Island,,,1254,4611,H86,,25.456,,,,Lindsay Addison
+Project Poop,2024,45502,BLSK,CORA,CH,H87,BLSK-CORA-CH-2024-H87,paper,Paper,Cora June Island,,,1254,4612,H87,,25.347,,,,Lindsay Addison
+Project Poop,2024,45502,BLSK,CORA,CH,H88,BLSK-CORA-CH-2024-H88,paper,Paper,Cora June Island,,,1254,4613,H88,,24.039,,,,Lindsay Addison
+Project Poop,2024,45502,BLSK,CORA,CH,H89,BLSK-CORA-CH-2024-H89,paper,Paper,Cora June Island,,,1254,4614,H89,,25.456,,,,Lindsay Addison
+Project Poop,2024,45502,BLSK,CORA,CH,H90,BLSK-CORA-CH-2024-H90,paper,Paper,Cora June Island,,,1254,4615,H90,,30.034,,,,Lindsay Addison
+Project Poop,2024,45502,BLSK,CORA,CH,H91,BLSK-CORA-CH-2024-H91,paper,Paper,Cora June Island,,,1254,4616,H91,,26.873,,,,Lindsay Addison
+Project Poop,2024,45502,BLSK,CORA,CH,H92,BLSK-CORA-CH-2024-H92,paper,Paper,Cora June Island,,,1254,4617,H92,,29.925,,,,Lindsay Addison
+Project Poop,2024,45502,BLSK,CORA,CH,H93,BLSK-CORA-CH-2024-H93,paper,Paper,Cora June Island,,,1254,4618,H93,,24.039,,,,Lindsay Addison
+Project Poop,2024,45502,BLSK,CORA,CH,H94,BLSK-CORA-CH-2024-H94,paper,Paper,Cora June Island,,,1254,4619,H94,,22.84,,,,Lindsay Addison
+Project Poop,2024,45502,BLSK,CORA,CH,H95,BLSK-CORA-CH-2024-H95,paper,Paper,Cora June Island,,,1254,4620,H95,,27.091,,,,Lindsay Addison
+Project Poop,2024,45502,BLSK,CORA,CH,H96,BLSK-CORA-CH-2024-H96,paper,Paper,Cora June Island,,,1254,4621,H96,,26.437,,,,Lindsay Addison
+Project Poop,2024,45502,BLSK,CORA,CH,H97,BLSK-CORA-CH-2024-H97,paper,Paper,Cora June Island,,,1254,4622,H97,,19.352,,,,Lindsay Addison
+Project Poop,2024,45502,BLSK,CORA,CH,H98,BLSK-CORA-CH-2024-H98,paper,Paper,Cora June Island,,,1254,4623,H98,,22.295,,,,Lindsay Addison
+Project Poop,2024,45502,BLSK,CORA,CH,H99,BLSK-CORA-CH-2024-H99,paper,Paper,Cora June Island,,,1254,4624,H99,,28.835,,,,Lindsay Addison
+Project Poop,2024,45502,BLSK,CORA,CH,J01,BLSK-CORA-CH-2024-J01,paper,Paper,Cora June Island,,,1254,4625,J01,,25.129,,,,Lindsay Addison
+Project Poop,2024,45502,BLSK,CORA,CH,J02,BLSK-CORA-CH-2024-J02,paper,Paper,Cora June Island,,,1254,4626,J02,,27.418,,,,Lindsay Addison
+Project Poop,2024,45502,BLSK,CORA,CH,J03,BLSK-CORA-CH-2024-J03,paper,Paper,Cora June Island,,,1254,4627,J03,,28.944,,,,Lindsay Addison
+Project Poop,2024,45502,BLSK,CORA,CH,J04,BLSK-CORA-CH-2024-J04,paper,Paper,Cora June Island,,,1254,4628,J04,,26.219,,,,Lindsay Addison
+Project Poop,2024,45502,BLSK,CORA,CH,J05,BLSK-CORA-CH-2024-J05,paper,Paper,Cora June Island,,,1254,4629,J05,,24.475,,,,Lindsay Addison
+Project Poop,2024,45502,BLSK,CORA,CH,J06,BLSK-CORA-CH-2024-J06,paper,Paper,Cora June Island,,,1254,4630,J06,,26.328,,,,Lindsay Addison
+Project Poop,2024,45502,BLSK,CORA,CH,J07,BLSK-CORA-CH-2024-J07,paper,Paper,Cora June Island,,,1254,4631,J07,,28.835,,,,Lindsay Addison
+Project Poop,2024,45503,BLSK,WRIS,CH,J15,BLSK-WRIS-CH-2024-J15,clothes,Clothing,Wrightsville Beach,,,1254,4639,J15,,26.328,EB's pants,,,Lindsay Addison
+Project Poop,2024,45503,BLSK,WRIS,CH,J16,BLSK-WRIS-CH-2024-J16,paper bag,Paper,Wrightsville Beach,,,1254,4640,J16,,29.598,Fainy whispy poop in vial,,,Lindsay Addison
+Project Poop,2024,45503,BLSK,WRIS,CH,J17,BLSK-WRIS-CH-2024-J17,paper bag,Paper,Wrightsville Beach,,,1254,4641,J17,,34.83,,,,Lindsay Addison
+Project Poop,2024,45503,BLSK,WRIS,CH,J18,BLSK-WRIS-CH-2024-J18,paper bag,Paper,Wrightsville Beach,,,1254,4642,J18,,30.579,,,,Lindsay Addison
+Project Poop,2024,45503,BLSK,WRIS,CH,J19,BLSK-WRIS-CH-2024-J19,paper bag,Paper,Wrightsville Beach,,,1254,4643,J19,,31.015,,,,Lindsay Addison
+Project Poop,2024,45503,BLSK,WRIS,CH,J20,BLSK-WRIS-CH-2024-J20,paper bag,Paper,Wrightsville Beach,,,1254,4644,J20,,32.65,,,,Lindsay Addison
+Project Poop,2024,45503,BLSK,WRIS,CH,J21,BLSK-WRIS-CH-2024-J21,paper bag,Paper,Wrightsville Beach,,,1254,4645,J21,,30.906,,,,Lindsay Addison
+Project Poop,2024,45503,BLSK,WRIS,CH,J22,BLSK-WRIS-CH-2024-J22,paper bag,Paper,Wrightsville Beach,,,1254,4646,J22,,27.2,,,,Lindsay Addison
+Project Poop,2024,45503,BLSK,WRIS,CH,J23,BLSK-WRIS-CH-2024-J23,paper bag,Paper,Wrightsville Beach,,,1254,4647,J23,,26.001,,,,Lindsay Addison
+Project Poop,2024,45503,BLSK,WRIS,CH,J24,BLSK-WRIS-CH-2024-J24,paper bag,Paper,Wrightsville Beach,,,1254,4648,J24,,31.56,,,,Lindsay Addison
+Project Poop,2024,45506,BLSK,NCB,CH,UN1,BLSK-NCB-CH-2024-UN1,paper bag,Paper,North Core Banks,,,none,none,none,,13.793,,,,Lindsay Addison
+Project Poop,2024,45506,BLSK,NCB,CH,UN2,BLSK-NCB-CH-2024-UN2,paper bag,Paper,North Core Banks,,,none,none,none,,24.475,Right wing re-growing primaries and couldn't fully extend; appears to be an injury,,,Lindsay Addison
+Project Poop,2024,45506,BLSK,NCB,CH,J30,BLSK-NCB-CH-2024-J30,paper bag,Paper,North Core Banks,,,1254,4654,J30,,23.385,,,,Lindsay Addison
+Project Poop,2024,45506,BLSK,NCB,CH,J31,BLSK-NCB-CH-2024-J31,paper bag,Paper,North Core Banks,,,1254,4655,J31,,28.508,,,,Lindsay Addison
+Project Poop,2024,45506,BLSK,NCB,CH,J32,BLSK-NCB-CH-2024-J32,paper bag,Paper,North Core Banks,,,1254,4656,J32,,25.238,,,,Lindsay Addison
+Project Poop,2024,45506,BLSK,NCB,CH,J33,BLSK-NCB-CH-2024-J33,paper bag,Paper,North Core Banks,,,1254,4657,J33,,33.304,,,,Lindsay Addison
+Project Poop,2024,45506,BLSK,NCB,CH,J34,BLSK-NCB-CH-2024-J34,paper bag,Paper,North Core Banks,,,1254,4658,J34,,27.745,,,,Lindsay Addison
+Project Poop,2024,45506,BLSK,NCB,CH,J35,BLSK-NCB-CH-2024-J35,paper bag,Paper,North Core Banks,,,1254,4659,J35,,30.906,,,,Lindsay Addison
+Project Poop,2024,45506,BLSK,NCB,CH,J36,BLSK-NCB-CH-2024-J36,paper bag,Paper,North Core Banks,,,1254,4660,J36,,28.29,,,,Lindsay Addison
+Project Poop,2024,45506,BLSK,NCB,CH,J37,BLSK-NCB-CH-2024-J37,paper bag,Paper,North Core Banks,,,1254,4661,J37,,30.252,,,,Lindsay Addison
+Project Poop,2024,45506,BLSK,NCB,CH,J38,BLSK-NCB-CH-2024-J38,paper bag and sand,Sand,North Core Banks,,,1254,4662,J38,,30.688,,,,Lindsay Addison
+Project Poop,2024,45506,BLSK,NCB,CH,J39,BLSK-NCB-CH-2024-J39,paper bag,Paper,North Core Banks,,,1254,4663,J39,,26.982,,,,Lindsay Addison
+Project Poop,2024,45506,BLSK,NCB,CH,J40,BLSK-NCB-CH-2024-J40,paper bag,Paper,North Core Banks,,,1254,4664,J40,,27.527,,,,Lindsay Addison
+Project Poop,2024,45506,BLSK,NCB,CH,J41,BLSK-NCB-CH-2024-J41,paper bag,Paper,North Core Banks,,,1254,4665,J41,,26.764,,,,Lindsay Addison
+Project Poop,2024,45506,BLSK,NCB,CH,J42,BLSK-NCB-CH-2024-J42,paper bag,Paper,North Core Banks,,,1254,4666,J42,,20.878,,,,Lindsay Addison
+Project Poop,2024,45506,BLSK,NCB,CH,J43,BLSK-NCB-CH-2024-J43,paper bag,Paper,North Core Banks,,,1254,4667,J43,,28.726,,,,Lindsay Addison
+Project Poop,2024,45506,BLSK,NCB,CH,J44,BLSK-NCB-CH-2024-J44,paper bag,Paper,North Core Banks,,,1254,4668,J44,,25.892,,,,Lindsay Addison
+Project Poop,2024,45506,BLSK,NCB,CH,J45,BLSK-NCB-CH-2024-J45,paper bag,Paper,North Core Banks,,,1254,4669,J45,,28.29,,,,Lindsay Addison
+Project Poop,2024,45506,BLSK,NCB,CH,J46,BLSK-NCB-CH-2024-J46,paper bag and plastic bag,Paper,North Core Banks,,,1254,4670,J46,,23.603,,,,Lindsay Addison
+Project Poop,2024,45506,BLSK,NCB,CH,J47,BLSK-NCB-CH-2024-J47,paper bag,Paper,North Core Banks,,,1254,4671,J47,,30.252,,,,Lindsay Addison
+Project Poop,2024,45142,BLSK,WRIS,CH,J17B,BLSK-WRIS-CH-2024-J17B,paper bag,Paper,Wrightsville Beach,,,1254,4641,J17,,40,A recapture that pooped for us again.,,,Lindsay Addison
+Project Poop,2024,45142,BLSK,WRIS,CH,J48,BLSK-WRIS-CH-2024-J48,paper bag,Paper,Wrightsville Beach,,,1254,4672,J48,,24.584,,,,Lindsay Addison
+Project Poop,2024,45142,BLSK,WRIS,CH,J49,BLSK-WRIS-CH-2024-J49,paper bag,Paper,Wrightsville Beach,,,1254,4673,J49,,29.598,,,,Lindsay Addison
+Project Poop,2024,45142,BLSK,WRIS,CH,UN3,BLSK-WRIS-CH-2024-UN3,pet carrier,Paper,Wrightsville Beach,,,none,none,none,,16.082,,,,Lindsay Addison
+Project Poop,2024,45142,BLSK,WRIS,CH,J50,BLSK-WRIS-CH-2024-J50,paper bag,Paper,Wrightsville Beach,,,1254,4674,J50,,24.039,,,,Lindsay Addison
+Project Poop,2024,45142,BLSK,WRIS,CH,UN4,BLSK-WRIS-CH-2024-UN4,paper bag,Paper,Wrightsville Beach,,,none,none,none,,18.589,,,,Lindsay Addison
+Project Poop,2024,45142,BLSK,WRIS,CH,J00,BLSK-WRIS-CH-2024-J00,paper bag,Paper,Wrightsville Beach,,,1254,4675,J00,,28.508,,,,Lindsay Addison
+Project Poop,2024,45142,BLSK,WRIS,CH,J51,BLSK-WRIS-CH-2024-J51,paper bag,Paper,Wrightsville Beach,,,1254,4676,J51,,27.309,,,,Lindsay Addison
+Project Poop,2024,45142,BLSK,WRIS,CH,J52,BLSK-WRIS-CH-2024-J52,paper bag,Paper,Wrightsville Beach,,,1254,4677,J52,,21.205,,,,Lindsay Addison
+Project Poop,2024,45142,BLSK,WRIS,CH,J53,BLSK-WRIS-CH-2024-J53,paper bag,Paper,Wrightsville Beach,,,1254,4678,J53,,28.726,,,,Lindsay Addison
+Project Poop,2024,45142,BLSK,WRIS,CH,J54,BLSK-WRIS-CH-2024-J54,paper bag,Paper,Wrightsville Beach,,,1254,4679,J54,,31.342,,,,Lindsay Addison
+Project Poop,2024,45142,BLSK,WRIS,CH,J55,BLSK-WRIS-CH-2024-J55,paper bag,Paper,Wrightsville Beach,,,1254,4680,J55,,25.347,,,,Lindsay Addison
+Project Poop,2024,45142,BLSK,WRIS,CH,J56,BLSK-WRIS-CH-2024-J56,paper bag,Paper,Wrightsville Beach,,,1254,4681,J56,,31.233,,,,Lindsay Addison
+Project Poop,2024,45142,BLSK,WRIS,CH,J57,BLSK-WRIS-CH-2024-J57,paper bag,Paper,Wrightsville Beach,,,1254,4682,J57,,24.802,,,,Lindsay Addison
+Project Poop,2024,45142,BLSK,WRIS,CH,J58,BLSK-WRIS-CH-2024-J58,paper bag,Paper,Wrightsville Beach,,,1254,4683,J58,,28.835,,,,Lindsay Addison
+Project Poop,2024,45142,BLSK,WRIS,CH,J59,BLSK-WRIS-CH-2024-J59,paper bag,Paper,Wrightsville Beach,,,1254,4684,J59,,28.508,,,,Lindsay Addison
+Project Poop,2024,45142,BLSK,WRIS,CH,J60,BLSK-WRIS-CH-2024-J60,paper bag,Paper,Wrightsville Beach,,,1254,4685,J60,,33.086,,,,Lindsay Addison
+Project Poop,2024,45142,BLSK,WRIS,CH,J61,BLSK-WRIS-CH-2024-J61,paper bag,Paper,Wrightsville Beach,,,1254,4686,J61,,21.314,,,,Lindsay Addison
+Project Poop,2024,45142,BLSK,WRIS,CH,J62,BLSK-WRIS-CH-2024-J62,paper bag,Paper,Wrightsville Beach,,,1254,4687,J62,,31.451,,,,Lindsay Addison
+Project Poop,2024,45142,BLSK,WRIS,CH,J63,BLSK-WRIS-CH-2024-J63,paper bag,Paper,Wrightsville Beach,,,1254,4688,J63,,28.617,,,,Lindsay Addison
+Project Poop,2024,45142,BLSK,WRIS,CH,J64,BLSK-WRIS-CH-2024-J64,paper bag,Paper,Wrightsville Beach,,,1254,4689,J64,,32.105,,,,Lindsay Addison
+Project Poop,2024,45142,BLSK,WRIS,CH,J65,BLSK-WRIS-CH-2024-J65,paper bag,Paper,Wrightsville Beach,,,1254,4690,J65,,23.603,,,,Lindsay Addison
+Project Poop,2024,45517,BLSK,WRIS,CH,J66,BLSK-WRIS-CH-2024-J66,paper bag,Paper,Wrightsville Beach,,,1254,4691,J66,,20.115,,,,Lindsay Addison
+Project Poop,2024,45517,BLSK,WRIS,CH,J67,BLSK-WRIS-CH-2024-J67,paper bag,Paper,Wrightsville Beach,,,1254,4692,J67,,21.75,,,,Lindsay Addison
+Project Poop,2024,45517,BLSK,WRIS,CH,J68,BLSK-WRIS-CH-2024-J68,paper bag,Paper,Wrightsville Beach,,,1254,4693,J68,,28.29,,,,Lindsay Addison
+Project Poop,2024,45517,BLSK,WRIS,CH,J69,BLSK-WRIS-CH-2024-J69,paper bag,Paper,Wrightsville Beach,,,1254,4694,J69,,23.058,,,,Lindsay Addison
+Project Poop,2024,45517,BLSK,WRIS,CH,J70,BLSK-WRIS-CH-2024-J70,paper bag,Paper,Wrightsville Beach,,,1254,4695,J70,,28.399,,,,Lindsay Addison
+Project Poop,2024,45517,BLSK,WRIS,CH,J71,BLSK-WRIS-CH-2024-J71,paper bag,Paper,Wrightsville Beach,,,1254,4696,J71,,26.546,,,,Lindsay Addison
+Project Poop,2024,45517,BLSK,WRIS,CH,J72,BLSK-WRIS-CH-2024-J72,paper bag,Paper,Wrightsville Beach,,,1254,4697,J72,,25.238,,,,Lindsay Addison
+Project Poop,2024,45517,BLSK,WRIS,CH,J73,BLSK-WRIS-CH-2024-J73,paper bag,Paper,Wrightsville Beach,,,1254,4698,J73,,22.295,,,,Lindsay Addison
+Project Poop,2024,45517,BLSK,WRIS,CH,J74,BLSK-WRIS-CH-2024-J74,paper bag,Paper,Wrightsville Beach,,,1254,4699,J74,,24.039,,,,Lindsay Addison
+Project Poop,2024,45517,BLSK,WRIS,CH,J75,BLSK-WRIS-CH-2024-J75,paper bag,Paper,Wrightsville Beach,,,1254,4700,J75,,23.712,,,,Lindsay Addison
+Project Poop,2024,45517,BLSK,WRIS,CH,J76,BLSK-WRIS-CH-2024-J76,paper bag,Paper,Wrightsville Beach,,,1254,4701,J76,,22.949,,,,Lindsay Addison
+Project Poop,2024,45517,BLSK,WRIS,CH,J77,BLSK-WRIS-CH-2024-J77,paper bag,Paper,Wrightsville Beach,,,1254,4702,J77,,26.655,,,,Lindsay Addison
+Project Poop,2024,45517,BLSK,WRIS,CH,J78,BLSK-WRIS-CH-2024-J78,paper bag,Paper,Wrightsville Beach,,,1254,4703,J78,,22.731,,,,Lindsay Addison
+Project Poop,2024,45517,BLSK,WRIS,CH,J79,BLSK-WRIS-CH-2024-J79,paper bag,Paper,Wrightsville Beach,,,1254,4704,J79,,24.475,,,,Lindsay Addison
+Project Poop,2024,45517,BLSK,WRIS,CH,J80,BLSK-WRIS-CH-2024-J80,paper bag,Paper,Wrightsville Beach,,,1254,4705,J80,,26.982,,,,Lindsay Addison
+Project Poop,2024,45517,BLSK,WRIS,CH,J81,BLSK-WRIS-CH-2024-J81,paper bag,Paper,Wrightsville Beach,,,1254,4706,J81,,28.508,,,,Lindsay Addison
+Project Poop,2024,45517,BLSK,WRIS,CH,J82,BLSK-WRIS-CH-2024-J82,paper bag,Paper,Wrightsville Beach,,,1254,4707,J82,,28.617,,,,Lindsay Addison
+Project Poop,2024,45521,BLSK,NCB,CH,U5,BLSK-NCB-CH-2024-U5,paper bag,Paper,North Core Banks,,,none,none,none,,14.883,,,,Lindsay Addison
+Project Poop,2024,45521,BLSK,NCB,CH,U6,BLSK-NCB-CH-2024-U6,paper bag,Paper,North Core Banks,,,none,none,none,,32.65,,,,Lindsay Addison
+Project Poop,2024,45521,BLSK,NCB,CH,04715A,BLSK-NCB-CH-2024-04715A,paper bag,Paper,North Core Banks,,,1254,4715,none,,20.878,"This chick got its poops collected three times on one day, the B vial was because the poop looked different from the A poop and the C poop was because we recaptured it and took a sample before we saw the band",,,Lindsay Addison
+Project Poop,2024,45521,BLSK,NCB,CH,04715B,BLSK-NCB-CH-2024-04715B,paper bag,Paper,North Core Banks,,,1254,4715,none,,20.878,"This chick got its poops collected three times on one day, the B vial was because the poop looked different from the A poop and the C poop was because we recaptured it and took a sample before we saw the band",,,Lindsay Addison
+Project Poop,2024,45521,BLSK,NCB,CH,04715C,BLSK-NCB-CH-2024-04715C,paper bag,Paper,North Core Banks,,,1254,4715,none,,20.878,"This chick got its poops collected three times on one day, the B vial was because the poop looked different from the A poop and the C poop was because we recaptured it and took a sample before we saw the band",,,Lindsay Addison
+Project Poop,2024,45521,BLSK,NCB,CH,U7,BLSK-NCB-CH-2024-U7,plastic bin,Paper,North Core Banks,,,none,none,none,,18.698,,,,Lindsay Addison
+Project Poop,2024,45521,BLSK,NCB,CH,U8,BLSK-NCB-CH-2024-U8,paper bag,Paper,North Core Banks,,,none,none,none,,13.575,,,,Lindsay Addison
+Project Poop,2024,45521,BLSK,NCB,CH,U9,BLSK-NCB-CH-2024-U9,paper bag,Paper,North Core Banks,,,none,none,none,,15.428,,,,Lindsay Addison
+Project Poop,2024,45521,BLSK,NCB,CH,U10,BLSK-NCB-CH-2024-U10,paper bag,Paper,North Core Banks,,,none,none,none,,13.684,,,,Lindsay Addison
+Project Poop,2024,45521,BLSK,NCB,CH,U11,BLSK-NCB-CH-2024-U11,paper bag,Paper,North Core Banks,,,none,none,none,,17.608,,,,Lindsay Addison
+Project Poop,2024,45521,BLSK,NCB,CH,U12,BLSK-NCB-CH-2024-U12,paper bag,Paper,North Core Banks,,,none,none,none,,23.821,,,,Lindsay Addison
+Project Poop,2024,45521,BLSK,NCB,CH,J90,BLSK-NCB-CH-2024-J90,paper bag,Paper,North Core Banks,,,1254,4716,J90,,28.508,,,,Lindsay Addison
+Project Poop,2024,45521,BLSK,NCB,CH,J91,BLSK-NCB-CH-2024-J91,paper bag,Paper,North Core Banks,,,1254,4717,J91,,26.328,,,,Lindsay Addison
+Project Poop,2024,45521,BLSK,NCB,CH,J92,BLSK-NCB-CH-2024-J92,paper bag,Paper,North Core Banks,,,1254,4718,J92,,26.328,,,,Lindsay Addison
+Project Poop,2024,45521,BLSK,NCB,CH,J94,BLSK-NCB-CH-2024-J94,paper bag,Paper,North Core Banks,,,1254,4720,J94,,18.371,,,,Lindsay Addison
+Project Poop,2024,45521,BLSK,NCB,CH,J95,BLSK-NCB-CH-2024-J95,playpen wall,Paper,North Core Banks,,,1254,4721,J95,,25.129,"Actually we collected vomit, which the bird projectile hurled onto the clean side of the pet playpen",,,Lindsay Addison
+Project Poop,2024,45489,BLANK,SPEL,NA,C20,BLANK-SPEL-2024-C20,parchment paper,Paper,South Pelican Island,,,,,,,,,,,Lindsay Addison
+Project Poop,2024,45489,BLANK,SPEL,NA,C21,BLANK-SPEL-2024-C21,parchment paper,Paper,South Pelican Island,,,,,,,,,,,Lindsay Addison
+Project Poop,2024,45489,BLANK,SPEL,NA,C22,BLANK-SPEL-2024-C22,parchment paper,Paper,South Pelican Island,,,,,,,,,,,Lindsay Addison
+Project Poop,2024,45489,BLANK,NCB,NA,C23,BLANK-NCB-2024-C23,sand,Sand,North Core Banks,,,,,,,,Sand from North Core Banks (Old Drum Inlet) a little above high tide line that had been scooped by hand into the playpen,,,Lindsay Addison
+Project Poop,2024,45489,BLANK,NCB,NA,C24,BLANK-NCB-2024-C24,sand,Sand,North Core Banks,,,,,,,,Sand from North Core Banks (Old Drum Inlet) a little above high tide line that had been scooped by hand into the playpen,,,Lindsay Addison
+Project Poop,2024,45414,BLANK,SPEL,NA,C1,BLANK-SPEL-2024-C1,KG shirt,Clothing,South Pelican Island,,,,,,,,Adult pooped on Kate's shirt,,,Lindsay Addison
+Project Poop,2024,45424,BLANK,SPEL,NA,C4,BLANK-SPEL-2024-C4,JB boat deck,Plastic,South Pelican Island,,,,,,,,Adult pooped on Jones Brothers boat deck,,,Lindsay Addison
+Project Poop,2024,45424,BLANK,SPEL,NA,C5,BLANK-SPEL-2024-C5,bird bag,Bird Bag,South Pelican Island,,,,,,,,"Dark bag, adult ROYT pooped on it",,,Lindsay Addison
+Project Poop,2024,45426,BLANK,SPEL,NA,C6,BLANK-SPEL-2024-C6,paper bag,Paper,South Pelican Island,,,,,,,,"No adult ROYT actually ended up pooping on a paper bag from this control, but we used similar bags for BLSK",,,Lindsay Addison
+Project Poop,2024,45427,BLANK,SPEL,NA,C7,BLANK-SPEL-2024-C7,tinfoil,Tin foil,South Pelican Island,,,,,,,,,,,Lindsay Addison
+Project Poop,2024,45494,BLANK,SCB,NA,C25,BLANK-SCB-2024-C25,sand,Sand,South Core Banks,,,,,,,,SCB sand,,,Lindsay Addison
+Project Poop,2024,45494,BLANK,SCB,NA,C26,BLANK-SCB-2024-C26,sand,Sand,South Core Banks,,,,,,,,SCB sand,,,Lindsay Addison
+Project Poop,2024,45494,BLANK,SCB,NA,C27,BLANK-SCB-2024-C27,paper bag,Paper,South Core Banks,,,,,,,,paper bag (Harris Teeter) (SCB),,,Lindsay Addison
+Project Poop,2024,45494,BLANK,SCB,NA,C28,BLANK-SCB-2024-C28,paper bag,Paper,South Core Banks,,,,,,,,paper bag (Harris Teeter) (SCB),,,Lindsay Addison
+Project Poop,2024,45500,BLANK,SCB,NA,C29,BLANK-SCB-2024-C29,paper bag,Paper,South Core Banks,,,,,,,,paper bag (Harris Teeter) (SCB),,,Lindsay Addison
+Project Poop,2024,45500,BLANK,SCB,NA,C30,BLANK-SCB-2024-C30,paper bag,Paper,South Core Banks,,,,,,,,paper bag (Harris Teeter) (SCB),,,Lindsay Addison
+Project Poop,2024,45503,BLANK,WRIS,NA,C40,BLANK-WRIS-2024-C40,paper bag,Paper,Wrightsville Beach,,,,,,,,paper bag (Harris Teeter) (SWB),,,Lindsay Addison
+Project Poop,2024,45503,BLANK,WRIS,NA,C41,BLANK-WRIS-2024-C41,paper bag,Paper,Wrightsville Beach,,,,,,,,paper bag (Harris Teeter) (SWB),,,Lindsay Addison
+Project Poop,2024,45508,BLANK,WRIS,NA,C50,BLANK-WRIS-2024-C50,paper bag,Paper,Wrightsville Beach,,,,,,,,paper bag (Harris Teeter) (SWB),,,Lindsay Addison
+Project Poop,2024,45508,BLANK,WRIS,NA,C51,BLANK-WRIS-2024-C51,paper bag,Paper,Wrightsville Beach,,,,,,,,paper bag (Harris Teeter) (SWB),,,Lindsay Addison
+Project Poop,2024,45521,BLANK,NCB,NA,C60,BLANK-NCB-2024-C60,plastic bin,Plastic,North Core Banks,,,,,,,,the plastic poop bin (the chick missed the paper bag),,,Lindsay Addison
+Project Poop,2024,45455,BLSK,HRBT,CH,577,BLSK-HRBT-CH-2024-577,Pants,Clothing,Hampton Roads Bridge Tunnel,Barge 2,CHR,1763,04851,,,8,,,,"Chelsea Weithman*, Sarah Karpanty, Kelsi Hunt"
+Project Poop,2024,45455,BLSK,HRBT,CH,588,BLSK-HRBT-CH-2024-588,Pants,Clothing,Hampton Roads Bridge Tunnel,Barge 2,CHR,,,,,6,,,,"Chelsea Weithman*, Sarah Karpanty, Kelsi Hunt"
+Project Poop,2024,45455,BLSK,HRBT,CH,594,BLSK-HRBT-CH-2024-594,Pants,Clothing,Hampton Roads Bridge Tunnel,Barge 2,CHR,1763,04857,,,7,,,,"Chelsea Weithman*, Sarah Karpanty, Kelsi Hunt"
+Project Poop,2024,45462,BLSK,HRBT,CH,606,BLSK-HRBT-CH-2024-606,Pants,Clothing,Hampton Roads Bridge Tunnel,Barge 2,CHR,1763,5495,,,9,,,,"Chelsea Weithman*, Sarah Karpanty, Kelsi Hunt"
+Project Poop,2024,45455,BLSK,HRBT,CH,607,BLSK-HRBT-CH-2024-607,Skin,Skin,Hampton Roads Bridge Tunnel,Barge 2,CHR,1763,04880,,,5,,,,"Chelsea Weithman*, Sarah Karpanty, Kelsi Hunt"
+Project Poop,2024,45455,BLSK,HRBT,CH,610,BLSK-HRBT-CH-2024-610,Pants,Clothing,Hampton Roads Bridge Tunnel,Barge 2,CHR,1763,04881,,,,,,,"Chelsea Weithman*, Sarah Karpanty, Kelsi Hunt"
+Project Poop,2024,45455,BLSK,HRBT,CH,619,BLSK-HRBT-CH-2024-619,Pants,Clothing,Hampton Roads Bridge Tunnel,Barge 2,CHR,1763,04879,,,6,,,,"Chelsea Weithman*, Sarah Karpanty, Kelsi Hunt"
+Project Poop,2024,45462,BLSK,HRBT,CH,620,BLSK-HRBT-CH-2024-620,Pants,Clothing,Hampton Roads Bridge Tunnel,Barge 2,CHR,1763,4887,,,8,,,,"Chelsea Weithman*, Sarah Karpanty, Kelsi Hunt"
+Project Poop,2024,45489,BLSK,HRBT,CH,662,BLSK-HRBT-CH-2024-662,Keeping Carrier,Plastic,Hampton Roads Bridge Tunnel,Barge 3,CHR,,,,,,"3 SAMPLES COLLECTED FROM 3 CHICKS, CHICK AGES RANGE 7-20 DAYS OLD",,,"Chelsea Weithman*, Sarah Karpanty, Kelsi Hunt"
+Project Poop,2024,45503,BLANK,HRBT,BLANK,663,BLANK-HRBT-BLANK-2024-663,Datasheet,Paper,Hampton Roads Bridge Tunnel,,CHR,,,,,,,103,,"Chelsea Weithman*, Sarah Karpanty, Kelsi Hunt"
+Project Poop,2024,45489,BLSK,HRBT,CH,666,BLSK-HRBT-CH-2024-666,Keeping Carrier,Plastic,Hampton Roads Bridge Tunnel,Barge 3,CHR,,,,,,"3 SAMPLES COLLECTED FROM 3 CHICKS, CHICK AGES RANGE 7-20 DAYS OLD",,,"Chelsea Weithman*, Sarah Karpanty, Kelsi Hunt"
+Project Poop,2024,45503,BLANK,HRBT,BLANK,667,BLANK-HRBT-BLANK-2024-667,Pants,Clothing,Hampton Roads Bridge Tunnel,,CHR,,,,,,,104,,"Chelsea Weithman*, Sarah Karpanty, Kelsi Hunt"
+Project Poop,2024,45503,BLANK,HRBT,BLANK,668,BLANK-HRBT-BLANK-2024-668,Skin,Skin,Hampton Roads Bridge Tunnel,,CHR,,,,,,,105,,"Chelsea Weithman*, Sarah Karpanty, Kelsi Hunt"
+Project Poop,2024,45503,BLANK,HRBT,BLANK,669,BLANK-HRBT-BLANK-2024-669,Shoe,Clothing,Hampton Roads Bridge Tunnel,,CHR,,,,,,,105,,"Chelsea Weithman*, Sarah Karpanty, Kelsi Hunt"
+Project Poop,2024,45503,BLANK,HRBT,BLANK,670,BLANK-HRBT-BLANK-2024-670,Keeping Carrier,Plastic,Hampton Roads Bridge Tunnel,,CHR,,,,,,,103,,"Chelsea Weithman*, Sarah Karpanty, Kelsi Hunt"
+Project Poop,2024,45489,BLSK,HRBT,CH,684,BLSK-HRBT-CH-2024-684,Keeping Carrier,Plastic,Hampton Roads Bridge Tunnel,Barge 3,CHR,,,,,,"3 SAMPLES COLLECTED FROM 3 CHICKS, CHICK AGES RANGE 7-20 DAYS OLD",,,"Chelsea Weithman*, Sarah Karpanty, Kelsi Hunt"
+Project Poop,2024,45517,BLSK,HORS,CH,1799,BLSK-HORS-CH-2024-1799,Sand,Sand,Horsehoe Island,,MIX,1763,3495,C9R,,24,"Chicks between 20-28 days, selecting 24 as midrange",,,Cristina Davis
+Project Poop,2024,45517,BLSK,HORS,CH,1800,BLSK-HORS-CH-2024-1800,Sand,Sand,Horsehoe Island,,MIX,1763,2560,C14,,24,,,,Cristina Davis
+Project Poop,2024,45517,BLSK,HORS,CH,1801,BLSK-HORS-CH-2024-1801,Sand,Sand,Horsehoe Island,,MIX,1763,2561,C24,,24,,,,Cristina Davis
+Project Poop,2024,45517,BLSK,HORS,CH,1802,BLSK-HORS-CH-2024-1802,Sand,Sand,Horsehoe Island,,MIX,1763,3496,,,24,,,,Cristina Davis
+Project Poop,2024,45517,BLSK,HORS,CH,1803,BLSK-HORS-CH-2024-1803,Sand,Sand,Horsehoe Island,,MIX,1763,2562,C34,,24,,,,Cristina Davis
+Project Poop,2024,45517,BLSK,HORS,CH,1804,BLSK-HORS-CH-2024-1804,Sand,Sand,Horsehoe Island,,MIX,1763,3497,C0R,,24,,,,Cristina Davis
+Project Poop,2024,45517,BLSK,HORS,CH,1805,BLSK-HORS-CH-2024-1805,Sand,Sand,Horsehoe Island,,MIX,1763,2563,C44,,24,,,,Cristina Davis
+Project Poop,2024,45517,BLSK,HORS,CH,1806,BLSK-HORS-CH-2024-1806,Sand,Sand,Horsehoe Island,,MIX,1763,3498,C1S,,24,,,,Cristina Davis
+Project Poop,2024,45517,BLSK,HORS,CH,1807,BLSK-HORS-CH-2024-1807,Sand,Sand,Horsehoe Island,,MIX,1763,2565,C64,,24,,,,Cristina Davis
+Project Poop,2024,45517,BLSK,HORS,CH,1808,BLSK-HORS-CH-2024-1808,Sand,Sand,Horsehoe Island,,MIX,1763,2564,C54,,24,,,,Cristina Davis
+Project Poop,2024,45517,BLSK,HORS,CH,1809,BLSK-HORS-CH-2024-1809,Sand,Sand,Horsehoe Island,,MIX,1024,1713,C74,,24,,,,Cristina Davis
+Project Poop,2024,45517,BLSK,HORS,CH,1810,BLSK-HORS-CH-2024-1810,Sand,Sand,Horsehoe Island,,MIX,1763,2566,C84,,24,,,,Cristina Davis
+Project Poop,2024,45517,BLSK,HORS,CH,1811,BLSK-HORS-CH-2024-1811,Sand,Sand,Horsehoe Island,,MIX,1763,3499,C2S,,24,,,,Cristina Davis
+Project Poop,2024,45517,BLSK,HORS,CH,1812,BLSK-HORS-CH-2024-1812,Sand,Sand,Horsehoe Island,,MIX,1763,2567,C94,,24,,,,Cristina Davis
+Project Poop,2024,45517,BLSK,HORS,CH,1813,BLSK-HORS-CH-2024-1813,Sand,Sand,Horsehoe Island,,MIX,1763,3500,C3S,,24,,,,Cristina Davis
+Project Poop,2024,45517,BLSK,HORS,CH,1814,BLSK-HORS-CH-2024-1814,Sand,Sand,Horsehoe Island,,MIX,1024,1715,C4S,,24,,,,Cristina Davis
+Project Poop,2024,45517,BLSK,HORS,CH,1815,BLSK-HORS-CH-2024-1815,Sand,Sand,Horsehoe Island,,MIX,1763,2568,C1V,,24,,,,Cristina Davis
+Project Poop,2024,45517,BLSK,HORS,CH,1816,BLSK-HORS-CH-2024-1816,Sand,Sand,Horsehoe Island,,MIX,1024,1716,C2V,,24,,,,Cristina Davis
+Project Poop,2024,45517,BLSK,HORS,CH,1817,BLSK-HORS-CH-2024-1817,Sand,Sand,Horsehoe Island,,MIX,1024,1717,C6S,,24,,,,Cristina Davis
+Project Poop,2024,45517,BLSK,HORS,CH,1818,BLSK-HORS-CH-2024-1818,Sand,Sand,Horsehoe Island,,MIX,1763,2571,C3V,,24,,,,Cristina Davis
+Project Poop,2024,45517,BLSK,HORS,CH,1819,BLSK-HORS-CH-2024-1819,Sand,Sand,Horsehoe Island,,MIX,1763,2569,C5S,,24,,,,Cristina Davis
+Project Poop,2024,45517,BLSK,HORS,CH,1820,BLSK-HORS-CH-2024-1820,Sand,Sand,Horsehoe Island,,MIX,1024,1718,C7S,,24,,,,Cristina Davis
+Project Poop,2024,45517,BLSK,HORS,CH,1821,BLSK-HORS-CH-2024-1821,Sand,Sand,Horsehoe Island,,MIX,1024,1719,C8S,,24,,,,Cristina Davis
+Project Poop,2024,45517,BLSK,HORS,CH,1822,BLSK-HORS-CH-2024-1822,Sand,Sand,Horsehoe Island,,MIX,1024,1720,C9S,,24,,,,Cristina Davis
+Project Poop,2024,45517,BLSK,HORS,CH,1823,BLSK-HORS-CH-2024-1823,Sand,Sand,Horsehoe Island,,MIX,1024,27201,C0S,,24,,,,Cristina Davis
+Project Poop,2024,45517,BLSK,HORS,CH,1824,BLSK-HORS-CH-2024-1824,Sand,Sand,Horsehoe Island,,MIX,1763,2572,C4V,,24,,,,Cristina Davis
+Project Poop,2024,45517,BLSK,HORS,CH,1825,BLSK-HORS-CH-2024-1825,Sand,Sand,Horsehoe Island,,MIX,1763,2573,,,16,,,,Cristina Davis
+Project Poop,2024,45517,BLSK,HORS,CH,1826,BLSK-HORS-CH-2024-1826,Sand,Sand,Horsehoe Island,,MIX,1763,2574,,,16,,,,Cristina Davis
+Project Poop,2024,45517,BLSK,HORS,CH,1827,BLSK-HORS-CH-2024-1827,Sand,Sand,Horsehoe Island,,MIX,1763,2575,C3T,,24,,,,Cristina Davis
+Project Poop,2024,45517,BLSK,HORS,CH,1828,BLSK-HORS-CH-2024-1828,Sand,Sand,Horsehoe Island,,MIX,1024,27203,C2T,,24,,,,Cristina Davis
+Project Poop,2024,45517,BLSK,HORS,CH,1829,BLSK-HORS-CH-2024-1829,Sand,Sand,Horsehoe Island,,MIX,1763,2577,C5T,,24,,,,Cristina Davis
+Project Poop,2024,45517,BLSK,HORS,CH,1830,BLSK-HORS-CH-2024-1830,Sand,Sand,Horsehoe Island,,MIX,1024,27206,C6T,,24,,,,Cristina Davis
+Project Poop,2024,45517,BLSK,HORS,CH,1831,BLSK-HORS-CH-2024-1831,Sand,Sand,Horsehoe Island,,MIX,1024,27204,C4T,,24,,,,Cristina Davis
+Project Poop,2024,45517,BLSK,HORS,CH,1832,BLSK-HORS-CH-2024-1832,Sand,Sand,Horsehoe Island,,MIX,1024,27205,C6V,,24,,,,Cristina Davis
+Project Poop,2024,45517,BLSK,HORS,CH,1833,BLSK-HORS-CH-2024-1833,Sand,Sand,Horsehoe Island,,MIX,1763,2579,C7V,,24,,,,Cristina Davis
+Project Poop,2024,45517,BLSK,HORS,CH,1834,BLSK-HORS-CH-2024-1834,Sand,Sand,Horsehoe Island,HOIS - 4,MIX,1763,2580,C8T,,24,,,,Cristina Davis
+Project Poop,2024,45517,BLSK,HORS,CH,1835,BLSK-HORS-CH-2024-1835,Sand,Sand,Horsehoe Island,HOIS - 4,MIX,1763,2581,C9T,,24,,,,Cristina Davis
+Project Poop,2024,45517,BLSK,HORS,CH,1836,BLSK-HORS-CH-2024-1836,Sand,Sand,Horsehoe Island,HOIS - 4,MIX,1763,2578,C7T,,24,,,,Cristina Davis
+Project Poop,2024,45517,BLSK,HORS,CH,1838,BLSK-HORS-CH-2024-1838,Sand,Sand,Horsehoe Island,HOIS - 4,MIX,1763,2576,C5V,,24,,,,Cristina Davis
+Project Poop,2024,45517,BLSK,HORS,CH,1843,BLSK-HORS-CH-2024-1843,Sand,Sand,Horsehoe Island,HOIS - 4,MIX,1024,27202,CIT,,24,,,,Cristina Davis
+Project Poop,2024,45517,BLANK,HORS,,1839,BLANK-HORS--2024-1839,Banding Bag,Plastic,Horsehoe Island,,MIX,,,,,,,,,Cristina Davis
+Project Poop,2024,45517,BLANK,HORS,,1840,BLANK-HORS--2024-1840,Backpack,Clothing,Horsehoe Island,,MIX,,,,,,,,,Cristina Davis
+Project Poop,2024,45517,BLANK,HORS,,1841,BLANK-HORS--2024-1841,Banding Bag,Clothing,Horsehoe Island,,MIX,,,,,,,,,Cristina Davis
+Project Poop,2024,45517,BLANK,HORS,,1842,BLANK-HORS--2024-1842,Back Pack,Plastic,Horsehoe Island,,MIX,,,,,,,,,Cristina Davis
+Project Poop,2024,45517,BLANK,HORS,,1839,BLANK-HORS--2024-1839,Jacket,Clothing,Horsehoe Island,,MIX,,,,,,,,,Cristina Davis
+Project Poop,2024,45441,BLSK,STU,AD,101,BLSK-STU-AD-2024-101,clothes,Clothing,Stuart,FL,MIX,1034,1516,M05,,,Adult capture,,,Kate Goodenough
+Project Poop,2024,45441,BLANK,STU,,105,BLANK-STU--2024-105,clothes,Clothing,Stuart,FL,,,,,,,Control for pants; C05,,,Kate Goodenough
+Project Poop,2024,45441,BLANK,STU,,106,BLANK-STU--2024-106,clothes,Clothing,Stuart,FL,,,,,,,TC02; control for pants,,,Kate Goodenough
+Project Poop,2024,45440,BLSK,STU,AD,107,BLSK-STU-AD-2024-107,clothes,Clothing,Stuart,FL,MIX,1034,1513,M02,,,Adult capture,,,Kate Goodenough
+Project Poop,2024,45482,BLANK,CAX,,108,BLANK-CAX--2024-108,clothes,Clothing,Caxambas,FL,MIX,,,,,,TC03,,,Kate Goodenough
+Project Poop,2024,45482,BLANK,CAX,,108,BLANK-CAX--2024-108,clothes,Clothing,Caxambas,FL,,,,,,,C09,,,Kate Goodenough
+Project Poop,2024,45439,BLSK,STU,AD,110,BLSK-STU-AD-2024-110,clothes,Clothing,Stuart,FL,MIX,1034,1511,M00,,,Adult capture,,,Kate Goodenough
+Project Poop,2024,45439,BLSK,STU,AD,111,BLSK-STU-AD-2024-111,clothes,Clothing,Stuart,FL,MIX,1034,1512,M01,,,Adult capture,,,Kate Goodenough
+Project Poop,2024,45439,BLANK,STU,,113,BLANK-STU--2024-113,clothes,Clothing,Stuart,FL,MIX,,,,,,C1 control for M01,,,Kate Goodenough
+Project Poop,2024,45439,BLANK,STU,,114,BLANK-STU--2024-114,clothes,Clothing,Stuart,FL,MIX,,,,,,C02 control for M02,,,Kate Goodenough
+Project Poop,2024,45440,BLSK,STU,AD,116,BLSK-STU-AD-2024-116,clothes,Clothing,Stuart,FL,MIX,1034,1516,M05,,,Adult capture,,,Kate Goodenough
+Project Poop,2024,45525,BLSK,NIC,CH,117,BLSK-NIC-CH-2024-117,paper bag,Paper,Long Island,Nickerson_Sanctuary,CHR,1094,82044,,,8,,,,Kate Goodenough
+Project Poop,2024,45525,BLSK,NIC,CH,118,BLSK-NIC-CH-2024-118,paper bag,Paper,Long Island,Nickerson_Sanctuary,CHR,1094,82043,,,8,,,,Kate Goodenough
+Project Poop,2024,45525,BLSK,NIC,CH,119,BLSK-NIC-CH-2024-119,paper bag,Paper,Long Island,Nickerson_Sanctuary,CHR,1094,82042,,,8,,,,Kate Goodenough
+Project Poop,2024,45525,BLSK,NIC,CH,120,BLSK-NIC-CH-2024-120,paper bag,Paper,Long Island,Nickerson_Sanctuary,CHR,1094,82039,,,8,,,,Kate Goodenough
+Project Poop,2024,45525,BLSK,NIC,CH,121,BLSK-NIC-CH-2024-121,paper bag,Paper,Long Island,Nickerson_Sanctuary,CHR,1094,82041,,,8,,,,Kate Goodenough
+Project Poop,2024,45525,BLSK,NIC,CH,122,BLSK-NIC-CH-2024-122,paper bag,Paper,Long Island,Nickerson_Sanctuary,CHR,1094,82040,,,8,,,,Kate Goodenough
+Project Poop,2024,45525,BLSK,NIC,CH,123,BLSK-NIC-CH-2024-123,paper bag,Paper,Long Island,Nickerson_Sanctuary,CHR,1094,82037,AYT,,8,,,,Kate Goodenough
+Project Poop,2024,45525,BLSK,NIC,CH,124,BLSK-NIC-CH-2024-124,paper bag,Paper,Long Island,Nickerson_Sanctuary,CHR,1094,82038,,,,,,,Kate Goodenough
+Project Poop,2024,45525,BLSK,NIC,CH,126,BLSK-NIC-CH-2024-126,paper bag,Paper,Long Island,Nickerson_Sanctuary,CHR,,,,,4,too young to be banded <6 days,,,Kate Goodenough
+Project Poop,2024,45525,BLSK,NIC,CH,127,BLSK-NIC-CH-2024-127,paper bag,Paper,Long Island,Nickerson_Sanctuary,CHR,1094,82036,AYV,,8,,,,Kate Goodenough
+Project Poop,2024,45525,BLSK,NIC,CH,128,BLSK-NIC-CH-2024-128,paper bag,Paper,Long Island,Nickerson_Sanctuary,CHR,,,,,4,too young to be banded <6 days,,,Kate Goodenough
+Project Poop,2024,45525,BLSK,NIC,CH,129,BLSK-NIC-CH-2024-129,paper bag,Paper,Long Island,Nickerson_Sanctuary,CHR,1094,82035,AYX,,8,,,,Kate Goodenough
+Project Poop,2024,45518,BLSK,NIC,CH,130,BLSK-NIC-CH-2024-130,paper bag,Paper,Long Island,Nickerson Beach_East,CHR,1154,29069,ACH,,8,,,,Kate Goodenough
+Project Poop,2024,45518,BLSK,NIC,CH,131,BLSK-NIC-CH-2024-131,paper bag,Paper,Long Island,Nickerson Beach_East,CHR,1154,29068,AEH,,8,,,,Kate Goodenough
+Project Poop,2024,45518,BLSK,NIC,CH,132,BLSK-NIC-CH-2024-132,paper bag,Paper,Long Island,Nickerson Beach_East,CHR,1154,29076,BAB,,8,,,,Kate Goodenough
+Project Poop,2024,45518,BLSK,NIC,CH,133,BLSK-NIC-CH-2024-133,paper bag,Paper,Long Island,Nickerson Beach_East,CHR,,,,,8,"LEG SWOLLEN, NO BANDS",,,Kate Goodenough
+Project Poop,2024,45525,BLSK,NIC,CH,134,BLSK-NIC-CH-2024-134,paper bag,Paper,Long Island,Nickerson_Sanctuary,CHR,1094,82033,ACG,,8,,,,Kate Goodenough
+Project Poop,2024,45525,BLSK,NIC,CH,135,BLSK-NIC-CH-2024-135,plastic carrier,Plastic,Long Island,Nickerson_Sanctuary,CHR,1044,82032,ACE,,8,,,,Kate Goodenough
+Project Poop,2024,45518,BLSK,NIC,CH,136,BLSK-NIC-CH-2024-136,paper bag,Paper,Long Island,Nickerson Beach_East,CHR,1154,29067,AEG,,8,,,,Kate Goodenough
+Project Poop,2024,45518,BLSK,NIC,CH,137,BLSK-NIC-CH-2024-137,paper bag,Paper,Long Island,Nickerson Beach_East,CHR,1154,29066,AEE,,8,,,,Kate Goodenough
+Project Poop,2024,45518,BLSK,NIC,CH,138,BLSK-NIC-CH-2024-138,paper bag,Paper,Long Island,Nickerson Beach_East,CHR,,,,,4,too young to be banded <6 days,,,Kate Goodenough
+Project Poop,2024,45518,BLSK,NIC,CH,139,BLSK-NIC-CH-2024-139,clothes,Clothing,Long Island,Nickerson Beach_East,CHR,1154,29064,AEC,,8,,,,Kate Goodenough
+Project Poop,2024,45518,BLSK,NIC,CH,140,BLSK-NIC-CH-2024-140,clothes,Clothing,Long Island,Nickerson Beach_East,CHR,,,,,4,too young to be banded <6 days,,,Kate Goodenough
+Project Poop,2024,45518,BLSK,NIC,CH,141,BLSK-NIC-CH-2024-141,clothes,Clothing,Long Island,Nickerson Beach_East,CHR,1154,29065,AED,,8,,,,Kate Goodenough
+Project Poop,2024,45518,BLSK,NIC,CH,142,BLSK-NIC-CH-2024-142,paper bag,Paper,Long Island,Nickerson Beach_East,CHR,1154,29063,AEB,,,,,,Kate Goodenough
+Project Poop,2024,45518,BLSK,NIC,CH,143,BLSK-NIC-CH-2024-143,paper bag,Paper,Long Island,Nickerson Beach_East,CHR,1154,29062,AEA,,,,,,Kate Goodenough
+Project Poop,2024,45518,BLSK,NIC,CH,144,BLSK-NIC-CH-2024-144,paper bag,Paper,Long Island,Nickerson Beach_East,CHR,1154,29061,ADY,,,,,,Kate Goodenough
+Project Poop,2024,45518,BLSK,NIC,CH,145,BLSK-NIC-CH-2024-145,plastic carrier,Plastic,Long Island,Nickerson Beach_East,CHR,1154,29055,ADH,,,,,,Kate Goodenough
+Project Poop,2024,45518,BLSK,NIC,CH,146,BLSK-NIC-CH-2024-146,paper bag,Paper,Long Island,Nickerson Beach_East,CHR,1154,29060,ADX,,8,,,,Kate Goodenough
+Project Poop,2024,45518,BLSK,NIC,CH,147,BLSK-NIC-CH-2024-147,paper bag,Paper,Long Island,Nickerson Beach_East,CHR,1154,29059,ADV,,8,,,,Kate Goodenough
+Project Poop,2024,45518,BLSK,NIC,CH,148,BLSK-NIC-CH-2024-148,paper bag,Paper,Long Island,Nickerson Beach_East,CHR,1154,29058,ADT,,8,,,,Kate Goodenough
+Project Poop,2024,45518,BLSK,NIC,CH,149,BLSK-NIC-CH-2024-149,paper bag,Paper,Long Island,Nickerson Beach_East,CHR,1154,29057,ADK,,8,,,,Kate Goodenough
+Project Poop,2024,45518,BLSK,NIC,CH,150,BLSK-NIC-CH-2024-150,paper bag,Paper,Long Island,Nickerson Beach_East,CHR,1154,29056,ADJ,,8,,,,Kate Goodenough
+Project Poop,2024,45518,BLSK,NIC,CH,151,BLSK-NIC-CH-2024-151,paper bag,Paper,Long Island,Nickerson Beach_East,CHR,1154,29054,ADG,,8,,,,Kate Goodenough
+Project Poop,2024,45518,BLSK,NIC,CH,152,BLSK-NIC-CH-2024-152,paper bag,Paper,Long Island,Nickerson Beach_East,CHR,1154,29053,ADE,,8,,,,Kate Goodenough
+Project Poop,2024,45518,BLSK,NIC,CH,153,BLSK-NIC-CH-2024-153,paper bag,Paper,Long Island,Nickerson Beach_East,CHR,1154,29052,ADD,,8,,,,Kate Goodenough
+Project Poop,2024,45518,BLSK,NIC,CH,154,BLSK-NIC-CH-2024-154,paper bag,Paper,Long Island,Nickerson Beach_East,CHR,1154,29051,ADC,,8,,,,Kate Goodenough
+Project Poop,2024,45518,BLSK,NIC,CH,155,BLSK-NIC-CH-2024-155,paper bag,Paper,Long Island,Nickerson Beach_East,CHR,1154,29050,ADB,,8,,,,Kate Goodenough
+Project Poop,2024,45525,BLSK,NIC,CH,156,BLSK-NIC-CH-2024-156,paper bag,Paper,Long Island,Nickerson_Sanctuary,CHR,1094,82045,AYK,,8,,,,Kate Goodenough
+Project Poop,2024,45482,BLSK,CAX,AD,172,BLSK-CAX-AD-2024-172,clothes,Clothing,Caxambas,FL,MIX,1034,1530,M19,,,Adult capture,,,Kate Goodenough
+Project Poop,2024,45482,BLSK,CAX,AD,179,BLSK-CAX-AD-2024-179,clothes,Clothing,Caxambas,FL,MIX,1034,1529,M18,,,Adult capture,,,Kate Goodenough
+Project Poop,2024,45482,BLANK,CAX,,183,BLANK-CAX--2024-183,clothes,Clothing,Caxambas,FL,,,,,,,TC01; Kate's pants,,,Kate Goodenough
+Project Poop,2024,45482,BLSK,CAX,AD,192,BLSK-CAX-AD-2024-192,clothes,Clothing,Caxambas,FL,MIX,1034,1527,M16,,,Adult capture,,,Kate Goodenough
+Project Poop,2024,45482,BLSK,CAX,AD,200,BLSK-CAX-AD-2024-200,clothes,Clothing,Caxambas,FL,MIX,1034,1528,M17,,,Adult capture,,,Kate Goodenough
+Project Poop,2024,45518,BLANK,NIC,,258,BLANK-NIC--2024-258,paper bag,Paper,Long Island,Nickerson Beach_East,CHR,,,,,,paper bag blank,,,Kate Goodenough
+Project Poop,2024,45518,BLANK,NIC,,259,BLANK-NIC--2024-259,paper bag,Paper,Long Island,Nickerson Beach_East,CHR,,,,,,paper bag blank,,,Kate Goodenough
+Project Poop,2024,45518,BLANK,NIC,,260,BLANK-NIC--2024-260,paper bag,Paper,Long Island,Nickerson Beach_East,CHR,,,,,,paper bag blank,,,Kate Goodenough
+Project Poop,2024,45518,BLANK,NIC,,261,BLANK-NIC--2024-261,plastic carrier,Plastic,Long Island,Nickerson Beach_East,CHR,,,,,,plastic carrier,,,Kate Goodenough
+Project Poop,2024,45518,BLANK,NIC,,262,BLANK-NIC--2024-262,paper bag,Paper,Long Island,Nickerson Beach_East,CHR,,,,,,paper bag blank,,,Kate Goodenough
+Project Poop,2024,45518,BLANK,NIC,,263,BLANK-NIC--2024-263,paper bag,Paper,Long Island,Nickerson Beach_East,CHR,,,,,,paper bag blank,,,Kate Goodenough
+Project Poop,2024,45525,BLSK,NIC,CH,264,BLSK-NIC-CH-2024-264,paper bag,Paper,Long Island,Nickerson_Sanctuary,CHR,,,,,4,too young to be banded <6 days,,,Kate Goodenough
+Project Poop,2024,45525,BLANK,NIC,,265,BLANK-NIC--2024-265,paper bag,Paper,Long Island,Nickerson_Sanctuary,CHR,,,,,,Base of carrier,,,Kate Goodenough
+Project Poop,2024,45525,BLANK,NIC,,266,BLANK-NIC--2024-266,paper bag,Paper,Long Island,Nickerson_Sanctuary,CHR,,,,,,Base of carrier,,,Kate Goodenough
+Project Poop,2024,45525,BLANK,NIC,,267,BLANK-NIC--2024-267,paper bag,Paper,Long Island,Nickerson_Sanctuary,CHR,,,,,,paper bag,,,Kate Goodenough
+Project Poop,2024,45525,BLANK,NIC,,268,BLANK-NIC--2024-268,paper bag,Paper,Long Island,Nickerson_Sanctuary,CHR,,,,,,paper bag blank,,,Kate Goodenough
+Project Poop,2024,45525,BLANK,NIC,,269,BLANK-NIC--2024-269,paper bag,Paper,Long Island,Nickerson_Sanctuary,CHR,,,,,,paper bag blank,,,Kate Goodenough
+Project Poop,2024,45518,BLSK,NIC,CH,270,BLSK-NIC-CH-2024-270,plastic carrier,Plastic,Long Island,Nickerson Beach_East,CHR,,,,,8,"Caught pre-roundup and injured, pooped in carrier, not banded",,,Kate Goodenough
