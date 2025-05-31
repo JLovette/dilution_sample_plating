@@ -1,5 +1,5 @@
-import sys
 import argparse
+
 from parse_samples import parse_samples
 from datamodel.test_manager import TestManager
 
@@ -20,7 +20,7 @@ def main():
 
     blank_positions = [tuple(map(int, b.split(','))) for b in args.blank] if args.blank else []
     manager = TestManager(samples, args.rows, args.cols, blank_positions)
-    print(f"Number of assay plates needed: {len(manager.get_plates())}")
+    manager.fill_plates()
     manager.print_plates()
     metrics = manager.algorithm_metrics()
     print("Algorithm Metrics:")

@@ -55,6 +55,6 @@ class Plate:
         output.append("\t" + "\t".join(col_headers))
 
         for i, row in enumerate(self.plate):
-            row_str = row_labels[i] + "\t" + "\t".join(cell.sample_id if cell else "" for cell in row)
+            row_str = row_labels[i] + "\t" + "\t".join(cell.unique_id if cell else "" for cell in row)
             output.append(row_str)
         return "\n".join(output) 

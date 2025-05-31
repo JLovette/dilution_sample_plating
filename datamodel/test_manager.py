@@ -14,7 +14,6 @@ class TestManager:
         self.cols = cols
         self.blank_positions = blank_positions
         self.plates: List[Plate] = []
-        self.fill_plates()
 
     def fill_plates(self):
         # Sort samples by Sample ID (or any other desired order)

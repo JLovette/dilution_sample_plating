@@ -1,7 +1,8 @@
-from datetime import datetime, timedelta
-from datamodel.sample import Sample, SampleType
-from typing import List
 import pandas as pd
+from typing import List
+
+from datamodel.sample import Sample, SampleType
+
 
 def parse_samples(csv_file: str) -> List[Sample]:
     """Parse the penguin sample data from a CSV file."""
