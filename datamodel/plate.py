@@ -1,6 +1,6 @@
 from typing import List, Optional
 
-from datamodel.sample import Sample
+from datamodel.sample import Sample, SampleType
 
 class Plate:
     """Laboratory plate for organizing and managing biological samples.
@@ -15,6 +15,21 @@ class Plate:
         self.rows = rows
         self.cols = cols
         self.plate: List[List[Optional[Sample]]] = [[None for _ in range(cols)] for _ in range(rows)]
+
+    @property
+    def num_blank_samples(self) -> int:
+        """Count the number of blank samples on the plate."""
+        return sum(1 for row in self.plate for sample in row if sample and sample.sample_type == SampleType.BLANK)
+
+    @property
+    def num_adult_samples(self) -> int:
+        """Count the number of adult samples on the plate."""
+        return sum(1 for row in self.plate for sample in row if sample and sample.sample_type == SampleType.ADULT)
+
+    @property
+    def num_chick_samples(self) -> int:
+        """Count the number of chick samples on the plate."""
+        return sum(1 for row in self.plate for sample in row if sample and sample.sample_type == SampleType.CHICK)
 
     def set_sample(self, row: int, col: int, sample: Optional[Sample]) -> None:
         if 0 <= row < self.rows and 0 <= col < self.cols:

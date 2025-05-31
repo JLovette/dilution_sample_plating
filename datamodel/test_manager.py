@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from typing import List, Tuple
 
 from datamodel.plate import Plate
-from datamodel.sample import Sample
+from datamodel.sample import Sample, SampleType
 
 class TestManager:
     def __init__(self, samples: List[Sample], rows: int, cols: int, blank_positions: List[Tuple[int, int]]):
@@ -20,8 +20,8 @@ class TestManager:
         # Sort samples by Sample ID (or any other desired order)
         samples_sorted = sorted(self.samples, key=lambda s: s.sample_id)
         # Separate BLANK samples from others
-        blank_samples = [s for s in samples_sorted if s.species == 'BLANK']
-        non_blank_samples = [s for s in samples_sorted if s.species != 'BLANK']
+        blank_samples = [s for s in samples_sorted if s.sample_type == SampleType.BLANK]
+        non_blank_samples = [s for s in samples_sorted if s.sample_type != SampleType.BLANK]
         blank_idx = 0
         sample_idx = 0
         num_cells = self.rows * self.cols
@@ -92,7 +92,7 @@ class TestManager:
                 for c in range(plate.cols):
                     sample_obj = plate.get_sample(r, c)
                     # Check if the cell contains a non-BLANK sample object
-                    if sample_obj and sample_obj.species != 'BLANK':
+                    if sample_obj and sample_obj.sample_type != SampleType.BLANK:
                         colony = sample_obj.colony_code
                         colony_counts[colony] = colony_counts.get(colony, 0) + 1
             result.append(colony_counts)
@@ -100,28 +100,19 @@ class TestManager:
 
     def blank_adult_chick_counts(self):
         """Return a list of dicts, one per plate, with counts of blanks, adults, and chicks."""
-        # No longer need sample_map as we have sample objects directly
-        # sample_map = {s.sample_id: s for s in self.samples}
         result = []
         for plate in self.plates:
-            counts = {"BLANK": 0, "AD": 0, "CH": 0, "OTHER": 0}
+            counts = {"BLANK": 0, "ADULT": 0, "CHICK": 0}
             for r in range(plate.rows):
                 for c in range(plate.cols):
                     sample_obj = plate.get_sample(r, c)
-                    
-                    if sample_obj is None:
-                        # Empty cell, not counted in these categories
-                        pass
-                    elif sample_obj.species == "BLANK":
-                        counts["BLANK"] += 1
-                    else: # It's a non-BLANK sample object
-                        ad_chick = sample_obj.ad_chick
-                        if ad_chick == "AD":
-                            counts["AD"] += 1
-                        elif ad_chick == "CH":
-                            counts["CH"] += 1
-                        else:
-                            counts["OTHER"] += 1
+                    if sample_obj:
+                        if sample_obj.sample_type == SampleType.BLANK:
+                            counts["BLANK"] += 1
+                        elif sample_obj.sample_type == SampleType.ADULT:
+                            counts["ADULT"] += 1
+                        elif sample_obj.sample_type == SampleType.CHICK:
+                            counts["CHICK"] += 1
             result.append(counts)
         return result
 
@@ -136,7 +127,7 @@ class TestManager:
                 for c in range(plate.cols):
                     sample_obj = plate.get_sample(r, c)
                     # Check if the cell contains a non-BLANK sample object
-                    if sample_obj and sample_obj.species != 'BLANK':
+                    if sample_obj and sample_obj.sample_type != SampleType.BLANK:
                         run += 1
                     else:
                         if run > 0:
@@ -150,7 +141,7 @@ class TestManager:
                 for r in range(plate.rows):
                     sample_obj = plate.get_sample(r, c)
                      # Check if the cell contains a non-BLANK sample object
-                    if sample_obj and sample_obj.species != 'BLANK':
+                    if sample_obj and sample_obj.sample_type != SampleType.BLANK:
                         run += 1
                     else:
                         if run > 0:
@@ -160,7 +151,7 @@ class TestManager:
                     runs.append(run)
             avg_run = sum(runs) / len(runs) if runs else 0.0
             result.append(avg_run)
-        return result 
+        return result
 
     def algorithm_metrics(self):
         """Return a dict of summary metrics for algorithm performance."""
@@ -180,10 +171,10 @@ class TestManager:
         type_counts_per_plate = self.blank_adult_chick_counts()
         for d in type_counts_per_plate:
             d.setdefault("BLANK", 0)
-            d.setdefault("AD", 0)
-            d.setdefault("CH", 0)
+            d.setdefault("ADULT", 0)
+            d.setdefault("CHICK", 0)
         type_stdevs = []
-        for t in ["BLANK", "AD", "CH"]:
+        for t in ["BLANK", "ADULT", "CHICK"]:
             counts = [d[t] for d in type_counts_per_plate]
             if len(counts) > 1:
                 type_stdevs.append(np.std(counts))
@@ -281,7 +272,7 @@ class TestManager:
 
                     if sample_obj is None:
                         grid[r, c] = [1, 1, 1]  # White for empty cells
-                    elif sample_obj.species == "BLANK":
+                    elif sample_obj.sample_type == SampleType.BLANK:
                         grid[r, c] = [0.9, 0.9, 0.9]  # Light gray for blanks
                     else: # It's a non-BLANK Sample
                         # Use a fixed color for all non-blank samples
