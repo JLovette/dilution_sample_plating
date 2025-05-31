@@ -2,76 +2,87 @@ import io
 import base64
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.backends.backend_pdf import PdfPages
 from typing import List, Tuple
+import textwrap  # <-- Add this import
 
 from datamodel.plate import Plate
 from datamodel.sample import Sample, SampleType
 
 class TestManager:
     def __init__(self, samples: List[Sample], rows: int, cols: int, blank_positions: List[Tuple[int, int]]):
-        self.samples = samples
+        self.samples = sorted(samples, key=lambda s: s.sample_id)
         self.rows = rows
         self.cols = cols
         self.blank_positions = blank_positions
-        self.plates: List[Plate] = []
+        num_plates = self._num_required_plates()
+        self.plates: List[Plate] = [Plate(self.rows, self.cols) for _ in range(num_plates)]
 
-    def fill_plates(self):
-        # Sort samples by Sample ID (or any other desired order)
-        samples_sorted = sorted(self.samples, key=lambda s: s.sample_id)
-        # Separate BLANK samples from others
-        blank_samples = [s for s in samples_sorted if s.sample_type == SampleType.BLANK]
-        non_blank_samples = [s for s in samples_sorted if s.sample_type != SampleType.BLANK]
+    def _num_required_plates(self) -> int:
+        """
+        Calculate the number of plates required to fit all the samples.
+        """
+        # Ceiling division to determine how many plates are needed for the blank samples
+        blank_samples = [s for s in self.samples if s.sample_type == SampleType.BLANK]
+        blank_required = (len(blank_samples) + len(self.blank_positions) - 1) // len(self.blank_positions)
+
+        # Ceiling division to determine how many plates are needed for the non-blank samples
+        non_blank_slots = self.rows * self.cols - blank_required
+        non_blank_samples = [s for s in self.samples if s.sample_type != SampleType.BLANK]
+        non_blank_required = (len(non_blank_samples) + non_blank_slots - 1) // non_blank_slots
+        return max(blank_required, non_blank_required)
+
+    def _place_blank_samples(self):
+        """
+        Place BLANK samples in designated positions across the plates.
+        """
+        blank_samples = [s for s in self.samples if s.sample_type == SampleType.BLANK]
+        total_blank_positions = len(self.plates) * len(self.blank_positions)
         blank_idx = 0
-        sample_idx = 0
-        num_cells = self.rows * self.cols
-        num_blanks = len(self.blank_positions)
-        samples_per_plate = num_cells - num_blanks
-        # Calculate number of plates needed
-        n_non_blank = len(non_blank_samples)
-        n_blanks = len(blank_samples)
-        n_plates = 0
-        while n_non_blank > n_plates * samples_per_plate:
-            n_plates += 1
-        if n_plates == 0:
-            n_plates = 1
-        self.plates = [Plate(self.rows, self.cols) for _ in range(n_plates)]
-        # Fill in BLANKs with actual BLANK samples if available
-        total_blank_positions = n_plates * len(self.blank_positions)
+
         for i in range(total_blank_positions):
-            plate_idx = i % n_plates
-            pos_idx = i // n_plates
+            plate_idx = i % len(self.plates)
+            pos_idx = i // len(self.plates)
             if pos_idx < len(self.blank_positions):
                 r, c = self.blank_positions[pos_idx]
                 if blank_idx < len(blank_samples):
-                    # Place the actual BLANK Sample object
                     self.plates[plate_idx].set_sample(r, c, blank_samples[blank_idx])
                     blank_idx += 1
-                # If no more BLANK samples, the position remains None (empty)
-        # Fill in non-blank samples breadth-first (round-robin)
+
+    def _get_available_cell_positions(self):
+        """
+        Get list of available cell positions that are not designated as blank positions.
+        """
         cell_positions = []
         for r in range(self.rows):
             for c in range(self.cols):
-                # Only consider positions that are not designated as blank positions
                 if (r, c) not in self.blank_positions:
-                     # Also check if the cell is already filled by a BLANK sample object
-                    if plate_idx < len(self.plates) and self.plates[plate_idx].get_sample(r, c) is None:
-                         cell_positions.append((r, c))
+                    cell_positions.append((r, c))
+        return cell_positions
+
+    def _place_non_blank_samples(self):
+        """
+        Place non-BLANK samples in available positions across the plates.
+        """
+        non_blank_samples = [s for s in self.samples if s.sample_type != SampleType.BLANK]
+        cell_positions = self._get_available_cell_positions()
 
         sample_idx = 0
-        # We need to iterate through plates and then cell_positions on each plate
-        for plate_idx in range(n_plates):
-             for r, c in cell_positions:
-                # Check if the cell is still empty before placing a sample
+        for plate_idx in range(len(self.plates)):
+            for r, c in cell_positions:
                 if self.plates[plate_idx].get_sample(r, c) is None:
                     if sample_idx < len(non_blank_samples):
-                        # Place the actual non-BLANK Sample object
                         self.plates[plate_idx].set_sample(r, c, non_blank_samples[sample_idx])
                         sample_idx += 1
                     else:
-                        # No more samples to place
                         break
-             if sample_idx >= len(non_blank_samples):
-                 break # Stop filling plates if all samples are placed
+            if sample_idx >= len(non_blank_samples):
+                break
+
+    def fill_plates(self):
+        """Fill plates with samples, placing BLANKs first then other samples."""        
+        self._place_blank_samples()
+        self._place_non_blank_samples()
 
     def get_plates(self) -> List[Plate]:
         return self.plates
@@ -209,7 +220,7 @@ class TestManager:
             "contiguity_score": contiguity_score,
             "plate_utilization": plate_utilization,
             "overall_adherence_score": overall
-        } 
+        }
 
     def generate_plate_visualization(self) -> str:
         """Generate a PNG visualization of all plates and return it as a base64 string."""
@@ -358,4 +369,4 @@ class TestManager:
         # Join rows into a single CSV string
         # No need to handle None explicitly in join anymore as cell_value is always string or empty
         csv_string = "\n".join([",".join(map(str, row)) for row in csv_data])
-        return csv_string 
+        return csv_string
