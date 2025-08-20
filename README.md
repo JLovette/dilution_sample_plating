@@ -8,6 +8,8 @@ A tool for automatically arranging samples and dilutions on assay plates for use
 - Balances colonies and sample types (AD, CH, BLANK) evenly across plates
 - Keeps samples in order and fills plates left-to-right, top-to-bottom
 - Preserves fixed BLANK positions in the layout
+- Generates PDF output with each plate on a separate page for easy printing and sharing
+- Provides PNG visualization as an alternative option
 
 ## Installation
 
@@ -36,17 +38,18 @@ streamlit run app.py
 The web interface provides a step-by-step workflow:
 
 1. **Upload CSV**: Upload your sample data in CSV format
-2. **Plate Dimensions**: Specify the number of rows and columns for your assay plates
-3. **BLANK Selection**: Mark positions for BLANK samples on the plate
-4. **View Results**: See the generated plate layouts and download results
+2. **BLANK Selection**: Mark positions for BLANK samples on the plate (8x12 grid)
+3. **View Results**: See the generated plate layouts and download results as PDF (recommended) or PNG
 
 ### Command Line Interface
 
 The CLI version can be used for batch processing or automation:
 
 ```bash
-python main.py --input_file samples.csv --rows 8 --cols 12 --blank 0,0 --blank 0,1
+python main.py --input_file samples.csv --blank 0,0 --blank 0,1
 ```
+
+**Note**: Plates are fixed at 8 rows × 12 columns (96 wells per plate).
 
 ## Input CSV Format
 

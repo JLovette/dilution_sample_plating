@@ -1,0 +1,35 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+I am developing a tool that will assist a geneticist determine the distribution of samples onto assay plates for further analysis. The input will be a CSV of samples taken for different birds. Here is the top of an example input CSV:
+
+```
+Project,Year,Date,Species,Colony_code,AD/chick,Sample ID,Unique_ID,Substrate,Substrate_group,Island,Area,Breeding period (Incubation/ Chick-rearing/ Mixed),Band or Band prefix,Band suffix,PFR ID,Nest/Burrow_ID,Chick age,Notes,DNA Plate,Re-extraction plate,Collaborator name
+Project Poop,2024,45485,BLSK,CRAB,CH,1934,BLSK-CRAB-CH-2024-1934,Pants,Clothing,Crab Bank,West,MIX,1234,05153,00A,,14,,,,Janet Thibault
+Project Poop,2024,45485,BLSK,CRAB,CH,1935,BLSK-CRAB-CH-2024-1935,Parchment Paper,Paper,Crab Bank,West,MIX,1234,05154,00C,,14,,,,Janet Thibault
+Project Poop,2024,45485,BLANK,CRAB,CH,1936,BLANK-CRAB-CH-2024-1936,Pants,Clothing,Crab Bank,West,MIX,NA,NA,NA,,,,,,Janet Thibault
+Project Poop,2024,45490,BLSK,CRAB,CH,1937,BLSK-CRAB-CH-2024-1937,BAG,Paper,Crab Bank,West,CHR,1234,05161,00M,,21,,,,Janet Thibault
+```
+
+As you can see, there are a few important fields for each sample, including the species, colony code, sample id, Adult vs. Chick, etc. Our task is to efficiently spread the samples across the smallest number of plates according to a handful of rules. Here are the rules we've been provided:
+
+1. Balance the number of samples from each colony across the 4.8 plates so that each colony is split evenly among the four plates. Include both BLSK and BLANK samples when balancing.
+2. Balance the number of blanks, adult (AD), and chick (CH) samples among plates (so that not all blanks are on one plate, for example). 
+3. Keep numbers in numerical order (do not randomize on the plate layout, as this makes setting it up very slow).
+4. Fill out the "Plate number” column with the plate number that the samples are assigned to so that we know which samples have been analyzed and on which plate.
+5. Populate the plate layout, keeping the blanks (marked in yellow) in the same positions.
+
+
+Our project will include the following:
+1. CLI command that takes in the input file and parses the samples into tidy objects
+2. A simple algorithm that determines the number of assay slides we need.
+3. A simple UI that allows the user to select the location of "BLANK" positions on the plates.
+4. An algorithm that fills in the rest of the plates according to the rules above.
+5. Save an image of the plates with the filled in sample IDs
+6. Calculate measures of how beholden to the rules the algoritm was
+
+
+
+Always suggest edits directly on the file without asking for permission to apply suggested changes.

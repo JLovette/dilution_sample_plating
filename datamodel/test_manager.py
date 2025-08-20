@@ -222,8 +222,8 @@ class TestManager:
             "overall_adherence_score": overall
         }
 
-    def generate_plate_visualization(self) -> str:
-        """Generate a PNG visualization of all plates and return it as a base64 string."""
+    def generate_plate_visualization_pdf(self) -> str:
+        """Generate a PDF visualization of all plates with each plate on a separate page and return it as a base64 string."""
         n_plates = len(self.plates)
         if n_plates == 0:
             return None
@@ -250,98 +250,125 @@ class TestManager:
         # Final cell size is the maximum of base size and text-required size
         cell_size = max(cell_size_base, required_cell_width_text)
 
-        fig_width = self.cols * cell_size * n_plates
-        fig_height = self.rows * cell_size # Assuming roughly square cells are okay
+        # For PDF, we'll use a standard page size and fit each plate appropriately
+        fig_width = self.cols * cell_size
+        fig_height = self.rows * cell_size
 
-        # Cap figure size to prevent excessively large images
-        max_fig_width = 50 # Increased cap
-        max_fig_height = 30 # Increased cap
+        # Cap figure size to prevent excessively large pages
+        max_fig_width = 12  # inches
+        max_fig_height = 10  # inches
         fig_width = min(max_fig_width, fig_width)
         fig_height = min(max_fig_height, fig_height)
 
-        fig, axes = plt.subplots(1, n_plates, figsize=(fig_width, fig_height))
-        if n_plates == 1:
-            axes = [axes]
-
-        # Remove colony color logic
-        # Create a sample map for coloring (no longer colony specific)
-        # sample_map = {s.sample_id: s for s in self.samples}
-        # colony_colors = {}
-        # for sample in self.samples:
-        #     if sample.colony_code not in colony_colors:
-        #         colony_colors[sample.colony_code] = np.random.rand(3,)
-
-        for i, (plate, ax) in enumerate(zip(self.plates, axes)):
-            # Create a grid of cells
-            grid = np.zeros((self.rows, self.cols, 3))
-            
-            # Fill in the colors based on sample type (BLANK, Empty, or Sample)
-            for r in range(self.rows):
-                for c in range(self.cols):
-                    sample_obj = plate.get_sample(r, c) # Get the Sample object
-
-                    if sample_obj is None:
-                        grid[r, c] = [1, 1, 1]  # White for empty cells
-                    elif sample_obj.sample_type == SampleType.BLANK:
-                        grid[r, c] = [0.9, 0.9, 0.9]  # Light gray for blanks
-                    else: # It's a non-BLANK Sample
-                        # Use a fixed color for all non-blank samples
-                        grid[r, c] = [0.6, 0.8, 0.6]  # Example: a shade of green
-
-            # Display the grid
-            ax.imshow(grid)
-            ax.set_title(f'Plate {i+1}')
-            
-            # Add grid lines
-            ax.set_xticks(np.arange(-.5, self.cols, 1), minor=True)
-            ax.set_yticks(np.arange(-.5, self.rows, 1), minor=True)
-            ax.grid(which='minor', color='black', linestyle='-', linewidth=1)
-            
-            # Add row and column labels
-            ax.set_xticks(np.arange(self.cols))
-            ax.set_yticks(np.arange(self.rows))
-            ax.set_xticklabels([str(i+1) for i in range(self.cols)])
-            ax.set_yticklabels([chr(ord('A') + i) for i in range(self.rows)])
-
-            # Add cell IDs (sample_id)
-            for r in range(self.rows):
-                for c in range(self.cols):
-                    sample_obj = plate.get_sample(r, c)
-                    if sample_obj:
-                        display_text = sample_obj.unique_id if sample_obj.unique_id else ""
-                        
-                        # Calculate text color based on background
-                        bg_color = grid[r, c]
-                        # Simple luminance check for text color
-                        luminance = 0.299 * bg_color[0] + 0.587 * bg_color[1] + 0.114 * bg_color[2]
-                        text_color = 'black' if luminance > 0.5 else 'white'
-                        
-                        # Add the cell ID
-                        ax.text(c, r, display_text, 
-                               ha='center', va='center',
-                               color=text_color,
-                               fontsize=7,
-                               bbox=dict(facecolor='none', 
-                                       edgecolor='none',
-                                       alpha=0.7))
-
-        plt.tight_layout()
-        
-        # Convert plot to base64 string
+        # Create PDF with PdfPages
         buf = io.BytesIO()
-        plt.savefig(buf, format='png', dpi=300, bbox_inches='tight')
-        buf.seek(0)
-        img_str = base64.b64encode(buf.read()).decode()
-        plt.close()
-        
-        return img_str
+        with PdfPages(buf) as pdf:
+            for i, plate in enumerate(self.plates):
+                # Create a new figure for each plate
+                fig, ax = plt.subplots(1, 1, figsize=(fig_width, fig_height), facecolor='white')
+                ax.set_facecolor('white')
 
-    def get_plate_visualization_html(self) -> str:
-        """Return HTML for displaying the plate visualization."""
-        img_str = self.generate_plate_visualization()
-        if img_str:
-            return f'<img src="data:image/png;base64,{img_str}" style="max-width:100%;">'
+                # Create a grid of cells
+                grid = np.zeros((self.rows, self.cols, 3))
+                
+                # Fill in the colors based on sample type (BLANK, Empty, or Sample)
+                for r in range(self.rows):
+                    for c in range(self.cols):
+                        sample_obj = plate.get_sample(r, c) # Get the Sample object
+
+                        if sample_obj is None:
+                            grid[r, c] = [1, 1, 1]  # White for empty cells
+                        elif sample_obj.sample_type == SampleType.BLANK:
+                            grid[r, c] = [0.95, 0.95, 0.95]  # Very light gray for blanks
+                        else: # It's a non-BLANK Sample
+                            # Use a light blue color for samples
+                            grid[r, c] = [0.7, 0.85, 0.95]  # Light blue for samples
+
+                # Display the grid
+                ax.imshow(grid)
+                ax.set_title(f'Plate {i+1}', fontsize=12, fontweight='bold', color='black', pad=10)
+                
+                # Add grid lines
+                ax.set_xticks(np.arange(-.5, self.cols, 1), minor=True)
+                ax.set_yticks(np.arange(-.5, self.rows, 1), minor=True)
+                ax.grid(which='minor', color='#e0e0e0', linestyle='-', linewidth=0.5)
+                
+                # Add row and column labels with better visibility
+                ax.set_xticks(np.arange(self.cols))
+                ax.set_yticks(np.arange(self.rows))
+                ax.set_xticklabels([str(i+1) for i in range(self.cols)])
+                ax.set_yticklabels([chr(ord('A') + i) for i in range(self.rows)])
+                
+                # Style the tick labels for better visibility
+                ax.tick_params(axis='both', which='major', labelsize=10, colors='black')
+                ax.tick_params(axis='both', which='minor', labelsize=8, colors='black')
+
+                # Add cell IDs (sample_id)
+                for r in range(self.rows):
+                    for c in range(self.cols):
+                        sample_obj = plate.get_sample(r, c)
+                        if sample_obj:
+                            display_text = sample_obj.unique_id if sample_obj.unique_id else ""
+                            
+                            # Always use black text for maximum contrast against white/light backgrounds
+                            text_color = 'black'
+                            
+                            # Add the cell ID with maximum contrast
+                            ax.text(c, r, display_text, 
+                                   ha='center', va='center',
+                                   color=text_color,
+                                   fontsize=8,
+                                   weight='bold',
+                                   bbox=dict(facecolor='white', 
+                                           edgecolor='#333333',
+                                           alpha=1.0,
+                                           boxstyle='round,pad=0.3',
+                                           linewidth=1))
+
+                plt.tight_layout()
+                
+                # Add the page to the PDF
+                pdf.savefig(fig, bbox_inches='tight')
+                plt.close(fig)
+
+        # Convert PDF to base64 string
+        buf.seek(0)
+        pdf_str = base64.b64encode(buf.read()).decode()
+        
+        return pdf_str
+
+    def get_plate_visualization_pdf_html(self) -> str:
+        """Return HTML for displaying the PDF visualization with download link."""
+        pdf_str = self.generate_plate_visualization_pdf()
+        if pdf_str:
+            return f'''
+            <div style="text-align: center; margin: 20px 0;">
+                <a href="data:application/pdf;base64,{pdf_str}" 
+                   download="plate_layouts.pdf" 
+                   style="background-color: #007bff; color: white; padding: 12px 24px; 
+                          text-decoration: none; border-radius: 5px; font-weight: bold;">
+                    Download PDF
+                </a>
+            </div>
+            '''
         return "No plates to visualize"
+
+    def get_pdf_data(self) -> bytes:
+        """Return the PDF data as bytes for direct download."""
+        pdf_str = self.generate_plate_visualization_pdf()
+        if pdf_str:
+            return base64.b64decode(pdf_str)
+        return None
+
+    def get_detailed_csv_data(self) -> bytes:
+        """Return the detailed CSV data as bytes for direct download."""
+        csv_string = self.to_detailed_csv_string()
+        return csv_string.encode('utf-8')
+
+    def get_grid_csv_data(self) -> bytes:
+        """Return the grid CSV data as bytes for direct download."""
+        csv_string = self.to_csv_string()
+        return csv_string.encode('utf-8')
 
     def to_csv_string(self) -> str:
         """Generate a CSV string representation of the filled plates in a 2D grid format."""
@@ -368,5 +395,45 @@ class TestManager:
 
         # Join rows into a single CSV string
         # No need to handle None explicitly in join anymore as cell_value is always string or empty
+        csv_string = "\n".join([",".join(map(str, row)) for row in csv_data])
+        return csv_string
+
+    def to_detailed_csv_string(self) -> str:
+        """Generate a detailed CSV string with sample information for lab work."""
+        csv_data = []
+        
+        # Header row with sample details
+        header = ["Plate", "Row", "Column", "Sample_ID", "Unique_ID", "Species", "Colony_Code", "Sample_Type", "Substrate", "Notes"]
+        csv_data.append(header)
+        
+        for i, plate in enumerate(self.plates):
+            for r in range(plate.rows):
+                for c in range(plate.cols):
+                    sample_obj = plate.get_sample(r, c)
+                    if sample_obj:
+                        row_data = [
+                            f"Plate {i+1}",
+                            chr(ord('A') + r),
+                            str(c + 1),
+                            sample_obj.sample_id if hasattr(sample_obj, 'sample_id') else "",
+                            sample_obj.unique_id if hasattr(sample_obj, 'unique_id') else "",
+                            sample_obj.species if hasattr(sample_obj, 'species') else "",
+                            sample_obj.colony_code if hasattr(sample_obj, 'colony_code') else "",
+                            sample_obj.sample_type.value if hasattr(sample_obj, 'sample_type') else "",
+                            sample_obj.substrate if hasattr(sample_obj, 'substrate') else "",
+                            sample_obj.notes if hasattr(sample_obj, 'notes') else ""
+                        ]
+                        csv_data.append(row_data)
+                    else:
+                        # Empty cell
+                        row_data = [
+                            f"Plate {i+1}",
+                            chr(ord('A') + r),
+                            str(c + 1),
+                            "", "", "", "", "", "", ""
+                        ]
+                        csv_data.append(row_data)
+        
+        # Join rows into a single CSV string
         csv_string = "\n".join([",".join(map(str, row)) for row in csv_data])
         return csv_string
