@@ -1,5 +1,6 @@
 import io
 import base64
+from datamodel.sample import SampleType
 import streamlit as st
 import pandas as pd
 
@@ -295,13 +296,10 @@ def step1_upload_csv():
         df.to_csv(temp_csv, index=False)
         temp_csv.seek(0)
         samples = parse_samples(temp_csv)
+        blank_samples = [s for s in samples if s.sample_type == SampleType.BLANK]
         st.session_state["samples"] = samples
-        st.markdown(f'<div style="background-color: #d4edda; border: 1px solid #c3e6cb; color: #155724; padding: 10px; border-radius: 5px; margin: 10px 0;"><strong>✅ Success:</strong> Loaded {len(samples)} samples from file.</div>', unsafe_allow_html=True)
-    # elif "samples" in st.session_state:
-    #     st.markdown(f'<div style="background-color: #d1ecf1; border: 1px solid #bee5eb; color: #0c5460; padding: 10px; border-radius: 5px; margin: 10px 0;"><strong>ℹ️ Info:</strong> {len(st.session_state["samples"])} samples loaded.</div>', unsafe_allow_html=True)
-    # else:
-    #     st.markdown('<div style="background-color: #d1ecf1; border: 1px solid #bee5eb; color: #0c5460; padding: 10px; border-radius: 5px; margin: 10px 0;"><strong>ℹ️ Info:</strong> No file uploaded yet.</div>', unsafe_allow_html=True)
-    if (uploaded_file or "samples" in st.session_state):
+        st.markdown(f'<div style="background-color: #d4edda; border: 1px solid #c3e6cb; color: #155724; padding: 10px; border-radius: 5px; margin: 10px 0;"><strong>✅ Success:</strong> Loaded {len(samples)} total samples ({len(blank_samples)} BLANK samples).</div>', unsafe_allow_html=True)
+    if (uploaded_file):
         if st.button("Next"):
             st.session_state['step'] = 2
             st.rerun()
@@ -414,12 +412,60 @@ def step3_display_plates():
         if st.button("Go to Step 1"):
             st.session_state['step'] = 1
             st.rerun()
+    
     manager = TestManager(samples, ROWS, COLS, blank_positions)
     manager.fill_plates()
 
-
     # Image display and download
     st.markdown(manager.get_plate_visualization_pdf_html(), unsafe_allow_html=True)
+
+    # Display plate statistics
+    st.header("Plate Statistics")
+    plate_stats = manager.get_plate_statistics()
+    
+    # Create columns for better layout
+    cols = st.columns(len(plate_stats))
+    
+    for i, stats in enumerate(plate_stats):
+        with cols[i]:
+            st.markdown(f"**Plate {stats['plate_number']}**")
+            
+            # Sample type counts
+            st.markdown(f"**Sample Types:**")
+            st.markdown(f"• ADULT: {stats['type_counts']['ADULT']}")
+            st.markdown(f"• CHICK: {stats['type_counts']['CHICK']}")
+            st.markdown(f"• BLANK: {stats['type_counts']['BLANK']}")
+            st.markdown(f"• **Total Samples:** {stats['total_samples']}")
+            st.markdown(f"• **Utilization:** {stats['utilization']:.1%}")
+            
+            # Colony counts
+            if stats['colony_counts']:
+                st.markdown(f"**Colonies:**")
+                for colony, count in sorted(stats['colony_counts'].items()):
+                    st.markdown(f"• {colony}: {count}")
+            else:
+                st.markdown("**Colonies:** None")
+            
+            st.markdown("---")
+
+    # Display algorithm metrics
+    st.header("Algorithm Performance Metrics")
+    metrics = manager.algorithm_metrics()
+    
+    metric_cols = st.columns(2)
+    
+    with metric_cols[0]:
+        st.metric("Colony Balance Score", f"{metrics['colony_balance_score']:.3f}", 
+                 help="Lower is better - measures how evenly colonies are distributed across plates")
+        st.metric("Sample Type Balance Score", f"{metrics['blank_adult_chick_balance_score']:.3f}",
+                 help="Lower is better - measures how evenly ADULT/CHICK/BLANK samples are distributed")
+    
+    with metric_cols[1]:
+        st.metric("Contiguity Score", f"{metrics['contiguity_score']:.3f}",
+                 help="Average length of contiguous sample runs - higher is better for lab efficiency")
+        st.metric("Overall Adherence Score", f"{metrics['overall_adherence_score']:.3f}",
+                 help="Lower is better - overall measure of how well the algorithm followed the rules")
+
 
     with st.expander("Show Plates"):
         for i, plate in enumerate(manager.plates):

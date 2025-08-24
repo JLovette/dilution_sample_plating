@@ -4,7 +4,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_pdf import PdfPages
 from typing import List, Tuple
-import textwrap  # <-- Add this import
 
 from datamodel.plate import Plate
 from datamodel.sample import Sample, SampleType
@@ -63,20 +62,50 @@ class TestManager:
     def _place_non_blank_samples(self):
         """
         Place non-BLANK samples in available positions across the plates.
+        First balances colonies across plates, then balances adult/chick ratios.
         """
         non_blank_samples = [s for s in self.samples if s.sample_type != SampleType.BLANK]
         cell_positions = self._get_available_cell_positions()
 
+        if not non_blank_samples:
+            return
+
+        # Group samples by colony and sample type for balanced distribution
+        colony_groups = {}
+        for sample in non_blank_samples:
+            if sample.colony_code not in colony_groups:
+                colony_groups[sample.colony_code] = {'ADULT': [], 'CHICK': []}
+            if sample.sample_type == SampleType.ADULT:
+                colony_groups[sample.colony_code]['ADULT'].append(sample)
+            elif sample.sample_type == SampleType.CHICK:
+                colony_groups[sample.colony_code]['CHICK'].append(sample)
+
+        # Create a balanced distribution order
+        balanced_samples = []
+        max_samples_per_colony = max(len(colony_groups[colony]['ADULT']) + len(colony_groups[colony]['CHICK']) 
+                                   for colony in colony_groups)
+
+        # Distribute samples by colony and type in a round-robin fashion
+        for i in range(max_samples_per_colony):
+            for colony in sorted(colony_groups.keys()):
+                # Add ADULT sample if available
+                if i < len(colony_groups[colony]['ADULT']):
+                    balanced_samples.append(colony_groups[colony]['ADULT'][i])
+                # Add CHICK sample if available
+                if i < len(colony_groups[colony]['CHICK']):
+                    balanced_samples.append(colony_groups[colony]['CHICK'][i])
+
+        # Place samples on plates in the balanced order
         sample_idx = 0
         for plate_idx in range(len(self.plates)):
             for r, c in cell_positions:
                 if self.plates[plate_idx].get_sample(r, c) is None:
-                    if sample_idx < len(non_blank_samples):
-                        self.plates[plate_idx].set_sample(r, c, non_blank_samples[sample_idx])
+                    if sample_idx < len(balanced_samples):
+                        self.plates[plate_idx].set_sample(r, c, balanced_samples[sample_idx])
                         sample_idx += 1
                     else:
                         break
-            if sample_idx >= len(non_blank_samples):
+            if sample_idx >= len(balanced_samples):
                 break
 
     def fill_plates(self):
@@ -163,8 +192,51 @@ class TestManager:
             result.append(avg_run)
         return result
 
+    def get_plate_statistics(self):
+        """Return detailed statistics for each plate including colony counts and sample type counts."""
+        plate_stats = []
+        
+        for i, plate in enumerate(self.plates):
+            # Get colony counts for this plate
+            colony_counts = {}
+            for r in range(plate.rows):
+                for c in range(plate.cols):
+                    sample_obj = plate.get_sample(r, c)
+                    if sample_obj and sample_obj.sample_type != SampleType.BLANK:
+                        colony = sample_obj.colony_code
+                        colony_counts[colony] = colony_counts.get(colony, 0) + 1
+            
+            # Get sample type counts for this plate
+            type_counts = {"BLANK": 0, "ADULT": 0, "CHICK": 0}
+            for r in range(plate.rows):
+                for c in range(plate.cols):
+                    sample_obj = plate.get_sample(r, c)
+                    if sample_obj:
+                        if sample_obj.sample_type == SampleType.BLANK:
+                            type_counts["BLANK"] += 1
+                        elif sample_obj.sample_type == SampleType.ADULT:
+                            type_counts["ADULT"] += 1
+                        elif sample_obj.sample_type == SampleType.CHICK:
+                            type_counts["CHICK"] += 1
+            
+            # Calculate total samples on this plate
+            total_samples = type_counts["ADULT"] + type_counts["CHICK"]
+            
+            plate_stats.append({
+                "plate_number": i + 1,
+                "colony_counts": colony_counts,
+                "type_counts": type_counts,
+                "total_samples": total_samples,
+                "utilization": total_samples / (plate.rows * plate.cols) if plate.rows * plate.cols > 0 else 0
+            })
+        
+        return plate_stats
+
     def algorithm_metrics(self):
         """Return a dict of summary metrics for algorithm performance."""
+        # Get detailed plate statistics
+        plate_stats = self.get_plate_statistics()
+        
         # 1. Colony balance score
         colony_counts_per_plate = self.colony_balance()
         all_colonies = set()
@@ -195,11 +267,7 @@ class TestManager:
         contiguity_score = float(np.mean(contiguity_scores)) if contiguity_scores else 0.0
 
         # 4. Plate utilization
-        utilizations = []
-        for plate in self.plates:
-            total = plate.rows * plate.cols
-            non_blank = sum(1 for r in range(plate.rows) for c in range(plate.cols) if plate.get_sample(r, c) and plate.get_sample(r, c) != "BLANK")
-            utilizations.append(non_blank / total if total else 0)
+        utilizations = [stats["utilization"] for stats in plate_stats]
         plate_utilization = float(np.mean(utilizations)) if utilizations else 0.0
 
         # 5. Overall adherence score (lower is better)
@@ -219,7 +287,8 @@ class TestManager:
             "blank_adult_chick_balance_score": blank_adult_chick_balance_score,
             "contiguity_score": contiguity_score,
             "plate_utilization": plate_utilization,
-            "overall_adherence_score": overall
+            "overall_adherence_score": overall,
+            "plate_statistics": plate_stats
         }
 
     def generate_plate_visualization_pdf(self) -> str:
