@@ -481,13 +481,16 @@ def step3_display_plates():
     # Image display and download
     st.markdown(manager.get_plate_visualization_pdf_html(), unsafe_allow_html=True)
     
-    st.download_button(
-        label="Download CSV",
-        data=manager.get_grid_csv_data(),
-        file_name="plate_layouts_grid.csv",
-        mime="text/csv",
-        help="Download plate layouts in a grid format showing sample positions"
-    )
+    st.markdown("""
+    <div style="text-align: center; margin: 20px 0;">
+        <a href="data:text/csv;base64,""" + base64.b64encode(manager.get_grid_csv_data()).decode() + """" 
+           download="plate_layouts_grid.csv" 
+           style="background-color: #007bff; color: white; padding: 12px 24px; 
+                  text-decoration: none; border-radius: 5px; font-weight: bold;">
+            Download CSV
+        </a>
+    </div>
+    """, unsafe_allow_html=True)
 
     with st.expander("Show Plates"):
         for i, plate in enumerate(manager.plates):
