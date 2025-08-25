@@ -281,6 +281,10 @@ if 'samples' not in st.session_state:
     st.session_state['samples'] = []
 if 'blank_positions' not in st.session_state:
     st.session_state['blank_positions'] = []
+if 'colony_weight' not in st.session_state:
+    st.session_state['colony_weight'] = 1.0
+if 'type_weight' not in st.session_state:
+    st.session_state['type_weight'] = 2.0
 
 # Fixed plate dimensions
 ROWS = 8
@@ -288,7 +292,7 @@ COLS = 12
 
 # --- Step 1: Upload CSV ---
 def step1_upload_csv():
-    st.header("Step 1: Upload Sample CSV File")
+    st.header("1: Upload Sample CSV File")
     uploaded_file = st.file_uploader("Choose a CSV file", type=["csv"])
     if uploaded_file:
         df = pd.read_csv(uploaded_file)
@@ -297,8 +301,12 @@ def step1_upload_csv():
         temp_csv.seek(0)
         samples = parse_samples(temp_csv)
         blank_samples = [s for s in samples if s.sample_type == SampleType.BLANK]
+        adult_samples = [s for s in samples if s.sample_type == SampleType.ADULT]
+        chick_samples = [s for s in samples if s.sample_type == SampleType.CHICK]
         st.session_state["samples"] = samples
-        st.markdown(f'<div style="background-color: #d4edda; border: 1px solid #c3e6cb; color: #155724; padding: 10px; border-radius: 5px; margin: 10px 0;"><strong>✅ Success:</strong> Loaded {len(samples)} total samples ({len(blank_samples)} BLANK samples).</div>', unsafe_allow_html=True)
+        colonies = set(s.colony_code for s in samples if s.colony_code and s.sample_type != SampleType.BLANK)
+        st.markdown(f'<div style="background-color: #d4edda; border: 1px solid #c3e6cb; color: #155724; padding: 10px; border-radius: 5px; margin: 10px 0;">Loaded {len(samples)} total samples for {len(colonies)} colonies ({len(blank_samples)} BLANK, {len(adult_samples)} ADULT, {len(chick_samples)} CHICK)</div>', unsafe_allow_html=True)
+
     if (uploaded_file):
         if st.button("Next"):
             st.session_state['step'] = 2
@@ -308,7 +316,7 @@ def step1_upload_csv():
 
 # --- Step 2: BLANK Selection & Summary ---
 def step2_blank_selection():
-    st.header("Step 2: Set BLANK Sample Locations")
+    st.header("2: Set BLANK Sample Locations")
 
     samples = st.session_state.get("samples")
 
@@ -370,7 +378,7 @@ def step2_blank_selection():
     
     # Apply custom CSS class for tighter spacing
     st.markdown('<div class="quick-actions-section">', unsafe_allow_html=True)
-    st.markdown("**Quick Actions:**")
+    # st.markdown("**Quick Actions:**")
     
     # First row: Use Defaults and Clear buttons
     row1_col1, row1_col2 = st.columns([1, 1])
@@ -386,6 +394,58 @@ def step2_blank_selection():
             st.session_state.blank_positions = []
             st.success("🧹 Cleared all BLANK positions!")
             st.rerun()
+
+
+    # Algorithm Weight Settings
+    st.markdown("---")
+    st.subheader("Algo Settings")
+    st.markdown("Adjust how the algorithm prioritizes colony distribution vs. adult/chick ratio balancing:")
+    
+    weight_cols = st.columns(2)
+    
+    with weight_cols[0]:
+        st.markdown("**Colony Balance Weight**")
+        st.markdown("Higher values prioritize even colony distribution across plates")
+        colony_weight = st.slider(
+            "Colony Weight", 
+            min_value=0.1, 
+            max_value=5.0, 
+            value=st.session_state.colony_weight, 
+            step=0.1,
+            help="Weight for colony balance (default: 1.0). Higher values = more emphasis on spreading colonies evenly."
+        )
+    
+    with weight_cols[1]:
+        st.markdown("**Adult/Chick Ratio Weight**")
+        st.markdown("Higher values prioritize mixing adult and chick samples on each plate")
+        type_weight = st.slider(
+            "Type Weight", 
+            min_value=0.1, 
+            max_value=5.0, 
+            value=st.session_state.type_weight, 
+            step=0.1,
+            help="Weight for adult/chick balance (default: 2.0). Higher values = more emphasis on preventing segmentation."
+        )
+    
+    # Update session state when weights change
+    if colony_weight != st.session_state.colony_weight:
+        st.session_state.colony_weight = colony_weight
+        st.rerun()
+    
+    if type_weight != st.session_state.type_weight:
+        st.session_state.type_weight = type_weight
+        st.rerun()
+    
+    # Show current balance preview
+    st.markdown("**Current Balance Preview:**")
+    if colony_weight > type_weight:
+        st.info("**Colony-focused**: Colonies will be distributed more evenly, but adult/chick ratios may be less balanced.")
+    elif type_weight > colony_weight:
+        st.info("**Ratio-focused**: Adult and chick samples will be mixed better, but colony distribution may be less even.")
+    else:
+        st.info("**Balanced**: Equal emphasis on both colony distribution and adult/chick ratios.")
+    
+    st.markdown(f"**Colony Weight:** {colony_weight:.1f} | **Type Weight:** {type_weight:.1f}")
     
     # Second row: Back and Next buttons
     row2_col1, row2_col2 = st.columns([1, 1])
@@ -401,6 +461,7 @@ def step2_blank_selection():
             st.rerun()
     
     st.markdown('</div>', unsafe_allow_html=True)
+    
 
 # --- Step 3: Display Filled Plates ---
 def step3_display_plates():
@@ -413,66 +474,154 @@ def step3_display_plates():
             st.session_state['step'] = 1
             st.rerun()
     
-    manager = TestManager(samples, ROWS, COLS, blank_positions)
+    manager = TestManager(samples, ROWS, COLS, blank_positions, 
+                         st.session_state.colony_weight, st.session_state.type_weight)
     manager.fill_plates()
 
     # Image display and download
     st.markdown(manager.get_plate_visualization_pdf_html(), unsafe_allow_html=True)
 
-    # Display plate statistics
-    st.header("Plate Statistics")
-    plate_stats = manager.get_plate_statistics()
-    
-    # Create columns for better layout
-    cols = st.columns(len(plate_stats))
-    
-    for i, stats in enumerate(plate_stats):
-        with cols[i]:
-            st.markdown(f"**Plate {stats['plate_number']}**")
-            
-            # Sample type counts
-            st.markdown(f"**Sample Types:**")
-            st.markdown(f"• ADULT: {stats['type_counts']['ADULT']}")
-            st.markdown(f"• CHICK: {stats['type_counts']['CHICK']}")
-            st.markdown(f"• BLANK: {stats['type_counts']['BLANK']}")
-            st.markdown(f"• **Total Samples:** {stats['total_samples']}")
-            st.markdown(f"• **Utilization:** {stats['utilization']:.1%}")
-            
-            # Colony counts
-            if stats['colony_counts']:
-                st.markdown(f"**Colonies:**")
-                for colony, count in sorted(stats['colony_counts'].items()):
-                    st.markdown(f"• {colony}: {count}")
-            else:
-                st.markdown("**Colonies:** None")
-            
-            st.markdown("---")
-
-    # Display algorithm metrics
-    st.header("Algorithm Performance Metrics")
-    metrics = manager.algorithm_metrics()
-    
-    metric_cols = st.columns(2)
-    
-    with metric_cols[0]:
-        st.metric("Colony Balance Score", f"{metrics['colony_balance_score']:.3f}", 
-                 help="Lower is better - measures how evenly colonies are distributed across plates")
-        st.metric("Sample Type Balance Score", f"{metrics['blank_adult_chick_balance_score']:.3f}",
-                 help="Lower is better - measures how evenly ADULT/CHICK/BLANK samples are distributed")
-    
-    with metric_cols[1]:
-        st.metric("Contiguity Score", f"{metrics['contiguity_score']:.3f}",
-                 help="Average length of contiguous sample runs - higher is better for lab efficiency")
-        st.metric("Overall Adherence Score", f"{metrics['overall_adherence_score']:.3f}",
-                 help="Lower is better - overall measure of how well the algorithm followed the rules")
-
-
     with st.expander("Show Plates"):
         for i, plate in enumerate(manager.plates):
             st.text(plate.to_string(f"PLATE {i+1}"))
 
-    if st.button("Back"):
-        st.session_state['step'] = 2
+    with st.expander("Plate Statistics", expanded=False):
+        plate_stats = manager.get_plate_statistics()
+        
+        # Create a more visually appealing layout using Streamlit components
+        # Use columns to create a grid layout
+        num_plates = len(plate_stats)
+        cols_per_row = min(3, num_plates)  # Max 3 plates per row
+        
+        for i in range(0, num_plates, cols_per_row):
+            row_cols = st.columns(cols_per_row)
+            for j in range(cols_per_row):
+                if i + j < num_plates:
+                    stats = plate_stats[i + j]
+                    with row_cols[j]:
+                        # Create a styled container for each plate
+                        with st.container():
+                            # Plate header with custom styling
+                            st.markdown(f"""
+                            <div style="
+                                background: linear-gradient(90deg, #1f77b4, #0d5aa7);
+                                color: white;
+                                padding: 1rem;
+                                border-radius: 10px 10px 0 0;
+                                text-align: center;
+                                font-weight: bold;
+                                font-size: 1.1rem;
+                                margin-bottom: 0;
+                            ">
+                            Plate {stats['plate_number']}
+                            </div>
+                            """, unsafe_allow_html=True)
+                            
+                            # Plate content with border and background
+                            st.markdown(f"""
+                            <div style="
+                                border: 2px solid #dee2e6;
+                                border-top: none;
+                                border-radius: 0 0 10px 10px;
+                                padding: 1rem;
+                                background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+                                margin-bottom: 1rem;
+                            ">
+                            """, unsafe_allow_html=True)
+                            
+                            # Sample Types Section
+                            st.markdown("**📊 Sample Types**")
+                            col1, col2 = st.columns(2)
+                            with col1:
+                                st.markdown(f"**ADULT:** {stats['type_counts']['ADULT']}")
+                                st.markdown(f"**CHICK:** {stats['type_counts']['CHICK']}")
+                            with col2:
+                                st.markdown(f"**BLANK:** {stats['type_counts']['BLANK']}")
+                                st.markdown(f"**Total:** {stats['total_samples']}")
+                            
+                            st.markdown("---")
+                            
+                            # Colonies Section
+                            st.markdown("**🏝️ Colonies**")
+                            if stats['colony_counts']:
+                                for colony, count in sorted(stats['colony_counts'].items()):
+                                    st.markdown(f"• **{colony}:** {count}")
+                            else:
+                                st.markdown("*No colonies*")
+                            
+                            st.markdown("</div>", unsafe_allow_html=True)
+
+    # Display current algorithm settings
+    st.header("Algorithm Settings")
+    settings_cols = st.columns(3)
+    
+    with settings_cols[0]:
+        st.metric("Colony Weight", f"{st.session_state.colony_weight:.1f}")
+    with settings_cols[1]:
+        st.metric("Type Weight", f"{st.session_state.type_weight:.1f}")
+    with settings_cols[2]:
+        balance_type = "Colony-focused" if st.session_state.colony_weight > st.session_state.type_weight else \
+                      "Ratio-focused" if st.session_state.type_weight > st.session_state.colony_weight else "Balanced"
+        st.metric("Balance Type", balance_type)
+
+    
+    # Display detailed balance information in styled container
+    st.header("Balance Analysis")
+    
+    # Create a styled balance analysis container
+    with st.container():        
+        # Colony balance details
+        st.subheader("Colony Distribution Across Plates")
+        colony_balance = manager.colony_balance()
+        colony_df = pd.DataFrame(colony_balance).fillna(0)
+        colony_df.index = [f"Plate {i+1}" for i in range(len(colony_df))]
+        st.dataframe(colony_df, use_container_width=True)
+        
+        # Adult/Chick ratio details
+        st.subheader("Adult/Chick Sample Distribution")
+        type_counts = manager.blank_adult_chick_counts()
+        type_df = pd.DataFrame(type_counts)
+        type_df.index = [f"Plate {i+1}" for i in range(len(type_df))]
+        
+        # Calculate ratios
+        type_df['ADULT_RATIO'] = (type_df['ADULT'] / (type_df['ADULT'] + type_df['CHICK'])).fillna(0)
+        type_df['CHICK_RATIO'] = (type_df['CHICK'] / (type_df['ADULT'] + type_df['CHICK'])).fillna(0)
+        
+        st.dataframe(type_df, use_container_width=True)
+        
+        # Summary statistics
+        st.subheader("Balance Summary")
+        summary_cols = st.columns(3)
+        
+        with summary_cols[0]:
+            metrics = manager.algorithm_metrics()
+            st.metric("Colony Balance (Std Dev)", f"{metrics['colony_balance_score']:.2f}")
+            st.metric("Type Balance (Std Dev)", f"{metrics['blank_adult_chick_balance_score']:.2f}")
+        
+        with summary_cols[1]:
+            # Calculate ideal distribution
+            total_adult = sum(type_df['ADULT'])
+            total_chick = sum(type_df['CHICK'])
+            ideal_adult_per_plate = total_adult / len(manager.plates) if len(manager.plates) > 0 else 0
+            ideal_chick_per_plate = total_chick / len(manager.plates) if len(manager.plates) > 0 else 0
+            
+            st.metric("Ideal ADULT/Plate", f"{ideal_adult_per_plate:.1f}")
+            st.metric("Ideal CHICK/Plate", f"{ideal_chick_per_plate:.1f}")
+        
+        with summary_cols[2]:
+            # Show worst case deviations
+            max_colony_dev = max([max(d.values()) if d else 0 for d in colony_balance]) - min([min(d.values()) if d else 0 for d in colony_balance])
+            max_type_dev = max(type_df['ADULT'] + type_df['CHICK']) - min(type_df['ADULT'] + type_df['CHICK'])
+            
+            st.metric("Max Colony Deviation", f"{max_colony_dev:.0f}")
+            st.metric("Max Type Deviation", f"{max_type_dev:.0f}")
+        
+        st.markdown("</div>", unsafe_allow_html=True)
+
+    # Navigation button
+    st.markdown("---")
+    if st.button("New Plating", type="primary", use_container_width=True):
+        st.session_state['step'] = 1
         st.rerun()
 
 # Top-level app sequencing

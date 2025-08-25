@@ -9,11 +9,14 @@ from datamodel.plate import Plate
 from datamodel.sample import Sample, SampleType
 
 class TestManager:
-    def __init__(self, samples: List[Sample], rows: int, cols: int, blank_positions: List[Tuple[int, int]]):
+    def __init__(self, samples: List[Sample], rows: int, cols: int, blank_positions: List[Tuple[int, int]], 
+                 colony_weight: float = 1.0, type_weight: float = 2.0):
         self.samples = sorted(samples, key=lambda s: s.sample_id)
         self.rows = rows
         self.cols = cols
         self.blank_positions = blank_positions
+        self.colony_weight = colony_weight
+        self.type_weight = type_weight
         num_plates = self._num_required_plates()
         self.plates: List[Plate] = [Plate(self.rows, self.cols) for _ in range(num_plates)]
 
@@ -62,7 +65,7 @@ class TestManager:
     def _place_non_blank_samples(self):
         """
         Place non-BLANK samples in available positions across the plates.
-        First balances colonies across plates, then balances adult/chick ratios.
+        Uses a combined scoring approach to balance both colony counts and adult/chick ratios simultaneously.
         """
         non_blank_samples = [s for s in self.samples if s.sample_type != SampleType.BLANK]
         cell_positions = self._get_available_cell_positions()
@@ -70,7 +73,7 @@ class TestManager:
         if not non_blank_samples:
             return
 
-        # Group samples by colony and sample type for balanced distribution
+        # Group samples by colony and sample type
         colony_groups = {}
         for sample in non_blank_samples:
             if sample.colony_code not in colony_groups:
@@ -80,33 +83,109 @@ class TestManager:
             elif sample.sample_type == SampleType.CHICK:
                 colony_groups[sample.colony_code]['CHICK'].append(sample)
 
-        # Create a balanced distribution order
-        balanced_samples = []
+        # Initialize plate tracking for balancing
+        plate_colony_counts = [{} for _ in range(len(self.plates))]
+        plate_type_counts = [{"ADULT": 0, "CHICK": 0} for _ in range(len(self.plates))]
+        
+        # Calculate target distributions
+        total_adult = sum(len(colony_groups[c]['ADULT']) for c in colony_groups)
+        total_chick = sum(len(colony_groups[c]['CHICK']) for c in colony_groups)
+        total_samples = total_adult + total_chick
+        
+        if len(self.plates) > 0:
+            target_adult_per_plate = total_adult / len(self.plates)
+            target_chick_per_plate = total_chick / len(self.plates)
+        else:
+            target_adult_per_plate = target_chick_per_plate = 0
+
+        # Create a combined sample list with alternating types for better mixing
+        combined_samples = []
         max_samples_per_colony = max(len(colony_groups[colony]['ADULT']) + len(colony_groups[colony]['CHICK']) 
                                    for colony in colony_groups)
-
-        # Distribute samples by colony and type in a round-robin fashion
+        
+        # Interleave adult and chick samples from each colony
         for i in range(max_samples_per_colony):
             for colony in sorted(colony_groups.keys()):
                 # Add ADULT sample if available
                 if i < len(colony_groups[colony]['ADULT']):
-                    balanced_samples.append(colony_groups[colony]['ADULT'][i])
+                    combined_samples.append(colony_groups[colony]['ADULT'][i])
                 # Add CHICK sample if available
                 if i < len(colony_groups[colony]['CHICK']):
-                    balanced_samples.append(colony_groups[colony]['CHICK'][i])
+                    combined_samples.append(colony_groups[colony]['CHICK'][i])
 
-        # Place samples on plates in the balanced order
-        sample_idx = 0
-        for plate_idx in range(len(self.plates)):
-            for r, c in cell_positions:
-                if self.plates[plate_idx].get_sample(r, c) is None:
-                    if sample_idx < len(balanced_samples):
-                        self.plates[plate_idx].set_sample(r, c, balanced_samples[sample_idx])
-                        sample_idx += 1
-                    else:
+        # Place samples using combined scoring for both colony and type balance
+        for sample in combined_samples:
+            best_plate = self._find_best_plate_for_sample(
+                sample, plate_colony_counts, plate_type_counts, 
+                target_adult_per_plate, target_chick_per_plate
+            )
+            
+            if best_plate is not None:
+                # Find available position on best plate
+                for r, c in cell_positions:
+                    if self.plates[best_plate].get_sample(r, c) is None:
+                        self.plates[best_plate].set_sample(r, c, sample)
+                        
+                        # Update tracking
+                        colony = sample.colony_code
+                        plate_colony_counts[best_plate][colony] = plate_colony_counts[best_plate].get(colony, 0) + 1
+                        if sample.sample_type == SampleType.ADULT:
+                            plate_type_counts[best_plate]["ADULT"] += 1
+                        elif sample.sample_type == SampleType.CHICK:
+                            plate_type_counts[best_plate]["CHICK"] += 1
                         break
-            if sample_idx >= len(balanced_samples):
-                break
+
+    def _find_best_plate_for_sample(self, sample, plate_colony_counts, plate_type_counts, 
+                                   target_adult_per_plate, target_chick_per_plate):
+        """
+        Find the best plate for a sample by scoring both colony balance and type balance.
+        Returns the plate index with the best combined score.
+        """
+        best_plate = None
+        best_score = float('inf')
+        
+        for plate_idx in range(len(self.plates)):
+            # Check if this plate has available positions
+            has_available = False
+            for r in range(self.rows):
+                for c in range(self.cols):
+                    if (r, c) not in self.blank_positions and self.plates[plate_idx].get_sample(r, c) is None:
+                        has_available = True
+                        break
+                if has_available:
+                    break
+            
+            if not has_available:
+                continue
+            
+            # Calculate colony balance score (lower is better)
+            current_colony_count = plate_colony_counts[plate_idx].get(sample.colony_code, 0)
+            colony_score = current_colony_count
+            
+            # Calculate type balance score (lower is better)
+            current_adult = plate_type_counts[plate_idx]["ADULT"]
+            current_chick = plate_type_counts[plate_idx]["CHICK"]
+            
+            if sample.sample_type == SampleType.ADULT:
+                # Prefer plates with fewer adults relative to target
+                type_score = abs((current_adult + 1) - target_adult_per_plate)
+            else:  # CHICK
+                # Prefer plates with fewer chicks relative to target
+                type_score = abs((current_chick + 1) - target_chick_per_plate)
+            
+            # Combined score with weights (adjust these weights to prioritize colony vs type balance)
+            combined_score = (self.colony_weight * colony_score) + (self.type_weight * type_score)
+            
+            if combined_score < best_score:
+                best_score = combined_score
+                best_plate = plate_idx
+        
+        return best_plate
+
+
+
+
+
 
     def fill_plates(self):
         """Fill plates with samples, placing BLANKs first then other samples."""        
