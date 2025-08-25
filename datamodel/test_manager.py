@@ -135,6 +135,76 @@ class TestManager:
                             plate_type_counts[best_plate]["CHICK"] += 1
                         break
 
+    def _sort_samples_by_id_within_plates(self):
+        """
+        Sort non-blank samples by ID within each plate while preserving BLANK positions.
+        This ensures samples are in numerical order for easier plate setup.
+        """
+        for plate in self.plates:
+            # Collect all non-blank samples from this plate with their positions
+            non_blank_samples_with_positions = []
+            for r in range(plate.rows):
+                for c in range(plate.cols):
+                    sample_obj = plate.get_sample(r, c)
+                    if sample_obj and sample_obj.sample_type != SampleType.BLANK:
+                        non_blank_samples_with_positions.append((r, c, sample_obj))
+            
+            if len(non_blank_samples_with_positions) <= 1:
+                continue  # No need to sort if 1 or fewer samples
+            
+            # Sort samples by ID (numerical order)
+            non_blank_samples_with_positions.sort(key=lambda x: x[2].sample_id)
+            
+            # Get available positions (excluding BLANK positions) in the same order as _get_available_cell_positions
+            available_positions = []
+            for r in range(plate.rows):
+                for c in range(plate.cols):
+                    if (r, c) not in self.blank_positions:
+                        available_positions.append((r, c))
+            
+            # Clear all non-blank samples from the plate
+            for r, c, _ in non_blank_samples_with_positions:
+                plate.set_sample(r, c, None)
+            
+            # Place sorted samples in available positions
+            for i, (_, _, sample_obj) in enumerate(non_blank_samples_with_positions):
+                if i < len(available_positions):
+                    r, c = available_positions[i]
+                    plate.set_sample(r, c, sample_obj)
+        
+        # Verify sorting was successful
+        self._verify_sample_ordering()
+
+    def _verify_sample_ordering(self):
+        """
+        Verify that non-blank samples are properly ordered by ID within each plate.
+        This is a debugging method to ensure the sorting worked correctly.
+        """
+        for plate_idx, plate in enumerate(self.plates):
+            # Collect non-blank samples in order they appear on the plate
+            plate_samples = []
+            for r in range(plate.rows):
+                for c in range(plate.cols):
+                    sample_obj = plate.get_sample(r, c)
+                    if sample_obj and sample_obj.sample_type != SampleType.BLANK:
+                        plate_samples.append(sample_obj)
+            
+            # Check if samples are in order
+            if len(plate_samples) > 1:
+                for i in range(1, len(plate_samples)):
+                    prev_id = plate_samples[i-1].sample_id
+                    curr_id = plate_samples[i].sample_id
+                    try:
+                        # Try to convert to int for numerical comparison
+                        prev_num = int(prev_id)
+                        curr_num = int(curr_id)
+                        if prev_num > curr_num:
+                            print(f"Warning: Sample ordering issue on plate {plate_idx + 1}: {prev_id} comes before {curr_id}")
+                    except ValueError:
+                        # If not numeric, use string comparison
+                        if prev_id > curr_id:
+                            print(f"Warning: Sample ordering issue on plate {plate_idx + 1}: {prev_id} comes before {curr_id}")
+
     def _find_best_plate_for_sample(self, sample, plate_colony_counts, plate_type_counts, 
                                    target_adult_per_plate, target_chick_per_plate):
         """
@@ -191,6 +261,7 @@ class TestManager:
         """Fill plates with samples, placing BLANKs first then other samples."""        
         self._place_blank_samples()
         self._place_non_blank_samples()
+        self._sort_samples_by_id_within_plates()
 
     def get_plates(self) -> List[Plate]:
         return self.plates

@@ -329,6 +329,12 @@ def step2_blank_selection():
 
     if 'blank_positions' not in st.session_state:
         st.session_state.blank_positions = []
+    
+    # Calculate and display BLANK spot recommendations
+    blank_samples = [s for s in samples if s.sample_type == SampleType.BLANK]
+    total_samples = len(samples)
+    num_plates = (total_samples + 95) // 96  # Ceiling division by 96 (8x12 plate capacity)
+    recommended_blanks_per_plate = (len(blank_samples) + num_plates - 1) // num_plates  # Ceiling division
 
     header_cols = st.columns(COLS + 1)
     for c in range(COLS):
@@ -344,6 +350,7 @@ def step2_blank_selection():
             st.session_state.blank_positions.append(pos_tuple)
         elif not is_checked and pos_tuple in st.session_state.blank_positions:
             st.session_state.blank_positions.remove(pos_tuple)
+
 
     # BLANK location checkbox grid display
     for r in range(ROWS):
@@ -374,6 +381,17 @@ def step2_blank_selection():
     st.markdown("**Check any cell to mark as BLANK.**")
     
     # Add default BLANK positions button
+    st.markdown("---")
+
+    # Alert if insufficient BLANK positions
+    current_blanks = len(st.session_state.blank_positions)
+    if current_blanks < recommended_blanks_per_plate:
+        st.markdown(f"""
+        <div style="background-color: #f8d7da; border: 1px solid #f5c6cb; color: #721c24; padding: 15px; border-radius: 8px; margin: 15px 0;">
+        ⚠️ You currently have {current_blanks} BLANK positions selected. {recommended_blanks_per_plate} is recommended to optimize the number of utilized plates. 
+        </div>
+        """, unsafe_allow_html=True)
+    
     st.markdown("---")
     
     # Apply custom CSS class for tighter spacing
@@ -480,7 +498,7 @@ def step3_display_plates():
 
     # Image display and download
     st.markdown(manager.get_plate_visualization_pdf_html(), unsafe_allow_html=True)
-    
+
     st.markdown("""
     <div style="text-align: center; margin: 20px 0;">
         <a href="data:text/csv;base64,""" + base64.b64encode(manager.get_grid_csv_data()).decode() + """" 
