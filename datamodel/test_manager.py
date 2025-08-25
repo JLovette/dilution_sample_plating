@@ -383,28 +383,43 @@ class TestManager:
             max_sid_length = max((len(s.unique_id) for s in self.samples), default=0)
         # Also consider the 'BLANK' string length
         max_sid_length = max(max_sid_length, len("BLANK"))
+        
+        # Ensure we have a reasonable minimum length for calculations
+        max_sid_length = max(max_sid_length, 10)
 
         # Estimate required cell size based on max text length and font size
         # Using a heuristic: char_width approx 0.6 * font_height
-        fontsize = 7 # Current font size
+        fontsize = 10  # Increased font size for better readability
         points_per_inch = 72
         char_width_inch = 0.6 * (fontsize / points_per_inch)
-        # Add some padding (e.g., 2 characters worth)
-        required_cell_width_text = (max_sid_length + 2) * char_width_inch
+        
+        # Calculate how many characters can fit in a reasonable cell width
+        # We want cells to be wide enough for most IDs without being too wide
+        target_cell_width_inch = 1.0  # Increased target cell width for better text fitting
+        
+        # Calculate how many characters can fit in the target width
+        chars_per_line = int(target_cell_width_inch / char_width_inch) - 3  # Leave more padding for better readability
+        
+        # If the longest ID is longer than what fits in one line, we'll need to wrap
+        if max_sid_length > chars_per_line:
+            # Calculate how many lines we need
+            lines_needed = (max_sid_length + chars_per_line - 1) // chars_per_line
+            # Increase cell height to accommodate multiple lines
+            cell_height_multiplier = max(1.0, lines_needed * 0.8)
+        else:
+            cell_height_multiplier = 1.0
 
         # Base cell size (for visual spacing even with short text)
-        cell_size_base = 0.5 # inches
-
-        # Final cell size is the maximum of base size and text-required size
-        cell_size = max(cell_size_base, required_cell_width_text)
+        cell_width = target_cell_width_inch
+        cell_height = 1.1 * cell_height_multiplier  # Increased base height for better text spacing
 
         # For PDF, we'll use a standard page size and fit each plate appropriately
-        fig_width = self.cols * cell_size
-        fig_height = self.rows * cell_size
+        fig_width = self.cols * cell_width
+        fig_height = self.rows * cell_height
 
         # Cap figure size to prevent excessively large pages
-        max_fig_width = 12  # inches
-        max_fig_height = 10  # inches
+        max_fig_width = 14  # inches - increased for better readability
+        max_fig_height = 12  # inches - increased for better readability
         fig_width = min(max_fig_width, fig_width)
         fig_height = min(max_fig_height, fig_height)
 
@@ -415,6 +430,13 @@ class TestManager:
                 # Create a new figure for each plate
                 fig, ax = plt.subplots(1, 1, figsize=(fig_width, fig_height), facecolor='white')
                 ax.set_facecolor('white')
+                
+                # Set the axis limits to ensure proper cell positioning
+                ax.set_xlim(-0.5, self.cols - 0.5)
+                ax.set_ylim(-0.5, self.rows - 0.5)
+                
+                # Invert y-axis so that row A is at the top
+                ax.invert_yaxis()
 
                 # Create a grid of cells
                 grid = np.zeros((self.rows, self.cols, 3))
@@ -434,22 +456,32 @@ class TestManager:
 
                 # Display the grid
                 ax.imshow(grid)
-                ax.set_title(f'Plate {i+1}', fontsize=12, fontweight='bold', color='black', pad=10)
+                ax.set_title(f'Plate {i+1}', fontsize=16, fontweight='bold', color='black', pad=20)
                 
                 # Add grid lines
                 ax.set_xticks(np.arange(-.5, self.cols, 1), minor=True)
                 ax.set_yticks(np.arange(-.5, self.rows, 1), minor=True)
-                ax.grid(which='minor', color='#e0e0e0', linestyle='-', linewidth=0.5)
+                ax.grid(which='minor', color='#b0b0b0', linestyle='-', linewidth=2.0)
                 
                 # Add row and column labels with better visibility
                 ax.set_xticks(np.arange(self.cols))
                 ax.set_yticks(np.arange(self.rows))
-                ax.set_xticklabels([str(i+1) for i in range(self.cols)])
-                ax.set_yticklabels([chr(ord('A') + i) for i in range(self.rows)])
+                ax.set_xticklabels([str(i+1) for i in range(self.cols)], fontsize=12, fontweight='bold')
+                ax.set_yticklabels([chr(ord('A') + i) for i in range(self.rows)], fontsize=12, fontweight='bold')
                 
                 # Style the tick labels for better visibility
-                ax.tick_params(axis='both', which='major', labelsize=10, colors='black')
-                ax.tick_params(axis='both', which='minor', labelsize=8, colors='black')
+                ax.tick_params(axis='both', which='major', labelsize=12, colors='black', width=2)
+                ax.tick_params(axis='both', which='minor', labelsize=10, colors='black')
+                
+                # Make tick marks more visible
+                ax.tick_params(axis='both', which='major', length=6, width=2)
+                ax.tick_params(axis='both', which='minor', length=4, width=1)
+                
+                # Remove axis spines for cleaner look
+                ax.spines['top'].set_visible(False)
+                ax.spines['right'].set_visible(False)
+                ax.spines['bottom'].set_visible(False)
+                ax.spines['left'].set_visible(False)
 
                 # Add cell IDs (sample_id)
                 for r in range(self.rows):
@@ -461,22 +493,87 @@ class TestManager:
                             # Always use black text for maximum contrast against white/light backgrounds
                             text_color = 'black'
                             
-                            # Add the cell ID with maximum contrast
-                            ax.text(c, r, display_text, 
-                                   ha='center', va='center',
-                                   color=text_color,
-                                   fontsize=8,
-                                   weight='bold',
-                                   bbox=dict(facecolor='white', 
-                                           edgecolor='#333333',
-                                           alpha=1.0,
-                                           boxstyle='round,pad=0.3',
-                                           linewidth=1))
+                            # Skip empty text
+                            if not display_text.strip():
+                                continue
+                            
+                            # Wrap text if it's too long for the cell
+                            if len(display_text) > chars_per_line:
+                                # Split text into multiple lines, trying to break at word boundaries
+                                wrapped_lines = []
+                                current_line = ""
+                                
+                                # Split by common delimiters first (dashes, underscores, etc.)
+                                words = display_text.replace('-', ' - ').replace('_', ' _ ').split()
+                                
+                                for word in words:
+                                    if len(current_line) + len(word) + 1 <= chars_per_line:
+                                        if current_line:
+                                            current_line += " " + word
+                                        else:
+                                            current_line = word
+                                    else:
+                                        if current_line:
+                                            wrapped_lines.append(current_line)
+                                        current_line = word
+                                
+                                if current_line:
+                                    wrapped_lines.append(current_line)
+                                
+                                # If we still have lines that are too long, force break them
+                                final_lines = []
+                                for line in wrapped_lines:
+                                    if len(line) <= chars_per_line:
+                                        final_lines.append(line)
+                                    else:
+                                        # Force break long lines, but try to break at better positions
+                                        remaining = line
+                                        while len(remaining) > chars_per_line:
+                                            # Try to break at a dash or underscore if possible
+                                            break_pos = chars_per_line
+                                            for i in range(min(chars_per_line, len(remaining)), 0, -1):
+                                                if remaining[i-1] in ['-', '_', ' ']:
+                                                    break_pos = i
+                                                    break
+                                            final_lines.append(remaining[:break_pos])
+                                            remaining = remaining[break_pos:]
+                                        if remaining:
+                                            final_lines.append(remaining)
+                                
+                                # Join lines with newline characters
+                                wrapped_text = '\n'.join(final_lines)
+                                
+                                # Add the wrapped text
+                                ax.text(c, r, wrapped_text, 
+                                       ha='center', va='center',
+                                       color=text_color,
+                                       fontsize=fontsize-1,  # Slightly smaller font for wrapped text
+                                       weight='bold',
+                                       family='monospace',  # Use monospace font for better alignment
+                                       bbox=dict(facecolor='white', 
+                                               edgecolor='#333333',
+                                               alpha=0.95,
+                                               boxstyle='round,pad=0.5',
+                                               linewidth=2.0))
+                            else:
+                                # Add the single-line text
+                                ax.text(c, r, display_text, 
+                                       ha='center', va='center',
+                                       color=text_color,
+                                       fontsize=fontsize,
+                                       weight='bold',
+                                       family='monospace',  # Use monospace font for better alignment
+                                       bbox=dict(facecolor='white', 
+                                               edgecolor='#333333',
+                                               alpha=0.95,
+                                               boxstyle='round,pad=0.4',
+                                               linewidth=2.0))
 
-                plt.tight_layout()
+                # Adjust layout to ensure text doesn't get cut off
+                plt.tight_layout(pad=2.5)
                 
                 # Add the page to the PDF
-                pdf.savefig(fig, bbox_inches='tight')
+                pdf.savefig(fig, bbox_inches='tight', dpi=300)
                 plt.close(fig)
 
         # Convert PDF to base64 string
