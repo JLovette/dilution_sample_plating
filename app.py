@@ -297,6 +297,9 @@ def step1_upload_csv():
     st.header("1: Upload Sample CSV File")
     uploaded_file = st.file_uploader("Choose a CSV file", type=["csv"])
     if uploaded_file:
+        # Store the uploaded file in session state for later use
+        st.session_state["uploaded_file"] = uploaded_file
+        
         df = pd.read_csv(uploaded_file)
         temp_csv = io.StringIO()
         df.to_csv(temp_csv, index=False)
@@ -512,21 +515,39 @@ def step3_display_plates():
             st.session_state['step'] = 1
             st.rerun()
     
-    manager = TestManager(samples, ROWS, COLS, blank_positions, 
+    # Get the uploaded file from session state
+    uploaded_file = st.session_state.get("uploaded_file")
+    if not uploaded_file:
+        st.error("No uploaded file found. Please go back to Step 1.")
+        if st.button("Go to Step 1"):
+            st.session_state['step'] = 1
+            st.rerun()
+        st.stop()
+    
+    # Create TestManager with the uploaded file
+    manager = TestManager(uploaded_file, ROWS, COLS, blank_positions, 
                          st.session_state.colony_weight, st.session_state.type_weight,
                          starting_plate_number=st.session_state.starting_plate_number)
     manager.fill_plates()
-
-    # Image display and download
-    st.markdown(manager.get_plate_visualization_pdf_html(), unsafe_allow_html=True)
-
     st.markdown("""
     <div style="text-align: center; margin: 20px 0;">
+        <a href="data:application/pdf;base64,""" + base64.b64encode(manager.get_pdf_data()).decode() + """" 
+           download="plate_layouts.pdf" 
+           style="background-color: #dc3545; color: white; padding: 12px 24px; margin: 0 10px; 
+                  text-decoration: none; border-radius: 5px; font-weight: bold; display: inline-block;">
+            Download PDF
+        </a>
         <a href="data:text/csv;base64,""" + base64.b64encode(manager.get_grid_csv_data()).decode() + """" 
            download="plate_layouts_grid.csv" 
-           style="background-color: #007bff; color: white; padding: 12px 24px; 
-                  text-decoration: none; border-radius: 5px; font-weight: bold;">
-            Download CSV
+           style="background-color: #007bff; color: white; padding: 12px 24px; margin: 0 10px; 
+                  text-decoration: none; border-radius: 5px; font-weight: bold; display: inline-block;">
+            Download Plate Layouts CSV
+        </a>
+        <a href="data:text/csv;base64,""" + base64.b64encode(manager.get_original_csv_with_plates_data()).decode() + """" 
+           download="samples_with_plate_assignments.csv" 
+           style="background-color: #28a745; color: white; padding: 12px 24px; margin: 0 10px; 
+                  text-decoration: none; border-radius: 5px; font-weight: bold; display: inline-block;">
+            Download Original CSV with Plate Assignments
         </a>
     </div>
     """, unsafe_allow_html=True)

@@ -3,23 +3,131 @@ import base64
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_pdf import PdfPages
-from typing import List, Tuple
+from typing import List, Tuple, Union
+import pandas as pd
 
 from datamodel.plate import Plate
 from datamodel.sample import Sample, SampleType
 
 class TestManager:
-    def __init__(self, samples: List[Sample], rows: int, cols: int, blank_positions: List[Tuple[int, int]], 
+    def __init__(self, file_path: Union[str, io.StringIO, pd.DataFrame], rows: int, cols: int, blank_positions: List[Tuple[int, int]], 
                  colony_weight: float = 1.0, type_weight: float = 2.0, starting_plate_number: int = 1):
-        self.samples = sorted(samples, key=lambda s: s.sample_id)
+        """
+        Initialize TestManager with an uploaded file instead of a list of samples.
+        
+        Args:
+            file_path: Path to CSV file, StringIO object, or pandas DataFrame
+            rows: Number of rows in each plate
+            cols: Number of columns in each plate
+            blank_positions: List of (row, col) tuples for BLANK positions
+            colony_weight: Weight for colony balance (default: 1.0)
+            type_weight: Weight for adult/chick balance (default: 2.0)
+            starting_plate_number: Starting plate number (default: 1)
+        """
+        self.file_path = file_path
         self.rows = rows
         self.cols = cols
         self.blank_positions = blank_positions
         self.colony_weight = colony_weight
         self.type_weight = type_weight
         self.starting_plate_number = starting_plate_number
+        
+        # Load samples from the file
+        self.samples = self._load_samples_from_file()
+        self.original_df = self._load_original_dataframe()
+        
+        # Initialize plates
         num_plates = self._num_required_plates()
         self.plates: List[Plate] = [Plate(self.rows, self.cols) for _ in range(num_plates)]
+
+    def _load_samples_from_file(self) -> List[Sample]:
+        """Load samples from the uploaded file."""
+        from parse_samples import parse_samples
+        
+        if isinstance(self.file_path, pd.DataFrame):
+            # If it's already a DataFrame, convert to CSV string first
+            temp_csv = io.StringIO()
+            self.file_path.to_csv(temp_csv, index=False)
+            temp_csv.seek(0)
+            return parse_samples(temp_csv)
+        elif hasattr(self.file_path, 'read'):  # StreamlitUploadedFile or file-like object
+            # Reset file pointer to beginning
+            self.file_path.seek(0)
+            return parse_samples(self.file_path)
+        else:
+            # If it's a file path or StringIO, parse directly
+            return parse_samples(self.file_path)
+
+    def _load_original_dataframe(self) -> pd.DataFrame:
+        """Load the original DataFrame from the uploaded file."""
+        if isinstance(self.file_path, pd.DataFrame):
+            return self.file_path.copy()
+        elif hasattr(self.file_path, 'read'):  # StreamlitUploadedFile or file-like object
+            # Reset file pointer to beginning
+            self.file_path.seek(0)
+            return pd.read_csv(self.file_path)
+        else:
+            return pd.read_csv(self.file_path)
+
+    def _get_plate_assignment_for_sample(self, sample: Sample) -> Tuple[int, str, int]:
+        """Get the plate number, row, and column for a given sample."""
+        for plate_idx, plate in enumerate(self.plates):
+            for r in range(plate.rows):
+                for c in range(plate.cols):
+                    plate_sample = plate.get_sample(r, c)
+                    if plate_sample and plate_sample.unique_id == sample.unique_id:
+                        plate_num = self.starting_plate_number + plate_idx
+                        row_label = chr(ord('A') + r)  # Convert to A, B, C, etc.
+                        col_label = c + 1  # Convert to 1, 2, 3, etc.
+                        return plate_num, row_label, col_label
+        return None, None, None
+
+    def export_original_csv_with_plates(self) -> str:
+        """
+        Export the original CSV with new columns showing plate assignment and cell position.
+        
+        Returns:
+            CSV string with the original data plus plate assignments and cell positions
+        """
+        # Create a copy of the original DataFrame
+        result_df = self.original_df.copy()
+
+        # Add new columns for plate information
+        result_df['Plate Number'] = ''
+        result_df['Cell Row'] = ''
+        result_df['Cell Column'] = ''
+
+        # Fill in plate numbers and cell positions for each sample
+        for idx, row in result_df.iterrows():
+            # Find the corresponding sample object
+            sample_found = False
+            for sample in self.samples:
+                if (sample.sample_id == str(row['Sample ID']) and 
+                    sample.unique_id == str(row['Unique_ID'])):
+                    plate_num, row_label, col_label = self._get_plate_assignment_for_sample(sample)
+                    if plate_num:
+                        result_df.at[idx, 'Plate Number'] = plate_num
+                        result_df.at[idx, 'Cell Row'] = row_label
+                        result_df.at[idx, 'Cell Column'] = col_label
+                    sample_found = True
+                    break
+            
+            # If no sample found, leave columns empty
+            if not sample_found:
+                result_df.at[idx, 'Plate Number'] = ''
+                result_df.at[idx, 'Cell Row'] = ''
+                result_df.at[idx, 'Cell Column'] = ''
+
+        # Convert to CSV string
+        output = io.StringIO()
+        result_df.to_csv(output, index=False)
+        output.seek(0)
+        return output.getvalue()
+
+    def get_original_csv_with_plates_data(self) -> bytes:
+        """Return the original CSV with plate assignments as bytes for download."""
+        csv_string = self.export_original_csv_with_plates()
+        return csv_string.encode('utf-8')
 
     def _num_required_plates(self) -> int:
         """

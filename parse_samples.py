@@ -1,12 +1,18 @@
 import pandas as pd
-from typing import List
+from typing import List, Union
+import io
 
 from datamodel.sample import Sample, SampleType
 
 
-def parse_samples(csv_file: str) -> List[Sample]:
+def parse_samples(csv_file: Union[str, io.StringIO, io.BytesIO]) -> List[Sample]:
     """Parse the penguin sample data from a CSV file."""
-    df = pd.read_csv(csv_file)
+    # Handle different input types
+    if hasattr(csv_file, 'read'):  # File-like object (StringIO, BytesIO, StreamlitUploadedFile)
+        df = pd.read_csv(csv_file)
+    else:  # String path
+        df = pd.read_csv(csv_file)
+    
     samples = []
     for _, row in df.iterrows():
         # Determine sample type
