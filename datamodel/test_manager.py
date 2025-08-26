@@ -10,13 +10,14 @@ from datamodel.sample import Sample, SampleType
 
 class TestManager:
     def __init__(self, samples: List[Sample], rows: int, cols: int, blank_positions: List[Tuple[int, int]], 
-                 colony_weight: float = 1.0, type_weight: float = 2.0):
+                 colony_weight: float = 1.0, type_weight: float = 2.0, starting_plate_number: int = 1):
         self.samples = sorted(samples, key=lambda s: s.sample_id)
         self.rows = rows
         self.cols = cols
         self.blank_positions = blank_positions
         self.colony_weight = colony_weight
         self.type_weight = type_weight
+        self.starting_plate_number = starting_plate_number
         num_plates = self._num_required_plates()
         self.plates: List[Plate] = [Plate(self.rows, self.cols) for _ in range(num_plates)]
 
@@ -199,11 +200,11 @@ class TestManager:
                         prev_num = int(prev_id)
                         curr_num = int(curr_id)
                         if prev_num > curr_num:
-                            print(f"Warning: Sample ordering issue on plate {plate_idx + 1}: {prev_id} comes before {curr_id}")
+                            print(f"Warning: Sample ordering issue on plate {self.starting_plate_number + plate_idx}: {prev_id} comes before {curr_id}")
                     except ValueError:
                         # If not numeric, use string comparison
                         if prev_id > curr_id:
-                            print(f"Warning: Sample ordering issue on plate {plate_idx + 1}: {prev_id} comes before {curr_id}")
+                            print(f"Warning: Sample ordering issue on plate {self.starting_plate_number + plate_idx}: {prev_id} comes before {curr_id}")
 
     def _find_best_plate_for_sample(self, sample, plate_colony_counts, plate_type_counts, 
                                    target_adult_per_plate, target_chick_per_plate):
@@ -268,7 +269,7 @@ class TestManager:
 
     def print_plates(self):
         for i, plate in enumerate(self.plates):
-            print(f"Plate {i+1}:")
+            print(f"Plate {self.starting_plate_number + i}:")
             print(plate)
             print()
 
@@ -373,7 +374,7 @@ class TestManager:
             total_samples = type_counts["ADULT"] + type_counts["CHICK"]
             
             plate_stats.append({
-                "plate_number": i + 1,
+                "plate_number": self.starting_plate_number + i,
                 "colony_counts": colony_counts,
                 "type_counts": type_counts,
                 "total_samples": total_samples,
@@ -527,7 +528,7 @@ class TestManager:
 
                 # Display the grid
                 ax.imshow(grid)
-                ax.set_title(f'Plate {i+1}', fontsize=16, fontweight='bold', color='black', pad=20)
+                ax.set_title(f'Plate {self.starting_plate_number + i}', fontsize=16, fontweight='bold', color='black', pad=20)
                 
                 # Add grid lines
                 ax.set_xticks(np.arange(-.5, self.cols, 1), minor=True)
@@ -690,7 +691,7 @@ class TestManager:
         """Generate a CSV string representation of the filled plates in a 2D grid format."""
         csv_data = []
         for i, plate in enumerate(self.plates):
-            csv_data.append([f"Plate {i+1}"])
+            csv_data.append([f"Plate {self.starting_plate_number + i}"])
 
             # Add column headers row (empty first cell for row labels)
             header_row = [""] + [str(c + 1) for c in range(plate.cols)]
@@ -728,7 +729,7 @@ class TestManager:
                     sample_obj = plate.get_sample(r, c)
                     if sample_obj:
                         row_data = [
-                            f"Plate {i+1}",
+                            f"Plate {self.starting_plate_number + i}",
                             chr(ord('A') + r),
                             str(c + 1),
                             sample_obj.sample_id if hasattr(sample_obj, 'sample_id') else "",
@@ -743,7 +744,7 @@ class TestManager:
                     else:
                         # Empty cell
                         row_data = [
-                            f"Plate {i+1}",
+                            f"Plate {self.starting_plate_number + i}",
                             chr(ord('A') + r),
                             str(c + 1),
                             "", "", "", "", "", "", ""

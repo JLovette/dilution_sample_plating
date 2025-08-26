@@ -285,6 +285,8 @@ if 'colony_weight' not in st.session_state:
     st.session_state['colony_weight'] = 1.0
 if 'type_weight' not in st.session_state:
     st.session_state['type_weight'] = 2.0
+if 'starting_plate_number' not in st.session_state:
+    st.session_state['starting_plate_number'] = 1
 
 # Fixed plate dimensions
 ROWS = 8
@@ -416,6 +418,24 @@ def step2_blank_selection():
 
     # Algorithm Weight Settings
     st.markdown("---")
+    st.subheader("Plate Numbering")
+    st.markdown("Set the starting plate number for your assay:")
+    
+    starting_plate_number = st.number_input(
+        "Starting Plate Number",
+        min_value=1,
+        max_value=9999,
+        value=st.session_state.starting_plate_number,
+        step=1,
+        help="The first plate will be labeled with this number, subsequent plates will increment from here."
+    )
+    
+    # Update session state when starting plate number changes
+    if starting_plate_number != st.session_state.starting_plate_number:
+        st.session_state.starting_plate_number = starting_plate_number
+        st.rerun()
+    
+    st.markdown("---")
     st.subheader("Algo Settings")
     st.markdown("Adjust how the algorithm prioritizes colony distribution vs. adult/chick ratio balancing:")
     
@@ -493,7 +513,8 @@ def step3_display_plates():
             st.rerun()
     
     manager = TestManager(samples, ROWS, COLS, blank_positions, 
-                         st.session_state.colony_weight, st.session_state.type_weight)
+                         st.session_state.colony_weight, st.session_state.type_weight,
+                         starting_plate_number=st.session_state.starting_plate_number)
     manager.fill_plates()
 
     # Image display and download
@@ -512,7 +533,7 @@ def step3_display_plates():
 
     with st.expander("Show Plates"):
         for i, plate in enumerate(manager.plates):
-            st.text(plate.to_string(f"PLATE {i+1}"))
+                                        st.text(plate.to_string(f"PLATE {st.session_state.starting_plate_number + i}"))
 
     with st.expander("Plate Statistics", expanded=False):
         plate_stats = manager.get_plate_statistics()
@@ -603,14 +624,14 @@ def step3_display_plates():
         st.subheader("Colony Distribution Across Plates")
         colony_balance = manager.colony_balance()
         colony_df = pd.DataFrame(colony_balance).fillna(0)
-        colony_df.index = [f"Plate {i+1}" for i in range(len(colony_df))]
+        colony_df.index = [f"Plate {st.session_state.starting_plate_number + i}" for i in range(len(colony_df))]
         st.dataframe(colony_df, use_container_width=True)
         
         # Adult/Chick ratio details
         st.subheader("Adult/Chick Sample Distribution")
         type_counts = manager.blank_adult_chick_counts()
         type_df = pd.DataFrame(type_counts)
-        type_df.index = [f"Plate {i+1}" for i in range(len(type_df))]
+        type_df.index = [f"Plate {st.session_state.starting_plate_number + i}" for i in range(len(type_df))]
         
         # Calculate ratios
         type_df['ADULT_RATIO'] = (type_df['ADULT'] / (type_df['ADULT'] + type_df['CHICK'])).fillna(0)
