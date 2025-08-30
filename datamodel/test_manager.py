@@ -72,8 +72,9 @@ class TestManager:
     def _get_plate_assignment_for_sample(self, sample: Sample) -> Tuple[int, str, int]:
         """Get the plate number, row, and column for a given sample."""
         for plate_idx, plate in enumerate(self.plates):
-            for r in range(plate.rows):
-                for c in range(plate.cols):
+            # Use column-first ordering for consistency with the new filling pattern
+            for c in range(plate.cols):
+                for r in range(plate.rows):
                     plate_sample = plate.get_sample(r, c)
                     if plate_sample and plate_sample.unique_id == sample.unique_id:
                         plate_num = self.starting_plate_number + plate_idx
@@ -163,10 +164,11 @@ class TestManager:
     def _get_available_cell_positions(self):
         """
         Get list of available cell positions that are not designated as blank positions.
+        Fills by column rather than by row - goes down each column before moving to the next column.
         """
         cell_positions = []
-        for r in range(self.rows):
-            for c in range(self.cols):
+        for c in range(self.cols):
+            for r in range(self.rows):
                 if (r, c) not in self.blank_positions:
                     cell_positions.append((r, c))
         return cell_positions
@@ -231,6 +233,7 @@ class TestManager:
             
             if best_plate is not None:
                 # Find available position on best plate
+                # Use the column-first ordering from cell_positions
                 for r, c in cell_positions:
                     if self.plates[best_plate].get_sample(r, c) is None:
                         self.plates[best_plate].set_sample(r, c, sample)
@@ -265,9 +268,10 @@ class TestManager:
             non_blank_samples_with_positions.sort(key=lambda x: x[2].sample_id)
             
             # Get available positions (excluding BLANK positions) in the same order as _get_available_cell_positions
+            # Column-first ordering: go down each column before moving to the next column
             available_positions = []
-            for r in range(plate.rows):
-                for c in range(plate.cols):
+            for c in range(plate.cols):
+                for r in range(plate.rows):
                     if (r, c) not in self.blank_positions:
                         available_positions.append((r, c))
             
@@ -291,9 +295,10 @@ class TestManager:
         """
         for plate_idx, plate in enumerate(self.plates):
             # Collect non-blank samples in order they appear on the plate
+            # Use column-first ordering for consistency
             plate_samples = []
-            for r in range(plate.rows):
-                for c in range(plate.cols):
+            for c in range(plate.cols):
+                for r in range(plate.rows):
                     sample_obj = plate.get_sample(r, c)
                     if sample_obj and sample_obj.sample_type != SampleType.BLANK:
                         plate_samples.append(sample_obj)
@@ -325,9 +330,10 @@ class TestManager:
         
         for plate_idx in range(len(self.plates)):
             # Check if this plate has available positions
+            # Use column-first ordering for consistency
             has_available = False
-            for r in range(self.rows):
-                for c in range(self.cols):
+            for c in range(self.cols):
+                for r in range(self.rows):
                     if (r, c) not in self.blank_positions and self.plates[plate_idx].get_sample(r, c) is None:
                         has_available = True
                         break
@@ -386,8 +392,9 @@ class TestManager:
         result = []
         for plate in self.plates:
             colony_counts = {}
-            for r in range(plate.rows):
-                for c in range(plate.cols):
+            # Use column-first ordering for consistency
+            for c in range(plate.cols):
+                for r in range(plate.rows):
                     sample_obj = plate.get_sample(r, c)
                     # Check if the cell contains a non-BLANK sample object
                     if sample_obj and sample_obj.sample_type != SampleType.BLANK:
@@ -401,8 +408,9 @@ class TestManager:
         result = []
         for plate in self.plates:
             counts = {"BLANK": 0, "ADULT": 0, "CHICK": 0}
-            for r in range(plate.rows):
-                for c in range(plate.cols):
+            # Use column-first ordering for consistency
+            for c in range(plate.cols):
+                for r in range(plate.rows):
                     sample_obj = plate.get_sample(r, c)
                     if sample_obj:
                         if sample_obj.sample_type == SampleType.BLANK:
@@ -419,7 +427,7 @@ class TestManager:
         result = []
         for plate in self.plates:
             runs = []
-            # Check rows
+            # Check rows (left to right)
             for r in range(plate.rows):
                 run = 0
                 for c in range(plate.cols):
@@ -433,7 +441,7 @@ class TestManager:
                         run = 0
                 if run > 0:
                     runs.append(run)
-            # Check columns
+            # Check columns (top to bottom) - this is now the primary filling direction
             for c in range(plate.cols):
                 run = 0
                 for r in range(plate.rows):
@@ -458,8 +466,9 @@ class TestManager:
         for i, plate in enumerate(self.plates):
             # Get colony counts for this plate
             colony_counts = {}
-            for r in range(plate.rows):
-                for c in range(plate.cols):
+            # Use column-first ordering for consistency
+            for c in range(plate.cols):
+                for r in range(plate.rows):
                     sample_obj = plate.get_sample(r, c)
                     if sample_obj and sample_obj.sample_type != SampleType.BLANK:
                         colony = sample_obj.colony_code
@@ -467,8 +476,9 @@ class TestManager:
             
             # Get sample type counts for this plate
             type_counts = {"BLANK": 0, "ADULT": 0, "CHICK": 0}
-            for r in range(plate.rows):
-                for c in range(plate.cols):
+            # Use column-first ordering for consistency
+            for c in range(plate.cols):
+                for r in range(plate.rows):
                     sample_obj = plate.get_sample(r, c)
                     if sample_obj:
                         if sample_obj.sample_type == SampleType.BLANK:
@@ -805,6 +815,7 @@ class TestManager:
             header_row = [""] + [str(c + 1) for c in range(plate.cols)]
             csv_data.append(header_row)
 
+            # Use column-first ordering for consistency with the new filling pattern
             for r in range(plate.rows):
                 row_label = chr(ord('A') + r)
                 row_data = [row_label] # Start with row label
@@ -832,8 +843,9 @@ class TestManager:
         csv_data.append(header)
         
         for i, plate in enumerate(self.plates):
-            for r in range(plate.rows):
-                for c in range(plate.cols):
+            # Use column-first ordering for consistency with the new filling pattern
+            for c in range(plate.cols):
+                for r in range(plate.rows):
                     sample_obj = plate.get_sample(r, c)
                     if sample_obj:
                         row_data = [
