@@ -21,7 +21,7 @@ def main():
     COLS = 12
     
     blank_positions = [tuple(map(int, b.split(','))) for b in args.blank] if args.blank else []
-    manager = TestManager(samples, ROWS, COLS, blank_positions)
+    manager = TestManager(args.input_file, ROWS, COLS, blank_positions)
     manager.fill_plates()
     manager.print_plates()
     metrics = manager.algorithm_metrics()

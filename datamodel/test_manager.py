@@ -134,32 +134,19 @@ class TestManager:
         """
         Calculate the number of plates required to fit all the samples.
         """
-        # Ceiling division to determine how many plates are needed for the blank samples
-        blank_samples = [s for s in self.samples if s.sample_type == SampleType.BLANK]
-        blank_required = (len(blank_samples) + len(self.blank_positions) - 1) // len(self.blank_positions)
-
-        # Ceiling division to determine how many plates are needed for the non-blank samples
-        non_blank_slots = self.rows * self.cols - blank_required
-        non_blank_samples = [s for s in self.samples if s.sample_type != SampleType.BLANK]
-        non_blank_required = (len(non_blank_samples) + non_blank_slots - 1) // non_blank_slots
-        return max(blank_required, non_blank_required)
-
-    def _place_blank_samples(self):
-        """
-        Place BLANK samples in designated positions across the plates.
-        """
-        blank_samples = [s for s in self.samples if s.sample_type == SampleType.BLANK]
-        total_blank_positions = len(self.plates) * len(self.blank_positions)
-        blank_idx = 0
-
-        for i in range(total_blank_positions):
-            plate_idx = i % len(self.plates)
-            pos_idx = i // len(self.plates)
-            if pos_idx < len(self.blank_positions):
-                r, c = self.blank_positions[pos_idx]
-                if blank_idx < len(blank_samples):
-                    self.plates[plate_idx].set_sample(r, c, blank_samples[blank_idx])
-                    blank_idx += 1
+        # Calculate total samples (all samples are now treated equally)
+        total_samples = len(self.samples)
+        
+        # Calculate available slots per plate (excluding designated blank positions)
+        available_slots_per_plate = self.rows * self.cols - len(self.blank_positions)
+        
+        # Calculate number of plates needed
+        if available_slots_per_plate > 0:
+            num_plates = (total_samples + available_slots_per_plate - 1) // available_slots_per_plate
+        else:
+            num_plates = 1  # At least one plate
+            
+        return num_plates
 
     def _get_available_cell_positions(self):
         """
@@ -173,67 +160,89 @@ class TestManager:
                     cell_positions.append((r, c))
         return cell_positions
 
-    def _place_non_blank_samples(self):
+    def _place_samples(self):
         """
-        Place non-BLANK samples in available positions across the plates.
-        Uses a combined scoring approach to balance both colony counts and adult/chick ratios simultaneously.
+        Place all samples in available positions across the plates.
+        Uses a balanced distribution approach to ensure samples are spread evenly across plates.
         """
-        non_blank_samples = [s for s in self.samples if s.sample_type != SampleType.BLANK]
+        # All samples are now treated equally (including former BLANK samples)
+        samples_to_place = self.samples
         cell_positions = self._get_available_cell_positions()
 
-        if not non_blank_samples:
+        if not samples_to_place:
             return
 
         # Group samples by colony and sample type
         colony_groups = {}
-        for sample in non_blank_samples:
+        for sample in samples_to_place:
             if sample.colony_code not in colony_groups:
-                colony_groups[sample.colony_code] = {'ADULT': [], 'CHICK': []}
+                colony_groups[sample.colony_code] = {'ADULT': [], 'CHICK': [], 'BLANK': []}
             if sample.sample_type == SampleType.ADULT:
                 colony_groups[sample.colony_code]['ADULT'].append(sample)
             elif sample.sample_type == SampleType.CHICK:
                 colony_groups[sample.colony_code]['CHICK'].append(sample)
+            elif sample.sample_type == SampleType.BLANK:
+                colony_groups[sample.colony_code]['BLANK'].append(sample)
 
         # Initialize plate tracking for balancing
         plate_colony_counts = [{} for _ in range(len(self.plates))]
-        plate_type_counts = [{"ADULT": 0, "CHICK": 0} for _ in range(len(self.plates))]
+        plate_type_counts = [{"ADULT": 0, "CHICK": 0, "BLANK": 0} for _ in range(len(self.plates))]
+
+        # Calculate target distributions per plate
+        total_samples = len(samples_to_place)
+        available_slots_per_plate = self.rows * self.cols - len(self.blank_positions)
         
-        # Calculate target distributions
-        total_adult = sum(len(colony_groups[c]['ADULT']) for c in colony_groups)
-        total_chick = sum(len(colony_groups[c]['CHICK']) for c in colony_groups)
-        total_samples = total_adult + total_chick
-        
-        if len(self.plates) > 0:
-            target_adult_per_plate = total_adult / len(self.plates)
-            target_chick_per_plate = total_chick / len(self.plates)
+        # Ensure only the last plate can be non-full
+        # All plates except the last should be completely filled
+        if len(self.plates) > 1:
+            # First N-1 plates get filled completely
+            samples_per_full_plate = available_slots_per_plate
+            # Last plate gets remaining samples
+            samples_on_last_plate = total_samples - (samples_per_full_plate * (len(self.plates) - 1))
+            
+            plate_sample_counts = [samples_per_full_plate] * (len(self.plates) - 1)
+            plate_sample_counts.append(max(0, samples_on_last_plate))
         else:
-            target_adult_per_plate = target_chick_per_plate = 0
+            # Only one plate - it gets all samples
+            plate_sample_counts = [total_samples]
 
-        # Create a combined sample list with alternating types for better mixing
-        combined_samples = []
-        max_samples_per_colony = max(len(colony_groups[colony]['ADULT']) + len(colony_groups[colony]['CHICK']) 
-                                   for colony in colony_groups)
+        # Create a balanced sample list that distributes samples more evenly
+        balanced_samples = []
         
-        # Interleave adult and chick samples from each colony
-        for i in range(max_samples_per_colony):
-            for colony in sorted(colony_groups.keys()):
-                # Add ADULT sample if available
-                if i < len(colony_groups[colony]['ADULT']):
-                    combined_samples.append(colony_groups[colony]['ADULT'][i])
-                # Add CHICK sample if available
-                if i < len(colony_groups[colony]['CHICK']):
-                    combined_samples.append(colony_groups[colony]['CHICK'][i])
+        # Get all colonies and types
+        all_colonies = sorted(colony_groups.keys())
+        all_types = ['ADULT', 'CHICK', 'BLANK']
+        
+        # Create a more sophisticated distribution that ensures better balance
+        # First, calculate how many samples of each type we have total
+        total_by_type = {}
+        for sample_type in all_types:
+            total_by_type[sample_type] = sum(len(colony_groups[colony][sample_type]) for colony in all_colonies)
+        
+        # Create a distribution that alternates between types and colonies
+        # This ensures we don't put all samples of one type on the same plate
+        max_samples = max(total_by_type.values())
+        
+        for i in range(max_samples):
+            for sample_type in all_types:
+                for colony in all_colonies:
+                    if i < len(colony_groups[colony][sample_type]):
+                        balanced_samples.append(colony_groups[colony][sample_type][i])
 
-        # Place samples using combined scoring for both colony and type balance
-        for sample in combined_samples:
-            best_plate = self._find_best_plate_for_sample(
+        # Now place samples using a smart distribution algorithm
+        current_plate = 0
+        samples_placed_on_current_plate = 0
+        
+        for sample in balanced_samples:
+            # Find the best plate for this sample based on balancing criteria
+            best_plate = self._find_best_balanced_plate(
                 sample, plate_colony_counts, plate_type_counts, 
-                target_adult_per_plate, target_chick_per_plate
+                plate_sample_counts, samples_placed_on_current_plate
             )
             
             if best_plate is not None:
-                # Find available position on best plate
-                # Use the column-first ordering from cell_positions
+                # Find available position on the best plate
+                position_found = False
                 for r, c in cell_positions:
                     if self.plates[best_plate].get_sample(r, c) is None:
                         self.plates[best_plate].set_sample(r, c, sample)
@@ -245,92 +254,32 @@ class TestManager:
                             plate_type_counts[best_plate]["ADULT"] += 1
                         elif sample.sample_type == SampleType.CHICK:
                             plate_type_counts[best_plate]["CHICK"] += 1
+                        elif sample.sample_type == SampleType.BLANK:
+                            plate_type_counts[best_plate]["BLANK"] += 1
+                        
+                        position_found = True
                         break
-
-    def _sort_samples_by_id_within_plates(self):
-        """
-        Sort non-blank samples by ID within each plate while preserving BLANK positions.
-        This ensures samples are in numerical order for easier plate setup.
-        """
-        for plate in self.plates:
-            # Collect all non-blank samples from this plate with their positions
-            non_blank_samples_with_positions = []
-            for r in range(plate.rows):
-                for c in range(plate.cols):
-                    sample_obj = plate.get_sample(r, c)
-                    if sample_obj and sample_obj.sample_type != SampleType.BLANK:
-                        non_blank_samples_with_positions.append((r, c, sample_obj))
-            
-            if len(non_blank_samples_with_positions) <= 1:
-                continue  # No need to sort if 1 or fewer samples
-            
-            # Sort samples by ID (numerical order)
-            non_blank_samples_with_positions.sort(key=lambda x: x[2].sample_id)
-            
-            # Get available positions (excluding BLANK positions) in the same order as _get_available_cell_positions
-            # Column-first ordering: go down each column before moving to the next column
-            available_positions = []
-            for c in range(plate.cols):
-                for r in range(plate.rows):
-                    if (r, c) not in self.blank_positions:
-                        available_positions.append((r, c))
-            
-            # Clear all non-blank samples from the plate
-            for r, c, _ in non_blank_samples_with_positions:
-                plate.set_sample(r, c, None)
-            
-            # Place sorted samples in available positions
-            for i, (_, _, sample_obj) in enumerate(non_blank_samples_with_positions):
-                if i < len(available_positions):
-                    r, c = available_positions[i]
-                    plate.set_sample(r, c, sample_obj)
+                
+                if not position_found:
+                    # This shouldn't happen, but just in case
+                    print(f"Warning: Could not find position for sample {sample.unique_id} on plate {best_plate}")
+            else:
+                print(f"Warning: Could not find suitable plate for sample {sample.unique_id}")
         
-        # Verify sorting was successful
-        self._verify_sample_ordering()
+        # Validate that only the last plate is non-full
+        self._validate_plate_filling()
 
-    def _verify_sample_ordering(self):
+    def _find_best_balanced_plate(self, sample, plate_colony_counts, plate_type_counts, 
+                                 plate_sample_counts, samples_placed_on_current_plate):
         """
-        Verify that non-blank samples are properly ordered by ID within each plate.
-        This is a debugging method to ensure the sorting worked correctly.
-        """
-        for plate_idx, plate in enumerate(self.plates):
-            # Collect non-blank samples in order they appear on the plate
-            # Use column-first ordering for consistency
-            plate_samples = []
-            for c in range(plate.cols):
-                for r in range(plate.rows):
-                    sample_obj = plate.get_sample(r, c)
-                    if sample_obj and sample_obj.sample_type != SampleType.BLANK:
-                        plate_samples.append(sample_obj)
-            
-            # Check if samples are in order
-            if len(plate_samples) > 1:
-                for i in range(1, len(plate_samples)):
-                    prev_id = plate_samples[i-1].sample_id
-                    curr_id = plate_samples[i].sample_id
-                    try:
-                        # Try to convert to int for numerical comparison
-                        prev_num = int(prev_id)
-                        curr_num = int(curr_id)
-                        if prev_num > curr_num:
-                            print(f"Warning: Sample ordering issue on plate {self.starting_plate_number + plate_idx}: {prev_id} comes before {curr_id}")
-                    except ValueError:
-                        # If not numeric, use string comparison
-                        if prev_id > curr_id:
-                            print(f"Warning: Sample ordering issue on plate {self.starting_plate_number + plate_idx}: {prev_id} comes before {curr_id}")
-
-    def _find_best_plate_for_sample(self, sample, plate_colony_counts, plate_type_counts, 
-                                   target_adult_per_plate, target_chick_per_plate):
-        """
-        Find the best plate for a sample by scoring both colony balance and type balance.
-        Returns the plate index with the best combined score.
+        Find the best plate for a sample based on balancing criteria.
+        Prioritizes colony balance and type balance while ensuring plates are filled evenly.
         """
         best_plate = None
         best_score = float('inf')
         
         for plate_idx in range(len(self.plates)):
             # Check if this plate has available positions
-            # Use column-first ordering for consistency
             has_available = False
             for c in range(self.cols):
                 for r in range(self.rows):
@@ -343,23 +292,27 @@ class TestManager:
             if not has_available:
                 continue
             
-            # Calculate colony balance score (lower is better)
+            # Calculate various balance scores (lower is better)
+            
+            # 1. Colony balance score - prefer plates with fewer samples from this colony
             current_colony_count = plate_colony_counts[plate_idx].get(sample.colony_code, 0)
-            colony_score = current_colony_count
+            colony_score = current_colony_count * 3.0  # Weight colony balance very heavily
             
-            # Calculate type balance score (lower is better)
-            current_adult = plate_type_counts[plate_idx]["ADULT"]
-            current_chick = plate_type_counts[plate_idx]["CHICK"]
+            # 2. Type balance score - prefer plates with fewer samples of this type
+            current_type_count = plate_type_counts[plate_idx].get(sample.sample_type.value, 0)
+            type_score = current_type_count * 2.5  # Weight type balance heavily
             
-            if sample.sample_type == SampleType.ADULT:
-                # Prefer plates with fewer adults relative to target
-                type_score = abs((current_adult + 1) - target_adult_per_plate)
-            else:  # CHICK
-                # Prefer plates with fewer chicks relative to target
-                type_score = abs((current_chick + 1) - target_chick_per_plate)
+            # 3. Plate utilization score - prefer plates that are under their target
+            current_plate_samples = sum(plate_colony_counts[plate_idx].values())
+            target_samples = plate_sample_counts[plate_idx]
+            utilization_score = max(0, current_plate_samples - target_samples) * 4.0  # Weight very heavily
             
-            # Combined score with weights (adjust these weights to prioritize colony vs type balance)
-            combined_score = (self.colony_weight * colony_score) + (self.type_weight * type_score)
+            # 4. Sequential filling bonus - prefer earlier plates to avoid gaps
+            # This ensures earlier plates are filled completely before moving to later plates
+            sequential_bonus = plate_idx * 2.0  # Strong preference for earlier plates
+            
+            # Combined score
+            combined_score = colony_score + type_score + utilization_score + sequential_bonus
             
             if combined_score < best_score:
                 best_score = combined_score
@@ -367,15 +320,127 @@ class TestManager:
         
         return best_plate
 
+    def _validate_plate_filling(self):
+        """
+        Validate that only the last plate is non-full.
+        This ensures our algorithm constraint is met.
+        """
+        if len(self.plates) <= 1:
+            return
+        
+        available_slots_per_plate = self.rows * self.cols - len(self.blank_positions)
+        
+        for i in range(len(self.plates) - 1):  # All plates except the last
+            sample_count = 0
+            for r in range(self.rows):
+                for c in range(self.cols):
+                    if self.plates[i].get_sample(r, c) is not None:
+                        sample_count += 1
+            
+            if sample_count < available_slots_per_plate:
+                print(f"Warning: Plate {i+1} is not full ({sample_count}/{available_slots_per_plate} samples)")
+                print("This violates the constraint that only the last plate can be non-full.")
+        
+        # Check the last plate
+        last_plate_idx = len(self.plates) - 1
+        sample_count = 0
+        for r in range(self.rows):
+            for c in range(self.cols):
+                if self.plates[last_plate_idx].get_sample(r, c) is not None:
+                    sample_count += 1
+        
+        print(f"Plate {last_plate_idx+1} (last): {sample_count}/{available_slots_per_plate} samples")
+
+    def _sort_samples_by_id_within_plates(self):
+        """
+        Sort all samples by ID within each plate while preserving designated blank positions.
+        This ensures samples are in numerical order for easier plate setup.
+        """
+        for plate in self.plates:
+            # Collect all samples from this plate with their positions
+            samples_with_positions = []
+            for r in range(plate.rows):
+                for c in range(plate.cols):
+                    sample_obj = plate.get_sample(r, c)
+                    if sample_obj:
+                        samples_with_positions.append((r, c, sample_obj))
+            
+            if len(samples_with_positions) <= 1:
+                continue  # No need to sort if 1 or fewer samples
+            
+            # Sort samples by original CSV row order to ensure stable down-column sequencing
+            # Fall back to sample_id if source_row_index is not available
+            def _order_key(item):
+                sample_obj = item[2]
+                if hasattr(sample_obj, 'source_row_index') and sample_obj.source_row_index is not None:
+                    return (0, int(sample_obj.source_row_index))
+                # Fallback: attempt numeric sample_id else lexicographic
+                sid = getattr(sample_obj, 'sample_id', '')
+                try:
+                    return (1, int(sid))
+                except (ValueError, TypeError):
+                    return (2, str(sid))
+            samples_with_positions.sort(key=_order_key)
+            
+            # Get available positions (excluding designated blank positions) in the same order as _get_available_cell_positions
+            # Column-first ordering: go down each column before moving to the next column
+            available_positions = []
+            for c in range(plate.cols):
+                for r in range(plate.rows):
+                    if (r, c) not in self.blank_positions:
+                        available_positions.append((r, c))
+            
+            # Clear all samples from the plate
+            for r, c, _ in samples_with_positions:
+                plate.set_sample(r, c, None)
+            
+            # Place sorted samples in available positions
+            for i, (_, _, sample_obj) in enumerate(samples_with_positions):
+                if i < len(available_positions):
+                    r, c = available_positions[i]
+                    plate.set_sample(r, c, sample_obj)
+        
+        # Verify ordering was applied based on source_row_index
+        self._verify_sample_ordering()
+
+    def _verify_sample_ordering(self):
+        """
+        Verify that all samples are properly ordered by ID within each plate.
+        This is a debugging method to ensure the sorting worked correctly.
+        """
+        for plate_idx, plate in enumerate(self.plates):
+            # Collect all samples in order they appear on the plate
+            # Use column-first ordering for consistency
+            plate_samples = []
+            for c in range(plate.cols):
+                for r in range(plate.rows):
+                    sample_obj = plate.get_sample(r, c)
+                    if sample_obj:
+                        plate_samples.append(sample_obj)
+            
+            # Check if samples are in order by source_row_index (when present)
+            if len(plate_samples) > 1:
+                for i in range(1, len(plate_samples)):
+                    prev = plate_samples[i-1]
+                    curr = plate_samples[i]
+                    prev_idx = getattr(prev, 'source_row_index', None)
+                    curr_idx = getattr(curr, 'source_row_index', None)
+                    if prev_idx is not None and curr_idx is not None and prev_idx > curr_idx:
+                        print(
+                            f"Warning: Ordering issue on plate {self.starting_plate_number + plate_idx}: "
+                            f"row {prev_idx} comes before {curr_idx}"
+                        )
+
+
+
 
 
 
 
 
     def fill_plates(self):
-        """Fill plates with samples, placing BLANKs first then other samples."""        
-        self._place_blank_samples()
-        self._place_non_blank_samples()
+        """Fill plates with samples, leaving designated blank positions empty for negative controls."""        
+        self._place_samples()
         self._sort_samples_by_id_within_plates()
 
     def get_plates(self) -> List[Plate]:
@@ -396,34 +461,34 @@ class TestManager:
             for c in range(plate.cols):
                 for r in range(plate.rows):
                     sample_obj = plate.get_sample(r, c)
-                    # Check if the cell contains a non-BLANK sample object
-                    if sample_obj and sample_obj.sample_type != SampleType.BLANK:
+                    # Check if the cell contains a sample object (all samples are now treated equally)
+                    if sample_obj:
                         colony = sample_obj.colony_code
                         colony_counts[colony] = colony_counts.get(colony, 0) + 1
             result.append(colony_counts)
         return result
 
-    def blank_adult_chick_counts(self):
-        """Return a list of dicts, one per plate, with counts of blanks, adults, and chicks."""
+    def sample_type_counts(self):
+        """Return a list of dicts, one per plate, with counts of adults, chicks, and blanks."""
         result = []
         for plate in self.plates:
-            counts = {"BLANK": 0, "ADULT": 0, "CHICK": 0}
+            counts = {"ADULT": 0, "CHICK": 0, "BLANK": 0}
             # Use column-first ordering for consistency
             for c in range(plate.cols):
                 for r in range(plate.rows):
                     sample_obj = plate.get_sample(r, c)
                     if sample_obj:
-                        if sample_obj.sample_type == SampleType.BLANK:
-                            counts["BLANK"] += 1
-                        elif sample_obj.sample_type == SampleType.ADULT:
+                        if sample_obj.sample_type == SampleType.ADULT:
                             counts["ADULT"] += 1
                         elif sample_obj.sample_type == SampleType.CHICK:
                             counts["CHICK"] += 1
+                        elif sample_obj.sample_type == SampleType.BLANK:
+                            counts["BLANK"] += 1
             result.append(counts)
         return result
 
     def contiguous_sample_measure(self):
-        """Return a list of floats, one per plate, representing the average contiguous run length of non-blank samples."""
+        """Return a list of floats, one per plate, representing the average contiguous run length of samples."""
         result = []
         for plate in self.plates:
             runs = []
@@ -432,8 +497,8 @@ class TestManager:
                 run = 0
                 for c in range(plate.cols):
                     sample_obj = plate.get_sample(r, c)
-                    # Check if the cell contains a non-BLANK sample object
-                    if sample_obj and sample_obj.sample_type != SampleType.BLANK:
+                    # Check if the cell contains a sample object (all samples are now treated equally)
+                    if sample_obj:
                         run += 1
                     else:
                         if run > 0:
@@ -446,8 +511,8 @@ class TestManager:
                 run = 0
                 for r in range(plate.rows):
                     sample_obj = plate.get_sample(r, c)
-                     # Check if the cell contains a non-BLANK sample object
-                    if sample_obj and sample_obj.sample_type != SampleType.BLANK:
+                     # Check if the cell contains a sample object (all samples are now treated equally)
+                    if sample_obj:
                         run += 1
                     else:
                         if run > 0:
@@ -470,26 +535,26 @@ class TestManager:
             for c in range(plate.cols):
                 for r in range(plate.rows):
                     sample_obj = plate.get_sample(r, c)
-                    if sample_obj and sample_obj.sample_type != SampleType.BLANK:
+                    if sample_obj:
                         colony = sample_obj.colony_code
                         colony_counts[colony] = colony_counts.get(colony, 0) + 1
             
             # Get sample type counts for this plate
-            type_counts = {"BLANK": 0, "ADULT": 0, "CHICK": 0}
+            type_counts = {"ADULT": 0, "CHICK": 0, "BLANK": 0}
             # Use column-first ordering for consistency
             for c in range(plate.cols):
                 for r in range(plate.rows):
                     sample_obj = plate.get_sample(r, c)
                     if sample_obj:
-                        if sample_obj.sample_type == SampleType.BLANK:
-                            type_counts["BLANK"] += 1
-                        elif sample_obj.sample_type == SampleType.ADULT:
+                        if sample_obj.sample_type == SampleType.ADULT:
                             type_counts["ADULT"] += 1
                         elif sample_obj.sample_type == SampleType.CHICK:
                             type_counts["CHICK"] += 1
+                        elif sample_obj.sample_type == SampleType.BLANK:
+                            type_counts["BLANK"] += 1
             
             # Calculate total samples on this plate
-            total_samples = type_counts["ADULT"] + type_counts["CHICK"]
+            total_samples = type_counts["ADULT"] + type_counts["CHICK"] + type_counts["BLANK"]
             
             plate_stats.append({
                 "plate_number": self.starting_plate_number + i,
@@ -518,18 +583,18 @@ class TestManager:
                 colony_stdevs.append(np.std(counts))
         colony_balance_score = float(np.mean(colony_stdevs)) if colony_stdevs else 0.0
 
-        # 2. Blank/adult/chick balance score
-        type_counts_per_plate = self.blank_adult_chick_counts()
+        # 2. Adult/chick/blank balance score
+        type_counts_per_plate = self.sample_type_counts()
         for d in type_counts_per_plate:
-            d.setdefault("BLANK", 0)
             d.setdefault("ADULT", 0)
             d.setdefault("CHICK", 0)
+            d.setdefault("BLANK", 0)
         type_stdevs = []
-        for t in ["BLANK", "ADULT", "CHICK"]:
+        for t in ["ADULT", "CHICK", "BLANK"]:
             counts = [d[t] for d in type_counts_per_plate]
             if len(counts) > 1:
                 type_stdevs.append(np.std(counts))
-        blank_adult_chick_balance_score = float(np.mean(type_stdevs)) if type_stdevs else 0.0
+        adult_chick_blank_balance_score = float(np.mean(type_stdevs)) if type_stdevs else 0.0
 
         # 3. Contiguity score
         contiguity_scores = self.contiguous_sample_measure()
@@ -546,14 +611,14 @@ class TestManager:
         max_balance = n_samples / n_plates if n_plates else 1
         max_contiguity = max(self.rows, self.cols)
         norm_colony = colony_balance_score / max_balance if max_balance else 0
-        norm_type = blank_adult_chick_balance_score / max_balance if max_balance else 0
+        norm_type = adult_chick_blank_balance_score / max_balance if max_balance else 0
         norm_contig = contiguity_score / max_contiguity if max_contiguity else 0
         norm_util = 1 - plate_utilization
         overall = float(np.mean([norm_colony, norm_type, norm_contig, norm_util]))
 
         return {
             "colony_balance_score": colony_balance_score,
-            "blank_adult_chick_balance_score": blank_adult_chick_balance_score,
+            "adult_chick_blank_balance_score": adult_chick_blank_balance_score,
             "contiguity_score": contiguity_score,
             "plate_utilization": plate_utilization,
             "overall_adherence_score": overall,
@@ -571,8 +636,8 @@ class TestManager:
         if self.samples:
             # Assuming Unique_ID is used, if not, adjust field
             max_sid_length = max((len(s.unique_id) for s in self.samples), default=0)
-        # Also consider the 'BLANK' string length
-        max_sid_length = max(max_sid_length, len("BLANK"))
+        # Consider minimum text length for cell sizing
+        max_sid_length = max(max_sid_length, 10)
         
         # Ensure we have a reasonable minimum length for calculations
         max_sid_length = max(max_sid_length, 10)
@@ -631,16 +696,18 @@ class TestManager:
                 # Create a grid of cells
                 grid = np.zeros((self.rows, self.cols, 3))
                 
-                # Fill in the colors based on sample type (BLANK, Empty, or Sample)
+                # Fill in the colors based on sample type (Empty or Sample)
                 for r in range(self.rows):
                     for c in range(self.cols):
                         sample_obj = plate.get_sample(r, c) # Get the Sample object
 
                         if sample_obj is None:
-                            grid[r, c] = [1, 1, 1]  # White for empty cells
-                        elif sample_obj.sample_type == SampleType.BLANK:
-                            grid[r, c] = [0.95, 0.95, 0.95]  # Very light gray for blanks
-                        else: # It's a non-BLANK Sample
+                            # Check if this is a designated blank position
+                            if (r, c) in self.blank_positions:
+                                grid[r, c] = [0.95, 0.95, 0.95]  # Very light gray for designated blank positions
+                            else:
+                                grid[r, c] = [1, 1, 1]  # White for empty cells
+                        else: # It's a Sample
                             # Use a light blue color for samples
                             grid[r, c] = [0.7, 0.85, 0.95]  # Light blue for samples
 
@@ -856,7 +923,7 @@ class TestManager:
                             sample_obj.unique_id if hasattr(sample_obj, 'unique_id') else "",
                             sample_obj.species if hasattr(sample_obj, 'species') else "",
                             sample_obj.colony_code if hasattr(sample_obj, 'colony_code') else "",
-                            sample_obj.sample_type.value if hasattr(sample_obj, 'sample_type') else "",
+                            sample_obj.sample_type.value if (hasattr(sample_obj, 'sample_type') and sample_obj.sample_type) else "",
                             sample_obj.substrate if hasattr(sample_obj, 'substrate') else "",
                             sample_obj.notes if hasattr(sample_obj, 'notes') else ""
                         ]

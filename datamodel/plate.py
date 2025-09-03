@@ -17,9 +17,11 @@ class Plate:
         self.plate: List[List[Optional[Sample]]] = [[None for _ in range(cols)] for _ in range(rows)]
 
     @property
-    def num_blank_samples(self) -> int:
-        """Count the number of blank samples on the plate."""
-        return sum(1 for row in self.plate for sample in row if sample and sample.sample_type == SampleType.BLANK)
+    def num_blank_positions(self) -> int:
+        """Count the number of designated blank positions on the plate."""
+        # This would need to be passed in from the TestManager since the Plate doesn't know about blank_positions
+        # For now, return 0 and this property can be calculated elsewhere
+        return 0
 
     @property
     def num_adult_samples(self) -> int:
@@ -30,6 +32,11 @@ class Plate:
     def num_chick_samples(self) -> int:
         """Count the number of chick samples on the plate."""
         return sum(1 for row in self.plate for sample in row if sample and sample.sample_type == SampleType.CHICK)
+
+    @property
+    def num_blank_samples(self) -> int:
+        """Count the number of blank samples on the plate."""
+        return sum(1 for row in self.plate for sample in row if sample and sample.sample_type == SampleType.BLANK)
 
     def set_sample(self, row: int, col: int, sample: Optional[Sample]) -> None:
         if 0 <= row < self.rows and 0 <= col < self.cols:

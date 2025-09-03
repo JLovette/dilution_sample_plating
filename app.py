@@ -305,12 +305,12 @@ def step1_upload_csv():
         df.to_csv(temp_csv, index=False)
         temp_csv.seek(0)
         samples = parse_samples(temp_csv)
-        blank_samples = [s for s in samples if s.sample_type == SampleType.BLANK]
         adult_samples = [s for s in samples if s.sample_type == SampleType.ADULT]
         chick_samples = [s for s in samples if s.sample_type == SampleType.CHICK]
+        blank_samples = [s for s in samples if s.sample_type == SampleType.BLANK]
         st.session_state["samples"] = samples
-        colonies = set(s.colony_code for s in samples if s.colony_code and s.sample_type != SampleType.BLANK)
-        st.markdown(f'<div style="background-color: #d4edda; border: 1px solid #c3e6cb; color: #155724; padding: 10px; border-radius: 5px; margin: 10px 0;">Loaded {len(samples)} total samples for {len(colonies)} colonies ({len(blank_samples)} BLANK, {len(adult_samples)} ADULT, {len(chick_samples)} CHICK)</div>', unsafe_allow_html=True)
+        colonies = set(s.colony_code for s in samples if s.colony_code)
+        st.markdown(f'<div style="background-color: #d4edda; border: 1px solid #c3e6cb; color: #155724; padding: 10px; border-radius: 5px; margin: 10px 0;">Loaded {len(samples)} total samples for {len(colonies)} colonies ({len(adult_samples)} ADULT, {len(chick_samples)} CHICK, {len(blank_samples)} BLANK)</div>', unsafe_allow_html=True)
 
     if (uploaded_file):
         if st.button("Next"):
@@ -319,9 +319,9 @@ def step1_upload_csv():
 
 
 
-# --- Step 2: BLANK Selection & Summary ---
+# --- Step 2: Blank Position Selection & Summary ---
 def step2_blank_selection():
-    st.header("2: Set BLANK Sample Locations")
+    st.header("2: Set Blank Position Locations")
 
     samples = st.session_state.get("samples")
 
@@ -335,18 +335,18 @@ def step2_blank_selection():
     if 'blank_positions' not in st.session_state:
         st.session_state.blank_positions = []
     
-    # Calculate and display BLANK spot recommendations
-    blank_samples = [s for s in samples if s.sample_type == SampleType.BLANK]
+    # Calculate and display blank position recommendations
     total_samples = len(samples)
     num_plates = (total_samples + 95) // 96  # Ceiling division by 96 (8x12 plate capacity)
-    recommended_blanks_per_plate = (len(blank_samples) + num_plates - 1) // num_plates  # Ceiling division
+    # Recommend 2-4 blank positions per plate for negative controls
+    recommended_blanks_per_plate = min(4, max(2, num_plates))
 
     header_cols = st.columns(COLS + 1)
     for c in range(COLS):
         header_cols[c + 1].markdown(f"**{c + 1}**", help=f"Column {c + 1}")
 
     def update_blank_positions(r, c):
-        # Checkbox callback to update persisted BLANK positioning
+        # Checkbox callback to update persisted blank positioning
         pos_tuple = (r, c)
         checkbox_key = f"cell_{r}_{c}"
         is_checked = st.session_state[checkbox_key]
@@ -357,7 +357,7 @@ def step2_blank_selection():
             st.session_state.blank_positions.remove(pos_tuple)
 
 
-    # BLANK location checkbox grid display
+    # Blank position checkbox grid display
     for r in range(ROWS):
         row_cols = st.columns(COLS + 1)
         row_label = chr(ord('A') + r)
@@ -366,7 +366,7 @@ def step2_blank_selection():
             key = f"cell_{r}_{c}"
             initial_value = (r, c) in st.session_state.blank_positions
             
-            # Create checkbox for BLANK position selection
+            # Create checkbox for blank position selection
             row_cols[c + 1].checkbox(
                 "BLANK",
                 value=initial_value,
@@ -383,20 +383,20 @@ def step2_blank_selection():
     if 'mask_cols' in st.session_state:
         del st.session_state.mask_cols
 
-    st.markdown("**Check any cell to mark as BLANK.**")
+    st.markdown("**Check any cell to mark as a blank position for negative controls.**")
     
-    # Add default BLANK positions button
+    # Add default blank positions button
     st.markdown("---")
 
-    # Alert if insufficient BLANK positions
+    # Alert if insufficient blank positions
     current_blanks = len(st.session_state.blank_positions)
-    if current_blanks < recommended_blanks_per_plate:
-        st.markdown(f"""
-        <div style="background-color: #f8d7da; border: 1px solid #f5c6cb; color: #721c24; padding: 15px; border-radius: 8px; margin: 15px 0;">
-        ⚠️ You currently have {current_blanks} BLANK positions selected. {recommended_blanks_per_plate} is recommended to optimize the number of utilized plates. 
-        </div>
-        """, unsafe_allow_html=True)
-    
+    # if current_blanks < recommended_blanks_per_plate:
+    #     st.markdown(f"""
+    #     <div style="background-color: #f8d7da; border: 1px solid #f5c6cb; color: #721c24; padding: 15px; border-radius: 8px; margin: 15px 0;">
+    #     ⚠️ You currently have {current_blanks} blank positions selected. {recommended_blanks_per_plate} is recommended for negative controls during DNA extraction. 
+    #     </div>
+    #     """, unsafe_allow_html=True)
+
     st.markdown("---")
     
     # Apply custom CSS class for tighter spacing
@@ -412,11 +412,11 @@ def step2_blank_selection():
             st.session_state.blank_positions = default_positions
             st.rerun()
     
-    with row1_col2:
-        if st.button("Clear"):
-            st.session_state.blank_positions = []
-            st.success("🧹 Cleared all BLANK positions!")
-            st.rerun()
+        with row1_col2:
+            if st.button("Clear"):
+                st.session_state.blank_positions = []
+                st.success("🧹 Cleared all blank positions!")
+                st.rerun()
 
 
     # Algorithm Weight Settings
@@ -607,7 +607,7 @@ def step3_display_plates():
                                 st.markdown(f"**ADULT:** {stats['type_counts']['ADULT']}")
                                 st.markdown(f"**CHICK:** {stats['type_counts']['CHICK']}")
                             with col2:
-                                st.markdown(f"**BLANK:** {stats['type_counts']['BLANK']}")
+                                # No more BLANK samples - they are now treated like normal samples
                                 st.markdown(f"**Total:** {stats['total_samples']}")
                             
                             st.markdown("---")
@@ -650,7 +650,7 @@ def step3_display_plates():
         
         # Adult/Chick ratio details
         st.subheader("Adult/Chick Sample Distribution")
-        type_counts = manager.blank_adult_chick_counts()
+        type_counts = manager.sample_type_counts()
         type_df = pd.DataFrame(type_counts)
         type_df.index = [f"Plate {st.session_state.starting_plate_number + i}" for i in range(len(type_df))]
         
@@ -667,7 +667,7 @@ def step3_display_plates():
         with summary_cols[0]:
             metrics = manager.algorithm_metrics()
             st.metric("Colony Balance (Std Dev)", f"{metrics['colony_balance_score']:.2f}")
-            st.metric("Type Balance (Std Dev)", f"{metrics['blank_adult_chick_balance_score']:.2f}")
+            st.metric("Type Balance (Std Dev)", f"{metrics['adult_chick_blank_balance_score']:.2f}")
         
         with summary_cols[1]:
             # Calculate ideal distribution
